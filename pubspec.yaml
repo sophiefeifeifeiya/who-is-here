@@ -35,6 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # AMap Flutter plugin
+  amap_flutter_map:
+    git:
+      url: whoishere@vs-ssh.visualstudio.com:v3/whoishere/Who%20is%20Here/amap_flutter_mapx
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
