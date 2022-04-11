@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
@@ -42,9 +44,8 @@ class Bubble extends StatelessWidget {
           ),
         );
         break;
-      case 2:
-
       default:
+        return Container();
     }
   }
 }
