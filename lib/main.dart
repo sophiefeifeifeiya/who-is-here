@@ -1,9 +1,12 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 import './widgets/MapOverlay.dart';
 import './widgets/MapView.dart';
 import './widgets/Bubble.dart';
+import './mock/mockMapOverLays.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: "Who's Here"),
     );
   }
 }
@@ -46,11 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: [
           MapView(
-            overlays: [
-              MapOverlay(
-                  coordinate: LatLng(23.477641, 111.274786),
-                  child: Bubble(avatar: 'images/avatar.png'))
-            ],
+            overlays: mockMapOverLays,
           )
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
