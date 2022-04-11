@@ -49,12 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
             overlays: [
               MapOverlay(
                   coordinate: LatLng(23.477641, 111.274786),
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.red,
-                    child: Bubble(avatar: 'images/avatar.png'),
-                  ))
+                  child: Bubble(avatar: 'images/avatar.png'))
             ],
           )
         ],

@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-
+import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
@@ -44,6 +44,31 @@ class Bubble extends StatelessWidget {
           ),
         );
         break;
+      case 2:
+        return AvatarView(
+          radius: 60,
+          borderColor: Colors.yellow,
+          isOnlyText: false,
+          text: Text(
+            'C',
+            style: TextStyle(color: Colors.white, fontSize: 50),
+          ),
+          avatarType: AvatarType.CIRCLE,
+          backgroundColor: Colors.red,
+          imagePath: avatar,
+          placeHolder: Container(
+            child: Icon(
+              Icons.person,
+              size: 50,
+            ),
+          ),
+          errorWidget: Container(
+            child: Icon(
+              Icons.error,
+              size: 50,
+            ),
+          ),
+        );
       default:
         return Container();
     }
