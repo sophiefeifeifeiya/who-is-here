@@ -2,10 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
-
-import './widgets/MapOverlay.dart';
 import './widgets/MapView.dart';
-import './widgets/Bubble.dart';
 import './mock/mockMapOverLays.dart';
 
 void main() {
