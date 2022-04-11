@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 50,
                     width: 50,
                     color: Colors.red,
-                    child: Bubble(avatar: ''),
+                    child: Bubble(avatar: 'images/avatar.png'),
                   ))
             ],
           )
