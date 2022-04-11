@@ -3,6 +3,7 @@ import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 import './widgets/MapOverlay.dart';
 import './widgets/MapView.dart';
+import './widgets/Bubble.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,9 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 50,
                     width: 50,
                     color: Colors.red,
-                    child: CircularProgressIndicator(
-                      color: Colors.amber,
-                    ),
+                    child: Bubble(avatar: ''),
                   ))
             ],
           )
