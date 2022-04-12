@@ -1,7 +1,7 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:whoshere/controller.dart';
+import 'package:whoshere/controller/controller.dart';
 
 class RectangleBubble extends StatefulWidget {
   const RectangleBubble({Key? key}) : super(key: key);

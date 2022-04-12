@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:whoshere/controller.dart';
+import 'package:whoshere/controller/controller.dart';
 import '../widgets/flow_bubble.dart';
 import '../widgets/circle_bubble.dart';
 import '../widgets/rectangle_bubble.dart';
 
 class Preview extends StatefulWidget {
+  const Preview({Key? key}) : super(key: key);
+
   @override
   _previewState createState() => _previewState();
 }

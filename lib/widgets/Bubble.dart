@@ -1,11 +1,35 @@
 // ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers
+import 'dart:ffi';
+
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:whoshere/page/setting_page.dart';
 
 // TODO: add bubble style Enum
 // Enum BubbleStyle {
 // }
+
+Widget makeTouchable(Widget w, VoidCallback calllBack) {
+// The GestureDetector wraps the button.
+  return GestureDetector(
+    // When the child is tapped, show a snackbar.
+    onTap: calllBack,
+    // The custom button
+    child: w,
+  );
+}
+
+void openBubbleSertting(BuildContext context) {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10))),
+    context: context,
+    builder: (context) => SettingPage(),
+    isScrollControlled: false,
+    enableDrag: true,
+  );
+}
 
 class Bubble extends StatelessWidget {
   final String avatar;
@@ -20,7 +44,8 @@ class Bubble extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (style) {
       case 1:
-        return buildBubble1(avatar);
+        return makeTouchable(
+            buildBubble1(avatar), () => openBubbleSertting(context));
       case 2:
         return buildBubble2(avatar);
       case 3:

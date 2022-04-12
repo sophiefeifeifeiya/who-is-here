@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../controller.dart';
+import '../controller/controller.dart';
 
 class ColorButton extends StatelessWidget {
   Color color;
@@ -12,12 +12,12 @@ class ColorButton extends StatelessWidget {
     return Container(
       color: Colors.transparent,
       child: FloatingActionButton(
-          backgroundColor: color,
-          onPressed: (){
-            colorStreamController.add(color);
-            color2StreamController.add(color);
-          },
-          mini: true,
+        backgroundColor: color,
+        onPressed: () {
+          colorStreamController.add(color);
+          color2StreamController.add(color);
+        },
+        mini: true,
       ),
     );
   }
