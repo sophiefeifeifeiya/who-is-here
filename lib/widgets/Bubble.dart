@@ -5,20 +5,11 @@ import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:whoshere/page/setting_page.dart';
+import 'package:whoshere/utils/Touchable.dart';
 
 // TODO: add bubble style Enum
 // Enum BubbleStyle {
 // }
-
-Widget makeTouchable(Widget w, VoidCallback calllBack) {
-// The GestureDetector wraps the button.
-  return GestureDetector(
-    // When the child is tapped, show a snackbar.
-    onTap: calllBack,
-    // The custom button
-    child: w,
-  );
-}
 
 void openBubbleSertting(BuildContext context) {
   showModalBottomSheet(
@@ -44,6 +35,7 @@ class Bubble extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (style) {
       case 1:
+        // return buildBubble2(avatar);
         return makeTouchable(
             buildBubble1(avatar), () => openBubbleSertting(context));
       case 2:
@@ -92,95 +84,110 @@ Widget buildBubble1(String avatar) {
 }
 
 Widget buildBubble2(String avatar) {
-  return AvatarView(
-    radius: 60,
-    borderColor: Colors.yellow,
-    isOnlyText: false,
-    text: Text(
-      'C',
-      style: TextStyle(color: Colors.white, fontSize: 50),
-    ),
-    avatarType: AvatarType.CIRCLE,
-    backgroundColor: Colors.red,
-    imagePath: avatar,
-    placeHolder: Container(
-      child: Icon(
-        Icons.person,
-        size: 25,
+  return SizedBox(
+    width: 50,
+    height: 50,
+    child: AvatarView(
+      radius: 60,
+      borderColor: Colors.yellow,
+      isOnlyText: false,
+      text: Text(
+        'C',
+        style: TextStyle(color: Colors.white, fontSize: 50),
       ),
-    ),
-    errorWidget: Container(
-      child: Icon(
-        Icons.error,
-        size: 25,
+      avatarType: AvatarType.CIRCLE,
+      backgroundColor: Colors.red,
+      imagePath: avatar,
+      placeHolder: Container(
+        child: Icon(
+          Icons.person,
+          size: 25,
+        ),
+      ),
+      errorWidget: Container(
+        child: Icon(
+          Icons.error,
+          size: 25,
+        ),
       ),
     ),
   );
 }
 
 Widget buildBubble3(String avatar) {
-  return AvatarView(
-    radius: 60,
-    borderWidth: 8,
-    borderColor: Colors.yellow,
-    avatarType: AvatarType.CIRCLE,
-    backgroundColor: Colors.red,
-    imagePath: avatar,
-    placeHolder: Container(
-      child: Icon(
-        Icons.person,
-        size: 50,
-      ),
-    ),
-    errorWidget: Container(
-      child: Icon(
-        Icons.error,
-        size: 50,
-      ),
-    ),
-  );
+  return SizedBox(
+      width: 60,
+      height: 60,
+      child: AvatarView(
+        radius: 60,
+        borderWidth: 8,
+        borderColor: Colors.yellow,
+        avatarType: AvatarType.CIRCLE,
+        backgroundColor: Colors.red,
+        imagePath: avatar,
+        placeHolder: Container(
+          child: Icon(
+            Icons.person,
+            size: 50,
+          ),
+        ),
+        errorWidget: Container(
+          child: Icon(
+            Icons.error,
+            size: 50,
+          ),
+        ),
+      ));
 }
 
 Widget buildBubble4(String avatar) {
-  return AvatarView(
-    radius: 60,
-    borderColor: Colors.grey,
-    avatarType: AvatarType.RECTANGLE,
-    backgroundColor: Colors.red,
-    imagePath: avatar,
-    placeHolder: Container(
-      child: Icon(
-        Icons.person,
-        size: 50,
+  return SizedBox(
+    width: 60,
+    height: 60,
+    child: AvatarView(
+      radius: 60,
+      borderColor: Colors.grey,
+      avatarType: AvatarType.RECTANGLE,
+      backgroundColor: Colors.red,
+      imagePath: avatar,
+      placeHolder: Container(
+        child: Icon(
+          Icons.person,
+          size: 50,
+        ),
       ),
-    ),
-    errorWidget: Container(
-      child: Icon(
-        Icons.error,
-        size: 50,
+      errorWidget: Container(
+        child: Icon(
+          Icons.error,
+          size: 50,
+        ),
       ),
     ),
   );
 }
 
 Widget buildBubble5(String avatar) {
-  return AvatarView(
-    radius: 60,
-    borderWidth: 8,
-    borderColor: Colors.grey,
-    avatarType: AvatarType.RECTANGLE,
-    backgroundColor: Colors.red,
-    imagePath: avatar,
-    placeHolder: Container(
-      child: Icon(
-        Icons.person,
-        size: 50,
+  return SizedBox(
+    width: 60,
+    height: 60,
+    child: AvatarView(
+      radius: 30,
+      borderWidth: 8,
+      borderColor: Colors.grey,
+      avatarType: AvatarType.RECTANGLE,
+      backgroundColor: Colors.red,
+      imagePath: avatar,
+      placeHolder: Container(
+        child: Icon(
+          Icons.person,
+          size: 50,
+        ),
       ),
-    ),
-    errorWidget: Container(
-      child: Icon(
-        Icons.error,
-        size: 50,
+      errorWidget: Container(
+        child: Icon(
+          Icons.error,
+          size: 50,
+        ),
       ),
     ),
   );

@@ -72,15 +72,15 @@ class _MapViewState extends State<MapView> {
             initialCameraPosition:
                 CameraPosition(target: LatLng(23.476733, 111.279022), zoom: 16),
           ),
-          Positioned(
-            child: Container(
-              height: 50,
-              width: 50,
-              color: Colors.green,
-            ),
-            right: 50,
-            bottom: 50,
-          ),
+          // Positioned(
+          //   child: Container(
+          //     height: 50,
+          //     width: 50,
+          //     color: Colors.green,
+          //   ),
+          //   right: 50,
+          //   bottom: 50,
+          // ),
           Stack(
             children: visibleOverlays,
           )
