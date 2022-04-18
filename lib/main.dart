@@ -5,6 +5,7 @@ import './widgets/MapView.dart';
 import './mock/mockMapOverLays.dart';
 import 'package:whoshere/mock/mockTagList.dart';
 import 'package:whoshere/widgets/TagSelector.dart';
+import 'package:whoshere/widgets/SearchBarDelegate.dart';
 
 void main() {
   runApp(const MyApp());
@@ -75,10 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: IconButton(
                       splashColor: Color.fromARGB(255, 0, 0, 255),
                       // iconSize: 40,
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(Icons.search),
                       onPressed: () {
-                        print('open tag sources');
-                        setState(() {});
+                        showSearch(
+                            context: context, delegate: SearchBarDelegate());
                       },
                     ))
               ],
