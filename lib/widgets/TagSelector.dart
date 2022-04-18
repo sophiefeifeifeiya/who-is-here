@@ -47,100 +47,106 @@ class _TagSelectorState extends State<TagSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: _scrollController,
-      scrollDirection: Axis.horizontal,
-      itemCount: _list.length,
-      itemBuilder: (BuildContext context, int index) {
-        TabModel _tabModel = _list[index];
+    return SizedBox(
+      height: 40,
+      child: ListView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        itemCount: _list.length,
+        itemBuilder: (BuildContext context, int index) {
+          TabModel _tabModel = _list[index];
 
-        Color bgColor = Colors.grey[200]!;
-        Color borderColor = Colors.grey[200]!;
-        Color textColor = Colors.black;
-        if (_tabModel.select) {
-          bgColor = Colors.white;
-          borderColor = Colors.blueAccent;
-          textColor = Colors.blueAccent;
-        }
+          Color bgColor = Colors.grey[200]!;
+          Color borderColor = Colors.grey[200]!;
+          Color textColor = Colors.black;
+          if (_tabModel.select) {
+            bgColor = Colors.white;
+            borderColor = Colors.blueAccent;
+            textColor = Colors.blueAccent;
+          }
 
-        return Container(
-          margin: EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (_tabModel.select) {
-                    return;
-                  }
-                  int selectIndex = 0;
-                  for (int i = 0; i < _list.length; i++) {
-                    TabModel element = _list[i];
-                    String title = element.title;
-                    String clickTitle = _tabModel.title;
-                    if (title == clickTitle) {
-                      element.select = true;
-                      selectIndex = i;
-                    } else {
-                      element.select = false;
+          return Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (_tabModel.select) {
+                      return;
                     }
-                  }
-                  double offset = _scrollController.offset;
-                  if (selectIndex <= 2) {
-                    _scrollController.animateTo(
-                      0.0,
-                      duration: Duration(milliseconds: 400),
-                      curve: Curves.linear,
-                    );
-                  } else if (selectIndex > 2 &&
-                      selectIndex < _list.length - 3) {
-                    if (selectIndex > _currentIndex) {
-                      //向左滑动
+                    int selectIndex = 0;
+                    for (int i = 0; i < _list.length; i++) {
+                      TabModel element = _list[i];
+                      String title = element.title;
+                      String clickTitle = _tabModel.title;
+                      if (title == clickTitle) {
+                        element.select = true;
+                        selectIndex = i;
+                      } else {
+                        element.select = false;
+                      }
+                    }
+                    double offset = _scrollController.offset;
+                    if (selectIndex <= 2) {
                       _scrollController.animateTo(
-                        offset + 80.0 + (selectIndex - _currentIndex - 1) * 80,
+                        0.0,
                         duration: Duration(milliseconds: 400),
                         curve: Curves.linear,
                       );
+                    } else if (selectIndex > 2 &&
+                        selectIndex < _list.length - 3) {
+                      if (selectIndex > _currentIndex) {
+                        //向左滑动
+                        _scrollController.animateTo(
+                          offset +
+                              80.0 +
+                              (selectIndex - _currentIndex - 1) * 80,
+                          duration: Duration(milliseconds: 400),
+                          curve: Curves.linear,
+                        );
+                      } else {
+                        //向右滑动
+                        _scrollController.animateTo(
+                          offset - 60,
+                          duration: Duration(milliseconds: 400),
+                          curve: Curves.linear,
+                        );
+                      }
                     } else {
-                      //向右滑动
+                      double max = _scrollController.position.maxScrollExtent;
                       _scrollController.animateTo(
-                        offset - 60,
+                        max,
                         duration: Duration(milliseconds: 400),
                         curve: Curves.linear,
                       );
                     }
-                  } else {
-                    double max = _scrollController.position.maxScrollExtent;
-                    _scrollController.animateTo(
-                      max,
-                      duration: Duration(milliseconds: 400),
-                      curve: Curves.linear,
-                    );
-                  }
-                  _currentIndex = selectIndex;
+                    _currentIndex = selectIndex;
 
-                  setState(() {});
-                  widget.onTap(_currentIndex);
-                },
-                child: Container(
-                  padding:
-                      EdgeInsets.only(left: 12, right: 12, top: 2, bottom: 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    //背景
-                    color: bgColor,
-                    //边框
-                    border: Border.all(color: borderColor),
+                    setState(() {});
+                    widget.onTap(_currentIndex);
+                  },
+                  child: Container(
+                    // height: 40,
+                    padding:
+                        EdgeInsets.only(left: 12, right: 12, top: 2, bottom: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      //背景
+                      color: bgColor,
+                      //边框
+                      border: Border.all(color: borderColor),
+                    ),
+                    child: Text(
+                      _tabModel.title,
+                      style: TextStyle(color: textColor),
+                    ),
                   ),
-                  child: Text(
-                    _tabModel.title,
-                    style: TextStyle(color: textColor),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      },
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

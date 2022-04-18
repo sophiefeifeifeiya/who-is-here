@@ -40,6 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+    double windowWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(widget.title),
@@ -50,16 +52,36 @@ class _MyHomePageState extends State<MyHomePage> {
             overlays: mockMapOverLays,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 120,
-            child: TagSelector(
-              tabTitleList: tagList,
-              select: _selectedTagIndex,
-              onTap: (int index) {
-                setState(() {
-                  _selectedTagIndex = index;
-                });
-              },
+            width: windowWidth,
+            height: statusBarHeight + 40,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: windowWidth - 40,
+                  child: TagSelector(
+                    tabTitleList: tagList,
+                    select: _selectedTagIndex,
+                    onTap: (int index) {
+                      setState(() {
+                        _selectedTagIndex = index;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      splashColor: Color.fromARGB(255, 0, 0, 255),
+                      // iconSize: 40,
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        print('open tag sources');
+                        setState(() {});
+                      },
+                    ))
+              ],
             ),
           )
         ],
