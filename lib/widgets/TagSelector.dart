@@ -43,7 +43,7 @@ class _TagSelectorState extends State<TagSelector> {
     widget.tabTitleList.forEach((element) {});
   }
 
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +58,7 @@ class _TagSelectorState extends State<TagSelector> {
         Color borderColor = Colors.grey[200]!;
         Color textColor = Colors.black;
         if (_tabModel.select) {
+          print('${_tabModel.title} selected');
           bgColor = Colors.white;
           borderColor = Colors.blueAccent;
           textColor = Colors.blueAccent;
@@ -69,21 +70,28 @@ class _TagSelectorState extends State<TagSelector> {
             children: [
               GestureDetector(
                 onTap: () {
+                  print('====== tapped ======');
+                  print(_tabModel.title);
                   if (_tabModel.select) {
+                    print('完事了');
+                    _tabModel.select = false;
                     return;
                   }
                   int selectIndex = 0;
-                  for (int i = 0; i < _list.length; i++) {
-                    TabModel element = _list[i];
-                    String title = element.title;
-                    String clickTitle = _tabModel.title;
-                    if (title == clickTitle) {
-                      element.select = true;
-                      selectIndex = i;
-                    } else {
-                      element.select = false;
-                    }
-                  }
+                  String clickTitle = _tabModel.title;
+                  print(clickTitle);
+                  // for (int i = 0; i < _list.length; i++) {
+                  //   TabModel element = _list[i];
+                  //   String title = element.title;
+                  //   if (title == clickTitle) {
+                  //     element.select = true;
+                  //     selectIndex = i;
+                  //   }
+                  //   else {
+                  //     element.select = false;
+                  //   }
+                  // }
+                  _tabModel.select = true;
                   double offset = _scrollController.offset;
                   if (selectIndex <= 2) {
                     _scrollController.animateTo(
@@ -119,9 +127,7 @@ class _TagSelectorState extends State<TagSelector> {
                   _currentIndex = selectIndex;
 
                   setState(() {});
-                  if (widget.onTap != null) {
-                    widget.onTap(_currentIndex);
-                  }
+                  widget.onTap(_currentIndex);
                 },
                 child: Container(
                   padding:
@@ -134,7 +140,7 @@ class _TagSelectorState extends State<TagSelector> {
                     border: Border.all(color: borderColor),
                   ),
                   child: Text(
-                    "${_tabModel.title}",
+                    _tabModel.title,
                     style: TextStyle(color: textColor),
                   ),
                 ),
