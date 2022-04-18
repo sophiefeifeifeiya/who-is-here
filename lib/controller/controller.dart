@@ -8,3 +8,4 @@ StreamController<int> childPageStreamController = StreamController.broadcast();
 StreamController<Color> color2StreamController = StreamController.broadcast();
 StreamController<int> typeChoosingController = StreamController.broadcast();
 StreamController<String> emojiChoosingController = StreamController.broadcast();
+StreamController<int> styleChangeController = StreamController.broadcast();

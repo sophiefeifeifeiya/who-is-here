@@ -15,7 +15,7 @@ class emojiWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 190,
+      height: 170,
       child: Container(
         child: EmojiPicker(
             onEmojiSelected: (category, Emoji emoji) {

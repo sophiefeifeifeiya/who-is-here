@@ -8,10 +8,10 @@ import '../style_resource/style1.dart';
 import '../style_resource/style2.dart';
 import '../style_resource/style3.dart';
 
-void inform(index) {
-  typeChoosingController.add(2);
-  print('trigerred');
-}
+// void inform(index) {
+//   typeChoosingController.add(2);
+//   print('trigerred');
+// }
 
 class styleWidget extends StatelessWidget {
   const styleWidget({Key? key}) : super(key: key);
@@ -30,12 +30,12 @@ class styleWidget extends StatelessWidget {
             crossAxisSpacing: 15,
             children: [
               // bubbleType1(),
-              makeTouchable(buildBubble1('images/avatar.png'), () => inform(1)),
+              bubbleType1(),
               bubbleType2(),
               bubbleType3(),
-              bubbleType1(),
-              bubbleType1(),
-              bubbleType1()
+              // bubbleType1(),
+              // bubbleType1(),
+              // bubbleType1()
             ]));
   }
 }
