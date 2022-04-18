@@ -76,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 40,
                     child: IconButton(
                       splashColor: Color.fromARGB(255, 0, 0, 255),
-                      // iconSize: 40,
                       icon: const Icon(Icons.search),
                       onPressed: () {
                         showSearch(
