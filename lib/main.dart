@@ -6,6 +6,7 @@ import './mock/mockMapOverLays.dart';
 import 'package:whoshere/mock/mockTagList.dart';
 import 'package:whoshere/widgets/TagSelector.dart';
 import 'package:whoshere/widgets/SearchBarDelegate.dart';
+import 'package:whoshere/widgets/FilledIconButton.dart';
 
 void main() {
   runApp(const MyApp());
@@ -81,10 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         showSearch(
                             context: context, delegate: SearchBarDelegate());
                       },
-                    ))
+                    )),
               ],
             ),
-          )
+          ),
+          Positioned(
+              bottom: 20,
+              right: 20,
+              child: FilledIconButton(
+                background: Colors.blueAccent,
+              ))
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
