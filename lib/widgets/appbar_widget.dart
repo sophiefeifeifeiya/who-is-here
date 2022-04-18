@@ -18,7 +18,7 @@ AppBar buildAppBar(BuildContext context) {
           onPressed: () {
             final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
 
-            final switcher = ThemeSwitcher.of(context)!;
+            final switcher = ThemeSwitcher.of(context);
             switcher.changeTheme(theme: theme);
           },
         ),

@@ -1,5 +1,4 @@
 // ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 
 class FilledIconButton extends StatelessWidget {
@@ -8,14 +7,16 @@ class FilledIconButton extends StatelessWidget {
   final Color color;
   final double width;
   final double height;
-  const FilledIconButton({
-    Key? key,
-    this.icon = Icons.person,
-    this.color = Colors.white,
-    this.background = Colors.lightBlue,
-    this.width = 50,
-    this.height = 50,
-  }) : super(key: key);
+  final VoidCallback? cb;
+  const FilledIconButton(
+      {Key? key,
+      this.icon = Icons.person,
+      this.color = Colors.white,
+      this.background = Colors.lightBlue,
+      this.width = 50,
+      this.height = 50,
+      required this.cb})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class FilledIconButton extends StatelessWidget {
           size: width - 15,
           color: color,
         ),
-        onPressed: () {},
+        onPressed: cb,
       ),
     );
   }

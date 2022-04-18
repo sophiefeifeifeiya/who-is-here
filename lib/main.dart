@@ -7,6 +7,7 @@ import 'package:whoshere/mock/mockTagList.dart';
 import 'package:whoshere/widgets/TagSelector.dart';
 import 'package:whoshere/widgets/SearchBarDelegate.dart';
 import 'package:whoshere/widgets/FilledIconButton.dart';
+import 'package:whoshere/page/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -90,6 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
               right: 20,
               child: FilledIconButton(
                 background: Colors.blueAccent,
+                cb: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                ),
               ))
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
