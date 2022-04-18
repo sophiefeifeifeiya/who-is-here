@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:amap_flutter_map/amap_flutter_map.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,10 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
+  static const AMapApiKey _amapApiKeys = AMapApiKey(
+      androidKey: 'f9648f64a9a370e7dc8e09c63ac2cbc1',
+      iosKey: 'c166816f949c6c796c329e0c62968d34');
+
   AMapController? controller;
   List<Widget> visibleOverlays = [];
   double devicePixelRatio = 1; // default to 1, will be updated in build()
@@ -41,7 +47,8 @@ class _MapViewState extends State<MapView> {
       if (point == null) {
         continue;
       }
-      print("Overlay UI position: x: ${point.x}  y: ${point.y}");
+      print(
+          "Overlay UI position: x: ${point.x}  y: ${point.y}    Pixel ratio: ${devicePixelRatio}");
       visibleOverlays.add(Positioned(
         child: overlay,
         left: point.x.toDouble() / devicePixelRatio,
@@ -58,7 +65,11 @@ class _MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context);
     Size parentSize = media.size;
-    devicePixelRatio = media.devicePixelRatio;
+    if (Platform.isIOS) {
+      devicePixelRatio = media.textScaleFactor;
+    } else {
+      devicePixelRatio = media.devicePixelRatio;
+    }
     return SizedBox(
       height: parentSize.height,
       width: parentSize.width,
@@ -71,6 +82,7 @@ class _MapViewState extends State<MapView> {
                 hasContains: true, hasShow: true, hasAgree: true),
             initialCameraPosition:
                 CameraPosition(target: LatLng(23.476733, 111.279022), zoom: 16),
+            apiKey: _amapApiKeys,
           ),
           // Positioned(
           //   child: Container(
