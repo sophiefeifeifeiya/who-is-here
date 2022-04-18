@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:amap_flutter_base/amap_flutter_base.dart';
 import './widgets/MapView.dart';
 import './mock/mockMapOverLays.dart';
+import 'package:whoshere/mock/mockTagList.dart';
+import 'package:whoshere/widgets/TagSelector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +36,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedTagIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +48,18 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           MapView(
             overlays: mockMapOverLays,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 120,
+            child: TagSelector(
+              tabTitleList: tagList,
+              onTap: (int index) {
+                setState(() {
+                  _selectedTagIndex = index;
+                });
+              },
+            ),
           )
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
