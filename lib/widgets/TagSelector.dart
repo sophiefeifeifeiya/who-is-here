@@ -58,7 +58,6 @@ class _TagSelectorState extends State<TagSelector> {
         Color borderColor = Colors.grey[200]!;
         Color textColor = Colors.black;
         if (_tabModel.select) {
-          print('${_tabModel.title} selected');
           bgColor = Colors.white;
           borderColor = Colors.blueAccent;
           textColor = Colors.blueAccent;
@@ -70,28 +69,21 @@ class _TagSelectorState extends State<TagSelector> {
             children: [
               GestureDetector(
                 onTap: () {
-                  print('====== tapped ======');
-                  print(_tabModel.title);
                   if (_tabModel.select) {
-                    print('完事了');
-                    _tabModel.select = false;
                     return;
                   }
                   int selectIndex = 0;
-                  String clickTitle = _tabModel.title;
-                  print(clickTitle);
-                  // for (int i = 0; i < _list.length; i++) {
-                  //   TabModel element = _list[i];
-                  //   String title = element.title;
-                  //   if (title == clickTitle) {
-                  //     element.select = true;
-                  //     selectIndex = i;
-                  //   }
-                  //   else {
-                  //     element.select = false;
-                  //   }
-                  // }
-                  _tabModel.select = true;
+                  for (int i = 0; i < _list.length; i++) {
+                    TabModel element = _list[i];
+                    String title = element.title;
+                    String clickTitle = _tabModel.title;
+                    if (title == clickTitle) {
+                      element.select = true;
+                      selectIndex = i;
+                    } else {
+                      element.select = false;
+                    }
+                  }
                   double offset = _scrollController.offset;
                   if (selectIndex <= 2) {
                     _scrollController.animateTo(

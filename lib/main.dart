@@ -54,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 120,
             child: TagSelector(
               tabTitleList: tagList,
+              select: _selectedTagIndex,
               onTap: (int index) {
                 setState(() {
                   _selectedTagIndex = index;
