@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:whoshere/controller/controller.dart';
 import 'package:whoshere/model/bubble_info.dart';
 import 'package:whoshere/utils/Touchable.dart';
-import 'package:whoshere/widgets/bubble.dart';
+import 'package:whoshere/widgets/plain_bubble.dart';
 import 'package:whoshere/utils/navigating.dart';
 
 class DecoratedBubble extends StatefulWidget {
@@ -45,7 +45,7 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
         if (type.data?.tag == widget.tag && type.data?.bubbleStyle != null) {
           currentStyle = type.data?.bubbleStyle as int;
         }
-        bubble = Bubble(style: currentStyle as int);
+        bubble = PlainBubble(style: currentStyle as int);
         var stack = Stack(
           alignment: const FractionalOffset(0.3, 0.75),
           children: [

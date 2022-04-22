@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:whoshere/widgets/bubble.dart';
+import 'package:whoshere/widgets/plain_bubble.dart';
 import 'package:whoshere/controller/controller.dart';
 import 'package:whoshere/model/bubble_info.dart';
 
@@ -25,16 +25,16 @@ class styleWidget extends StatelessWidget {
             mainAxisSpacing: 15,
             crossAxisSpacing: 15,
             children: [
-              Bubble(
+              PlainBubble(
                 style: 1,
                 cb: () => swicthStyle(1, tag),
               ),
               // bubbleType1(),
-              Bubble(
+              PlainBubble(
                 style: 2,
                 cb: () => swicthStyle(2, tag),
               ),
-              Bubble(
+              PlainBubble(
                 style: 3,
                 cb: () => swicthStyle(3, tag),
               ),

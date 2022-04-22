@@ -10,11 +10,11 @@ import 'package:whoshere/widgets/bubble_style/style3.dart';
 // Enum BubbleStyle {
 // }
 
-class Bubble extends StatelessWidget {
+class PlainBubble extends StatelessWidget {
   final String avatar;
   final int style;
   final VoidCallback? cb;
-  const Bubble(
+  const PlainBubble(
       {Key? key, this.avatar = 'images/avatar.png', this.style = 1, this.cb})
       : super(key: key);
 
