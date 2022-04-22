@@ -21,8 +21,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         builder: (context) => Scaffold(
           appBar: buildAppBar(context),
           body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 32),
-            physics: BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            physics: const BouncingScrollPhysics(),
             children: [
               ProfileWidget(
                 imagePath: user.imagePath,
