@@ -8,9 +8,14 @@ class DecoratedBubble extends StatefulWidget {
   final int bubbleStyle;
   final String emoji;
   final VoidCallback? onTap;
-  const DecoratedBubble(
-      {Key? key, required this.bubbleStyle, this.emoji = '', this.onTap})
-      : super(key: key);
+  final String tag;
+  const DecoratedBubble({
+    Key? key,
+    required this.bubbleStyle,
+    required this.tag,
+    this.emoji = '',
+    this.onTap,
+  }) : super(key: key);
 
   @override
   _DecoratedBubbleState createState() => _DecoratedBubbleState();
@@ -39,11 +44,15 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
               )),
         ),
         Positioned(
-          left: 110,
+          left: widget.bubbleStyle == 1 ? 90 : 110,
+          top: widget.bubbleStyle == 1 ? 90 : 105,
+          right: 10,
           child: StreamBuilder(
             stream: emojiChoosingController.stream,
             initialData: widget.emoji,
             builder: (BuildContext context, AsyncSnapshot<String> emoji) {
+              print('emoji');
+              print(emoji.data);
               return Text(
                 emoji.data.toString(),
                 style: const TextStyle(
@@ -52,8 +61,6 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
               );
             },
           ),
-          top: 105,
-          right: 10,
         ),
       ],
     );

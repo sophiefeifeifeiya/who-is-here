@@ -23,15 +23,13 @@ import 'package:whoshere/page/bubble_setting_page.dart';
 // }
 
 void openBubbleSertting(BuildContext context,
-    {required int bubbleStyle, String emoji = ''}) {
+    {required int bubbleStyle, String emoji = '', required String tag}) {
   showModalBottomSheet(
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10))),
     context: context,
-    builder: (context) => BubbleSettingPage(
-      bubbleStye: bubbleStyle,
-      emoji: emoji,
-    ),
+    builder: (context) =>
+        BubbleSettingPage(bubbleStye: bubbleStyle, emoji: emoji, tag: tag),
     isScrollControlled: false,
     enableDrag: true,
   );

@@ -11,12 +11,12 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
   return [
     MapOverlay(
       coordinate: LatLng(23.477641, 111.274786),
-      child: Bubble(
-        avatar: 'images/avatar.png',
-        style: 1,
-        cb: () {
-          openBubbleSertting(context, bubbleStyle: 1);
-        },
+      child: DecoratedBubble(
+        bubbleStyle: 2,
+        emoji: '😅',
+        tag: 'current_user',
+        onTap: () => openBubbleSertting(context,
+            bubbleStyle: 2, emoji: '😅', tag: 'current_user'),
       ),
     ),
     MapOverlay(

@@ -10,8 +10,11 @@ import 'package:whoshere/widgets/category.dart';
 
 class BubbleSettingPage extends StatelessWidget {
   final int bubbleStye;
+
+  final String tag;
+  final String emoji;
   const BubbleSettingPage(
-      {Key? key, required this.bubbleStye, String emoji = ''})
+      {Key? key, required this.bubbleStye, this.emoji = '', required this.tag})
       : super(key: key);
 
   @override
@@ -29,7 +32,9 @@ class BubbleSettingPage extends StatelessWidget {
               ),
               Center(
                 child: DecoratedBubble(
+                  tag: tag,
                   bubbleStyle: bubbleStye,
+                  emoji: emoji,
                 ),
               ),
               SizedBox(
@@ -44,7 +49,10 @@ class BubbleSettingPage extends StatelessWidget {
                 height: 5,
               ),
               if (snapshot.data == 0) colorWidget(),
-              if (snapshot.data == 1) styleWidget(),
+              if (snapshot.data == 1)
+                styleWidget(
+                  tag: tag,
+                ),
               if (snapshot.data == 2) emojiWidget(),
             ],
           );

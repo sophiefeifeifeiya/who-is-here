@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:whoshere/widgets/bubble.dart';
 import 'package:whoshere/controller/controller.dart';
 
-void swicthStyle(int style) {
+void swicthStyle(int style, String tag) {
   typeChoosingController.add(style);
 }
 
 class styleWidget extends StatelessWidget {
-  const styleWidget({Key? key}) : super(key: key);
+  final String tag;
+  const styleWidget({Key? key, required this.tag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +26,16 @@ class styleWidget extends StatelessWidget {
             children: [
               Bubble(
                 style: 1,
-                cb: () => swicthStyle(1),
+                cb: () => swicthStyle(1, tag),
               ),
               // bubbleType1(),
               Bubble(
                 style: 2,
-                cb: () => swicthStyle(2),
+                cb: () => swicthStyle(2, tag),
               ),
               Bubble(
                 style: 3,
-                cb: () => swicthStyle(3),
+                cb: () => swicthStyle(3, tag),
               ),
             ]));
   }
