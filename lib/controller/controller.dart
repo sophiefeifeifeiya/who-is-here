@@ -9,6 +9,7 @@ StreamController<int> childPageStreamController = StreamController.broadcast();
 StreamController<Color> color2StreamController = StreamController.broadcast();
 StreamController<BubbleStyleInfo> typeChoosingController =
     StreamController.broadcast();
-StreamController<String> emojiChoosingController = StreamController.broadcast();
+StreamController<BubbleEmojiInfo> emojiChoosingController =
+    StreamController.broadcast();
 StreamController<BubbleStyleInfo> styleChangeController =
     StreamController.broadcast();

@@ -37,11 +37,8 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
         Widget bubble;
         if (type.data?.tag == widget.tag && type.data?.bubbleStyle != null) {
           currentStyle = type.data?.bubbleStyle as int;
-          bubble = Bubble(style: type.data?.bubbleStyle as int);
-        } else {
-          bubble = Bubble(style: currentStyle as int);
         }
-
+        bubble = Bubble(style: currentStyle as int);
         var stack = Stack(
           alignment: const FractionalOffset(0.3, 0.75),
           children: [
@@ -54,11 +51,15 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
               right: 10,
               child: StreamBuilder(
                 stream: emojiChoosingController.stream,
-                initialData: widget.emoji,
-                builder: (BuildContext context, AsyncSnapshot<String> emoji) {
-                  currentEmoji = emoji.data;
+                initialData:
+                    BubbleEmojiInfo(emoji: widget.emoji, tag: widget.tag),
+                builder: (BuildContext context,
+                    AsyncSnapshot<BubbleEmojiInfo> bubbleEmojiInfo) {
+                  if (bubbleEmojiInfo.data?.tag == widget.tag) {
+                    currentEmoji = bubbleEmojiInfo.data?.emoji;
+                  }
                   return Text(
-                    emoji.data.toString(),
+                    currentEmoji.toString(),
                     style: const TextStyle(
                       fontSize: 30.0,
                     ),

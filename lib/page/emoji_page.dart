@@ -1,12 +1,15 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
+import 'package:whoshere/model/bubble_info.dart';
 
 class emojiWidget extends StatelessWidget {
-  const emojiWidget({Key? key}) : super(key: key);
+  final String tag;
+
+  const emojiWidget({Key? key, required this.tag}) : super(key: key);
 
   _onEmojiSelected(Emoji emoji) {
-    emojiChoosingController.add(emoji.emoji);
+    emojiChoosingController.add(BubbleEmojiInfo(emoji: emoji.emoji, tag: tag));
   }
 
   @override

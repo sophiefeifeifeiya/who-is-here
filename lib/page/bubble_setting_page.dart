@@ -53,7 +53,10 @@ class BubbleSettingPage extends StatelessWidget {
                 styleWidget(
                   tag: tag,
                 ),
-              if (snapshot.data == 2) emojiWidget(),
+              if (snapshot.data == 2)
+                emojiWidget(
+                  tag: tag,
+                ),
             ],
           );
         });
