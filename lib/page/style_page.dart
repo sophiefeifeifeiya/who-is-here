@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import '../style_resource/style1.dart';
-import '../style_resource/style2.dart';
-import '../style_resource/style3.dart';
+import 'package:whoshere/widgets/bubble_style/style1.dart';
+import 'package:whoshere/widgets/bubble_style/style2.dart';
+import 'package:whoshere/widgets/bubble_style/style3.dart';
 
 // void inform(index) {
 //   typeChoosingController.add(2);

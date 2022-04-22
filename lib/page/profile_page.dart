@@ -1,4 +1,3 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/edit_profile_page.dart';
@@ -41,13 +40,6 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
-    // Container();
-
-    //   ThemeSwitchingArea(
-    // child:
-    // Container(),
-
-    // );
   }
 
   Widget buildName(User user) => Column(

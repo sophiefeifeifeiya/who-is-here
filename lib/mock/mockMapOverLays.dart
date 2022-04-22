@@ -2,7 +2,7 @@
 
 import '../widgets/MapOverlay.dart';
 import '../widgets/Bubble.dart';
-import 'package:whoshere/style_resource/style1.dart';
+import 'package:whoshere/widgets/bubble_style/style1.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 var mockMapOverLays = [
