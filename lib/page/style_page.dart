@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:whoshere/widgets/bubble_style/style1.dart';
-import 'package:whoshere/widgets/bubble_style/style2.dart';
-import 'package:whoshere/widgets/bubble_style/style3.dart';
+import 'package:whoshere/widgets/Bubble.dart';
+import 'package:whoshere/controller/controller.dart';
+
+void swicthStyle(int style) {
+  typeChoosingController.add(style);
+}
 
 class styleWidget extends StatelessWidget {
   const styleWidget({Key? key}) : super(key: key);
@@ -20,9 +23,19 @@ class styleWidget extends StatelessWidget {
             mainAxisSpacing: 15,
             crossAxisSpacing: 15,
             children: [
-              bubbleType1(),
-              bubbleType2(),
-              bubbleType3(),
+              Bubble(
+                style: 1,
+                cb: () => swicthStyle(1),
+              ),
+              // bubbleType1(),
+              Bubble(
+                style: 2,
+                cb: () => swicthStyle(2),
+              ),
+              Bubble(
+                style: 3,
+                cb: () => swicthStyle(3),
+              ),
             ]));
   }
 }

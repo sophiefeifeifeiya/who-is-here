@@ -15,7 +15,6 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
         style: 1,
         cb: () {
           openBubbleSertting(context);
-          print('triggered');
         },
       ),
     ),

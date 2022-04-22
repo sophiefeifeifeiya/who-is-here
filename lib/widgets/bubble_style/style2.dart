@@ -11,9 +11,6 @@ class bubbleType2 extends StatelessWidget {
       height: 80,
       width: 80,
       child: InkWell(
-        onTap: () {
-          typeChoosingController.add(2);
-        },
         child: AvatarView(
           radius: 1000,
           borderWidth: 10,

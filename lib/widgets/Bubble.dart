@@ -14,18 +14,14 @@ class Bubble extends StatelessWidget {
   final String avatar;
   final int style;
   final VoidCallback? cb;
-  const Bubble({Key? key, required this.avatar, this.style = 1, this.cb})
+  const Bubble(
+      {Key? key, this.avatar = 'images/avatar.png', this.style = 1, this.cb})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('cb');
-    print(cb);
-    VoidCallback _cb = () {
-      print('do nothing 1');
-    };
+    VoidCallback _cb = () {};
     if (cb != null) {
-      print('发现cb');
       _cb = cb as VoidCallback;
     }
     switch (style) {
@@ -35,10 +31,6 @@ class Bubble extends StatelessWidget {
         return makeTouchable(buildBubble2(avatar), _cb);
       case 3:
         return makeTouchable(buildBubble3(avatar), _cb);
-      case 4:
-        return buildBubble4(avatar);
-      case 5:
-        return buildBubble5(avatar);
       default:
         return Container();
     }

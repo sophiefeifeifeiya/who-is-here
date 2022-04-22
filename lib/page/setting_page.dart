@@ -8,8 +8,8 @@ import 'package:whoshere/widgets/preview.dart';
 import 'package:whoshere/controller/controller.dart';
 import 'package:whoshere/widgets/category.dart';
 
-class SettingPage extends StatelessWidget {
-  const SettingPage({Key? key}) : super(key: key);
+class BubbleSettingPage extends StatelessWidget {
+  const BubbleSettingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -27,7 +27,7 @@ void openBubbleSertting(BuildContext context) {
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10))),
     context: context,
-    builder: (context) => const SettingPage(),
+    builder: (context) => const BubbleSettingPage(),
     isScrollControlled: false,
     enableDrag: true,
   );
