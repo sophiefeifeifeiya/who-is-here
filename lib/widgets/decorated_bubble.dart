@@ -5,6 +5,7 @@ import 'package:whoshere/model/bubble_info.dart';
 import 'package:whoshere/utils/Touchable.dart';
 import 'package:whoshere/widgets/plain_bubble.dart';
 import 'package:whoshere/utils/navigating.dart';
+import 'package:whoshere/widgets/emoji_decrorator.dart';
 
 class DecoratedBubble extends StatefulWidget {
   final int bubbleStyle;
@@ -57,27 +58,12 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
                       (widget.onMap && currentStyle != 1) ? 85 : widget.height,
                   child: bubble),
             ),
-            Positioned(
-              right: currentStyle == 1 ? 20 : -3,
-              bottom: currentStyle == 1 ? 20 : -3,
-              child: StreamBuilder(
-                stream: emojiChoosingController.stream,
-                initialData:
-                    BubbleEmojiInfo(emoji: widget.emoji, tag: widget.tag),
-                builder: (BuildContext context,
-                    AsyncSnapshot<BubbleEmojiInfo> bubbleEmojiInfo) {
-                  if (bubbleEmojiInfo.data?.tag == widget.tag) {
-                    currentEmoji = bubbleEmojiInfo.data?.emoji;
-                  }
-                  return Text(
-                    currentEmoji.toString(),
-                    style: const TextStyle(
-                      fontSize: 30.0,
-                    ),
-                  );
-                },
-              ),
-            ),
+            EmojiDecroator(
+              tag: widget.tag,
+              right: currentStyle == 1 ? 20 : 0,
+              bottom: currentStyle == 1 ? 20 : 0,
+              emoji: widget.emoji,
+            )
           ],
         );
         if (widget.onTap == null) {
