@@ -6,7 +6,8 @@ import '../widgets/MapOverlay.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:whoshere/widgets/decorated_bubble.dart';
 
-List<MapOverlay> getMockMapOverLays(BuildContext context) {
+List<MapOverlay> getMockMapOverLays(
+    BuildContext context, VoidCallback _showPersistantBottomSheetCallBack) {
   return [
     MapOverlay(
       coordinate: LatLng(23.477641, 111.274786),
@@ -26,6 +27,7 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
           tag: 'other_user_a',
           width: 85,
           height: 85,
+          onTap: () => _showPersistantBottomSheetCallBack(),
         )),
     MapOverlay(
         coordinate: LatLng(23.477641, 111.260786),
@@ -35,6 +37,7 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
           tag: 'other_user_b',
           width: 85,
           height: 85,
+          onTap: () => _showPersistantBottomSheetCallBack(),
         )),
     // MapOverlay(
     //     coordinate: LatLng(23.477641, 111.161786),

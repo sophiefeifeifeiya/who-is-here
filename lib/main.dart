@@ -8,6 +8,7 @@ import 'package:whoshere/widgets/TagSelector.dart';
 import 'package:whoshere/widgets/SearchBarDelegate.dart';
 import 'package:whoshere/widgets/FilledIconButton.dart';
 import 'package:whoshere/page/profile_page.dart';
+import 'package:whoshere/widgets/tapbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,16 +41,47 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedTagIndex = 0;
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+  late VoidCallback _showPersistantBottomSheetCallBack;
+
+  @override
+  void initState() {
+    super.initState();
+    _showPersistantBottomSheetCallBack = _showBottomSheet;
+  }
+
+  void _showBottomSheet() {
+    setState(() {
+      _showPersistantBottomSheetCallBack = () {};
+    });
+
+    _scaffoldKey.currentState
+        ?.showBottomSheet((context) {
+          return tapBar2();
+        })
+        .closed
+        .whenComplete(() {
+          // controller broadcast
+
+          if (mounted) {
+            setState(() {
+              _showPersistantBottomSheetCallBack = _showBottomSheet;
+            });
+          }
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
     double windowWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: [
           MapView(
-            overlays: getMockMapOverLays(context),
+            overlays:
+                getMockMapOverLays(context, _showPersistantBottomSheetCallBack),
           ),
           SizedBox(
             width: windowWidth,
