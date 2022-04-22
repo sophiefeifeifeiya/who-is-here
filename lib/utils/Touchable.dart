@@ -7,7 +7,8 @@ Widget makeTouchable(Widget w, VoidCallback calllBack) {
     behavior: HitTestBehavior.translucent,
     onTap: calllBack,
     child: AbsorbPointer(
-      // if it is the child of GestureDetector which is one of children of a Stack，it shold be wrapped by AbsorbPointer
+      // if it is the child of GestureDetector which is one of children of
+      // a Stack，it shold be wrapped by AbsorbPointer
       child: w,
     ),
   );
