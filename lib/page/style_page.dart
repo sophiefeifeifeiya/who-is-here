@@ -4,11 +4,6 @@ import 'package:whoshere/widgets/bubble_style/style1.dart';
 import 'package:whoshere/widgets/bubble_style/style2.dart';
 import 'package:whoshere/widgets/bubble_style/style3.dart';
 
-// void inform(index) {
-//   typeChoosingController.add(2);
-//   print('trigerred');
-// }
-
 class styleWidget extends StatelessWidget {
   const styleWidget({Key? key}) : super(key: key);
 

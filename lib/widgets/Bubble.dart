@@ -1,26 +1,15 @@
 // ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers
-import 'dart:ffi';
-
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:avatar_glow/avatar_glow.dart';
-import 'package:whoshere/page/setting_page.dart';
 import 'package:whoshere/utils/Touchable.dart';
+import 'package:whoshere/widgets/bubble_style/style1.dart';
+import 'package:whoshere/widgets/bubble_style/style2.dart';
+import 'package:whoshere/widgets/bubble_style/style3.dart';
+import 'package:whoshere/utils/navigating.dart';
 
 // TODO: add bubble style Enum
 // Enum BubbleStyle {
 // }
-
-void openBubbleSertting(BuildContext context) {
-  showModalBottomSheet(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10))),
-    context: context,
-    builder: (context) => SettingPage(),
-    isScrollControlled: false,
-    enableDrag: true,
-  );
-}
 
 class Bubble extends StatelessWidget {
   final String avatar;
@@ -53,91 +42,15 @@ class Bubble extends StatelessWidget {
 }
 
 Widget buildBubble1(String avatar) {
-  return Container(
-    width: 50,
-    height: 50,
-    color: Colors.white,
-    child: AvatarGlow(
-      startDelay: Duration(milliseconds: 1000),
-      glowColor: Colors.blue,
-      //边框大小
-      endRadius: 120.0,
-      duration: Duration(milliseconds: 2000),
-      repeat: true,
-      showTwoGlows: true,
-      repeatPauseDuration: Duration(milliseconds: 100),
-      child: Material(
-        elevation: 8.0,
-        shape: CircleBorder(),
-        color: Colors.transparent,
-        child: CircleAvatar(
-          //picture
-          backgroundImage: AssetImage(avatar),
-          radius: 70.0,
-        ),
-      ),
-      shape: BoxShape.circle,
-      animate: true,
-      curve: Curves.fastOutSlowIn,
-    ),
-  );
+  return bubbleType1();
 }
 
 Widget buildBubble2(String avatar) {
-  return SizedBox(
-    width: 50,
-    height: 50,
-    child: AvatarView(
-      radius: 60,
-      borderColor: Colors.yellow,
-      isOnlyText: false,
-      text: Text(
-        'C',
-        style: TextStyle(color: Colors.white, fontSize: 50),
-      ),
-      avatarType: AvatarType.CIRCLE,
-      backgroundColor: Colors.red,
-      imagePath: avatar,
-      placeHolder: Container(
-        child: Icon(
-          Icons.person,
-          size: 25,
-        ),
-      ),
-      errorWidget: Container(
-        child: Icon(
-          Icons.error,
-          size: 25,
-        ),
-      ),
-    ),
-  );
+  return bubbleType2();
 }
 
 Widget buildBubble3(String avatar) {
-  return SizedBox(
-      width: 60,
-      height: 60,
-      child: AvatarView(
-        radius: 60,
-        borderWidth: 8,
-        borderColor: Colors.yellow,
-        avatarType: AvatarType.CIRCLE,
-        backgroundColor: Colors.red,
-        imagePath: avatar,
-        placeHolder: Container(
-          child: Icon(
-            Icons.person,
-            size: 50,
-          ),
-        ),
-        errorWidget: Container(
-          child: Icon(
-            Icons.error,
-            size: 50,
-          ),
-        ),
-      ));
+  return bubbleType3();
 }
 
 Widget buildBubble4(String avatar) {

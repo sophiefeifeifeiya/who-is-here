@@ -3,7 +3,6 @@ import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/edit_profile_page.dart';
 import 'package:whoshere/utils/user_preferences.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
-
 import 'package:whoshere/widgets/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {

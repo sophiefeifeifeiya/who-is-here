@@ -1,21 +1,19 @@
-import 'dart:ui';
-
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
 import 'package:whoshere/page/setting_page.dart';
+import 'package:whoshere/utils/navigating.dart';
 
-void openBubbleSertting(BuildContext context) {
-  showModalBottomSheet(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10))),
-    context: context,
-    builder: (context) => SettingPage(),
-    isScrollControlled: false,
-    enableDrag: true,
-  );
-}
+// void openBubbleSertting(BuildContext context) {
+//   showModalBottomSheet(
+//     shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(Radius.circular(10))),
+//     context: context,
+//     builder: (context) => const SettingPage(),
+//     isScrollControlled: false,
+//     enableDrag: true,
+//   );
+// }
 
 //
 class bubbleType1 extends StatelessWidget {
@@ -32,7 +30,7 @@ class bubbleType1 extends StatelessWidget {
           openBubbleSertting(context);
         }
       },
-      child: AvatarGlow(
+      child: const AvatarGlow(
         startDelay: Duration(milliseconds: 0),
         glowColor: Colors.blue,
         //边框大小

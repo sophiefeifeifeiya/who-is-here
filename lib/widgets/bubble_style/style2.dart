@@ -4,14 +4,12 @@ import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
 
-import '../controller/controller.dart';
-
 class bubbleType2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 10,
-      width: 150,
+      height: 80,
+      width: 80,
       child: InkWell(
         onTap: () {
           typeChoosingController.add(2);
