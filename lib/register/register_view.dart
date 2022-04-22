@@ -18,7 +18,7 @@ class RegisterPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.blueAccent,
             title: Text(
-              '注册',
+              'Register',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.px,
@@ -51,7 +51,7 @@ class RegisterPage extends StatelessWidget {
                       },
                       child: const Icon(Icons.close),
                     ),
-                    hintText: '请输入账号',
+                    hintText: 'input account',
                     hintStyle: TextStyle(
                       fontSize: 16.px,
                       color: const Color(0xffbbbbbb),

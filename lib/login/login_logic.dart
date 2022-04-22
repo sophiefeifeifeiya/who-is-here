@@ -16,11 +16,11 @@ class LoginPageLogic extends GetxController {
     // user = "123456@qq.com";
     // pwd = "Qq123456_";
     if (user.isEmpty) {
-      ToastUtil.showMessage("请输入账号");
+      ToastUtil.showMessage("please input accoount");
       return;
     }
     if (user.isEmpty) {
-      ToastUtil.showMessage("请输入密码");
+      ToastUtil.showMessage("pass");
       return;
     }
     Map<String, dynamic> map = {};
@@ -32,7 +32,7 @@ class LoginPageLogic extends GetxController {
       LogUtil.d("登录返回========$value");
       LoadingUtil.dismiss();
       ToastUtil.showMessage("登录成功");
-      Get.toNamed(RoutePages.chat);
+      Get.toNamed(RoutePages.home);
     }).catchError((e) {
       LogUtil.d("报错了========$e");
       LoadingUtil.dismiss();
