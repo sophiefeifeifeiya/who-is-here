@@ -4,6 +4,7 @@ import 'package:whoshere/controller/controller.dart';
 import 'package:whoshere/model/bubble_info.dart';
 import 'package:whoshere/utils/Touchable.dart';
 import 'package:whoshere/widgets/bubble.dart';
+import 'package:whoshere/utils/navigating.dart';
 
 class DecoratedBubble extends StatefulWidget {
   final int bubbleStyle;
@@ -24,6 +25,7 @@ class DecoratedBubble extends StatefulWidget {
 
 class _DecoratedBubbleState extends State<DecoratedBubble> {
   int? currentStyle;
+  String? currentEmoji;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +53,14 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
               )),
         ),
         Positioned(
-          left: widget.bubbleStyle == 1 ? 90 : 110,
-          top: widget.bubbleStyle == 1 ? 90 : 105,
+          left: currentStyle == 1 ? 90 : 110,
+          top: currentStyle == 1 ? 90 : 105,
           right: 10,
           child: StreamBuilder(
             stream: emojiChoosingController.stream,
             initialData: widget.emoji,
             builder: (BuildContext context, AsyncSnapshot<String> emoji) {
+              currentEmoji = emoji.data;
               return Text(
                 emoji.data.toString(),
                 style: const TextStyle(
@@ -69,11 +72,17 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
         ),
       ],
     );
-
-    if (widget.onTap != null) {
+    if (widget.onTap == null) {
+      return stack;
+    } else if (currentStyle == widget.bubbleStyle) {
       return makeTouchable(stack, widget.onTap as VoidCallback);
     } else {
-      return stack;
+      return makeTouchable(
+          stack,
+          () => openBubbleSertting(context,
+              bubbleStyle: currentStyle ?? widget.bubbleStyle,
+              emoji: currentEmoji ?? widget.emoji,
+              tag: widget.tag));
     }
   }
 }
