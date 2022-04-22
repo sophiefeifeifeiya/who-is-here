@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/controller.dart';
@@ -12,7 +11,7 @@ class _SliderIndicatorPainter extends CustomPainter {
     canvas.drawCircle(
         Offset(position, size.height / 2), 16, Paint()..color = Colors.white);
     canvas.drawCircle(
-        Offset(position, size.height / 2), 13, Paint()..color = this.color);
+        Offset(position, size.height / 2), 13, Paint()..color = color);
   }
 
   @override
@@ -30,21 +29,21 @@ class ColorPicker extends StatefulWidget {
 
 class _ColorPickerState extends State<ColorPicker> {
   final List<Color> _colors = [
-    Color.fromARGB(255, 255, 0, 0),
-    Color.fromARGB(255, 255, 128, 0),
-    Color.fromARGB(255, 255, 255, 0),
-    Color.fromARGB(255, 128, 255, 0),
-    Color.fromARGB(255, 0, 255, 0),
-    Color.fromARGB(255, 0, 255, 128),
-    Color.fromARGB(255, 0, 255, 255),
-    Color.fromARGB(255, 0, 128, 255),
-    Color.fromARGB(255, 0, 0, 255),
-    Color.fromARGB(255, 127, 0, 255),
-    Color.fromARGB(255, 255, 0, 255),
-    Color.fromARGB(255, 255, 0, 127),
-    Color.fromARGB(255, 128, 128, 128),
+    const Color.fromARGB(255, 255, 0, 0),
+    const Color.fromARGB(255, 255, 128, 0),
+    const Color.fromARGB(255, 255, 255, 0),
+    const Color.fromARGB(255, 128, 255, 0),
+    const Color.fromARGB(255, 0, 255, 0),
+    const Color.fromARGB(255, 0, 255, 128),
+    const Color.fromARGB(255, 0, 255, 255),
+    const Color.fromARGB(255, 0, 128, 255),
+    const Color.fromARGB(255, 0, 0, 255),
+    const Color.fromARGB(255, 127, 0, 255),
+    const Color.fromARGB(255, 255, 0, 255),
+    const Color.fromARGB(255, 255, 0, 127),
+    const Color.fromARGB(255, 128, 128, 128),
   ];
-  double _colorSliderPosition = 0;
+  final double _colorSliderPosition = 0;
   late double _shadeSliderPosition;
   late Color _currentColor;
   late Color _shadedColor;
@@ -146,9 +145,7 @@ class _ColorPickerState extends State<ColorPicker> {
     //determine color
     double positionInColorArray =
         (position / widget.width * (_colors.length - 1));
-    print(positionInColorArray);
     int index = positionInColorArray.truncate();
-    print(index);
     double remainder = positionInColorArray - index;
     if (remainder == 0.0) {
       _currentColor = _colors[index];
@@ -186,7 +183,6 @@ class _ColorPickerState extends State<ColorPicker> {
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onHorizontalDragStart: (DragStartDetails details) {
-                    print("_-------------------------STARTED DRAG");
                     _shadeChangeHandler(details.localPosition.dx);
                   },
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
@@ -202,7 +198,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   //This outside padding makes it much easier to grab the slider because the gesture detector has
                   // the extra padding to recognize gestures inside of
                   child: Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Container(
                       width: widget.width,
                       height: 15,

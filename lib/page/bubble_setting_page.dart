@@ -48,7 +48,7 @@ class BubbleSettingPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              if (snapshot.data == 0) colorWidget(),
+              if (snapshot.data == 0) colorWidget(tag: tag),
               if (snapshot.data == 1)
                 styleWidget(
                   tag: tag,
