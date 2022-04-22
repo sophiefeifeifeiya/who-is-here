@@ -29,60 +29,58 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
 
   @override
   Widget build(BuildContext context) {
-    var stack = Stack(
-      alignment: const FractionalOffset(0.3, 0.75),
-      children: [
-        Positioned(
-          child: SizedBox(
-              height: 150,
-              width: 145,
+    return StreamBuilder(
+      stream: typeChoosingController.stream,
+      initialData:
+          BubbleStyleInfo(bubbleStyle: widget.bubbleStyle, tag: widget.tag),
+      builder: (BuildContext context, AsyncSnapshot<BubbleStyleInfo> type) {
+        Widget bubble;
+        if (type.data?.tag == widget.tag && type.data?.bubbleStyle != null) {
+          currentStyle = type.data?.bubbleStyle as int;
+          bubble = Bubble(style: type.data?.bubbleStyle as int);
+        } else {
+          bubble = Bubble(style: currentStyle as int);
+        }
+
+        var stack = Stack(
+          alignment: const FractionalOffset(0.3, 0.75),
+          children: [
+            Positioned(
+              child: SizedBox(height: 150, width: 145, child: bubble),
+            ),
+            Positioned(
+              left: currentStyle == 1 ? 90 : 110,
+              top: currentStyle == 1 ? 90 : 105,
+              right: 10,
               child: StreamBuilder(
-                stream: typeChoosingController.stream,
-                initialData: BubbleStyleInfo(
-                    bubbleStyle: widget.bubbleStyle, tag: widget.tag),
-                builder: (BuildContext context,
-                    AsyncSnapshot<BubbleStyleInfo> type) {
-                  if (type.data?.tag == widget.tag &&
-                      type.data?.bubbleStyle != null) {
-                    currentStyle = type.data?.bubbleStyle as int;
-                    return Bubble(style: type.data?.bubbleStyle as int);
-                  } else {
-                    return Bubble(style: currentStyle as int);
-                  }
+                stream: emojiChoosingController.stream,
+                initialData: widget.emoji,
+                builder: (BuildContext context, AsyncSnapshot<String> emoji) {
+                  currentEmoji = emoji.data;
+                  return Text(
+                    emoji.data.toString(),
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                    ),
+                  );
                 },
-              )),
-        ),
-        Positioned(
-          left: currentStyle == 1 ? 90 : 110,
-          top: currentStyle == 1 ? 90 : 105,
-          right: 10,
-          child: StreamBuilder(
-            stream: emojiChoosingController.stream,
-            initialData: widget.emoji,
-            builder: (BuildContext context, AsyncSnapshot<String> emoji) {
-              currentEmoji = emoji.data;
-              return Text(
-                emoji.data.toString(),
-                style: const TextStyle(
-                  fontSize: 30.0,
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+              ),
+            ),
+          ],
+        );
+        if (widget.onTap == null) {
+          return stack;
+        } else if (currentStyle == widget.bubbleStyle) {
+          return makeTouchable(stack, widget.onTap as VoidCallback);
+        } else {
+          return makeTouchable(
+              stack,
+              () => openBubbleSertting(context,
+                  bubbleStyle: currentStyle ?? widget.bubbleStyle,
+                  emoji: currentEmoji ?? widget.emoji,
+                  tag: widget.tag));
+        }
+      },
     );
-    if (widget.onTap == null) {
-      return stack;
-    } else if (currentStyle == widget.bubbleStyle) {
-      return makeTouchable(stack, widget.onTap as VoidCallback);
-    } else {
-      return makeTouchable(
-          stack,
-          () => openBubbleSertting(context,
-              bubbleStyle: currentStyle ?? widget.bubbleStyle,
-              emoji: currentEmoji ?? widget.emoji,
-              tag: widget.tag));
-    }
   }
 }

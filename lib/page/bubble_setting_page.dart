@@ -19,8 +19,6 @@ class BubbleSettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('bubbleStye');
-    print(bubbleStye);
     return StreamBuilder(
         stream: childPageStreamController.stream,
         initialData: 0,
