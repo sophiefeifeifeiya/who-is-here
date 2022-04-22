@@ -3,11 +3,16 @@
 import 'package:flutter/widgets.dart';
 
 Widget makeTouchable(Widget w, VoidCallback calllBack) {
-// The GestureDetector wraps the button.
+  // return GestureDetector(
+  //   onTap: calllBack,
+  //   child: w,
+  // );
+
   return GestureDetector(
-    // When the child is tapped, show a snackbar.
+    behavior: HitTestBehavior.translucent,
     onTap: calllBack,
-    // The custom button
-    child: w,
+    child: AbsorbPointer(
+      child: w,
+    ),
   );
 }

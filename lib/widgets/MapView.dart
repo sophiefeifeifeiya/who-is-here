@@ -80,20 +80,12 @@ class _MapViewState extends State<MapView> {
             onCameraMove: onCameraMove,
             privacyStatement: const AMapPrivacyStatement(
                 hasContains: true, hasShow: true, hasAgree: true),
-            initialCameraPosition:
-                CameraPosition(target: LatLng(23.476733, 111.279022), zoom: 16),
+            initialCameraPosition: const CameraPosition(
+                target: LatLng(23.476733, 111.279022), zoom: 16),
             apiKey: _amapApiKeys,
           ),
-          // Positioned(
-          //   child: Container(
-          //     height: 50,
-          //     width: 50,
-          //     color: Colors.green,
-          //   ),
-          //   right: 50,
-          //   bottom: 50,
-          // ),
           Stack(
+            clipBehavior: Clip.none,
             children: visibleOverlays,
           )
         ],

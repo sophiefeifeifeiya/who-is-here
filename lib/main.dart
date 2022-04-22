@@ -46,13 +46,10 @@ class _MyHomePageState extends State<MyHomePage> {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
     double windowWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: Stack(
         children: [
           MapView(
-            overlays: mockMapOverLays,
+            overlays: getMockMapOverLays(context),
           ),
           SizedBox(
             width: windowWidth,

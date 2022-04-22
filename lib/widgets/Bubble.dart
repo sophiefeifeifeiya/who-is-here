@@ -5,7 +5,6 @@ import 'package:whoshere/utils/Touchable.dart';
 import 'package:whoshere/widgets/bubble_style/style1.dart';
 import 'package:whoshere/widgets/bubble_style/style2.dart';
 import 'package:whoshere/widgets/bubble_style/style3.dart';
-import 'package:whoshere/utils/navigating.dart';
 
 // TODO: add bubble style Enum
 // Enum BubbleStyle {
@@ -14,23 +13,28 @@ import 'package:whoshere/utils/navigating.dart';
 class Bubble extends StatelessWidget {
   final String avatar;
   final int style;
-  const Bubble({
-    Key? key,
-    required this.avatar,
-    this.style = 1,
-  }) : super(key: key);
+  final VoidCallback? cb;
+  const Bubble({Key? key, required this.avatar, this.style = 1, this.cb})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print('cb');
+    print(cb);
+    VoidCallback _cb = () {
+      print('do nothing 1');
+    };
+    if (cb != null) {
+      print('发现cb');
+      _cb = cb as VoidCallback;
+    }
     switch (style) {
       case 1:
-        // return buildBubble2(avatar);
-        return makeTouchable(
-            buildBubble1(avatar), () => openBubbleSertting(context));
+        return makeTouchable(buildBubble1(avatar), _cb);
       case 2:
-        return buildBubble2(avatar);
+        return makeTouchable(buildBubble2(avatar), _cb);
       case 3:
-        return buildBubble3(avatar);
+        return makeTouchable(buildBubble3(avatar), _cb);
       case 4:
         return buildBubble4(avatar);
       case 5:
