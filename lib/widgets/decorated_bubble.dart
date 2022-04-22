@@ -11,13 +11,18 @@ class DecoratedBubble extends StatefulWidget {
   final String emoji;
   final VoidCallback? onTap;
   final String tag;
-  const DecoratedBubble({
-    Key? key,
-    required this.bubbleStyle,
-    required this.tag,
-    this.emoji = '',
-    this.onTap,
-  }) : super(key: key);
+  final double width;
+  final double height;
+
+  const DecoratedBubble(
+      {Key? key,
+      required this.bubbleStyle,
+      required this.tag,
+      this.emoji = '',
+      this.onTap,
+      this.width = 150,
+      this.height = 145})
+      : super(key: key);
 
   @override
   _DecoratedBubbleState createState() => _DecoratedBubbleState();
@@ -43,12 +48,12 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
           alignment: const FractionalOffset(0.3, 0.75),
           children: [
             Positioned(
-              child: SizedBox(height: 150, width: 145, child: bubble),
+              child: SizedBox(
+                  height: widget.height, width: widget.width, child: bubble),
             ),
             Positioned(
-              left: currentStyle == 1 ? 90 : 110,
-              top: currentStyle == 1 ? 90 : 105,
-              right: 10,
+              right: currentStyle == 1 ? 20 : -3,
+              bottom: currentStyle == 1 ? 20 : -3,
               child: StreamBuilder(
                 stream: emojiChoosingController.stream,
                 initialData:

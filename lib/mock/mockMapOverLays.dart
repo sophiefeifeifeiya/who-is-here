@@ -20,12 +20,22 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
     ),
     MapOverlay(
         coordinate: LatLng(23.467641, 111.274786),
-        child:
-            DecoratedBubble(bubbleStyle: 2, emoji: '😅', tag: 'other_user_a')),
+        child: DecoratedBubble(
+          bubbleStyle: 2,
+          emoji: '😅',
+          tag: 'other_user_a',
+          width: 85,
+          height: 85,
+        )),
     MapOverlay(
         coordinate: LatLng(23.477641, 111.260786),
-        child:
-            DecoratedBubble(bubbleStyle: 3, emoji: '😅', tag: 'other_user_b')),
+        child: DecoratedBubble(
+          bubbleStyle: 3,
+          emoji: '😅',
+          tag: 'other_user_b',
+          width: 85,
+          height: 85,
+        )),
     // MapOverlay(
     //     coordinate: LatLng(23.477641, 111.161786),
     //     child: Bubble(
