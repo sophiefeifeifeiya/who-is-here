@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:whoshere/page/emoji_page.dart';
 import 'package:whoshere/page/style_page.dart';
 import 'package:whoshere/page/color_page.dart';
-import 'package:whoshere/widgets/preview.dart';
+import 'package:whoshere/widgets/decorated_bubble.dart';
 import 'package:whoshere/controller/controller.dart';
 import 'package:whoshere/widgets/category.dart';
 
 class BubbleSettingPage extends StatelessWidget {
-  const BubbleSettingPage({Key? key}) : super(key: key);
+  final int bubbleStye;
+  const BubbleSettingPage(
+      {Key? key, required this.bubbleStye, String emoji = ''})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,9 @@ class BubbleSettingPage extends StatelessWidget {
                 height: 20,
               ),
               Center(
-                child: Preview(),
+                child: DecoratedBubble(
+                  bubbleStyle: bubbleStye,
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -62,7 +67,7 @@ class tapBar extends StatelessWidget {
                     TextStyle(color: Colors.black, fontSize: 17.0, height: 1.0),
               ),
               onPressed: () {
-                showDialog<Null>(
+                showDialog<void>(
                   context: context,
                   builder: (BuildContext context) {
                     return DecoratedBox(

@@ -22,12 +22,16 @@ import 'package:whoshere/page/bubble_setting_page.dart';
 //       backgroundColor: Colors.grey);
 // }
 
-void openBubbleSertting(BuildContext context) {
+void openBubbleSertting(BuildContext context,
+    {required int bubbleStyle, String emoji = ''}) {
   showModalBottomSheet(
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10))),
     context: context,
-    builder: (context) => const BubbleSettingPage(),
+    builder: (context) => BubbleSettingPage(
+      bubbleStye: bubbleStyle,
+      emoji: emoji,
+    ),
     isScrollControlled: false,
     enableDrag: true,
   );

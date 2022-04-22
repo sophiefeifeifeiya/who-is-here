@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:whoshere/widgets/Bubble.dart';
+import 'package:whoshere/widgets/bubble.dart';
 import 'package:whoshere/controller/controller.dart';
 
 void swicthStyle(int style) {

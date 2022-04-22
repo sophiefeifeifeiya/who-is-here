@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:whoshere/utils/navigating.dart';
 
 import '../widgets/MapOverlay.dart';
-import '../widgets/Bubble.dart';
+import '../widgets/bubble.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
+import 'package:whoshere/widgets/decorated_bubble.dart';
 
 List<MapOverlay> getMockMapOverLays(BuildContext context) {
   return [
@@ -14,7 +15,7 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
         avatar: 'images/avatar.png',
         style: 1,
         cb: () {
-          openBubbleSertting(context);
+          openBubbleSertting(context, bubbleStyle: 1);
         },
       ),
     ),

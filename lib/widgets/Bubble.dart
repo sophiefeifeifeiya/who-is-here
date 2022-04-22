@@ -20,17 +20,25 @@ class Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback _cb = () {};
-    if (cb != null) {
-      _cb = cb as VoidCallback;
-    }
     switch (style) {
       case 1:
-        return makeTouchable(buildBubble1(avatar), _cb);
+        if (cb != null) {
+          return makeTouchable(buildBubble1(avatar), cb as VoidCallback);
+        } else {
+          return buildBubble1(avatar);
+        }
       case 2:
-        return makeTouchable(buildBubble2(avatar), _cb);
+        if (cb != null) {
+          return makeTouchable(buildBubble2(avatar), cb as VoidCallback);
+        } else {
+          return buildBubble2(avatar);
+        }
       case 3:
-        return makeTouchable(buildBubble3(avatar), _cb);
+        if (cb != null) {
+          return makeTouchable(buildBubble3(avatar), cb as VoidCallback);
+        } else {
+          return buildBubble3(avatar);
+        }
       default:
         return Container();
     }

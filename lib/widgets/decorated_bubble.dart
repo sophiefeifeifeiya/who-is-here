@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whoshere/controller/controller.dart';
-import 'package:whoshere/widgets/Bubble.dart';
+import 'package:whoshere/utils/Touchable.dart';
+import 'package:whoshere/widgets/bubble.dart';
 
-class Preview extends StatefulWidget {
-  const Preview({Key? key}) : super(key: key);
+class DecoratedBubble extends StatefulWidget {
+  final int bubbleStyle;
+  final String emoji;
+  final VoidCallback? onTap;
+  const DecoratedBubble(
+      {Key? key, required this.bubbleStyle, this.emoji = '', this.onTap})
+      : super(key: key);
 
   @override
-  _previewState createState() => _previewState();
+  _DecoratedBubbleState createState() => _DecoratedBubbleState();
 }
 
-class _previewState extends State<Preview> {
+class _DecoratedBubbleState extends State<DecoratedBubble> {
   @override
   Widget build(BuildContext context) {
     var stack = Stack(
@@ -22,12 +28,12 @@ class _previewState extends State<Preview> {
               width: 145,
               child: StreamBuilder(
                 stream: typeChoosingController.stream,
-                initialData: 0,
+                initialData: widget.bubbleStyle,
                 builder: (BuildContext context, AsyncSnapshot<int> type) {
                   if (type.data != null) {
                     return Bubble(style: type.data as int);
                   } else {
-                    return const Bubble(style: 1);
+                    return const Bubble(style: 2);
                   }
                 },
               )),
@@ -36,7 +42,7 @@ class _previewState extends State<Preview> {
           left: 110,
           child: StreamBuilder(
             stream: emojiChoosingController.stream,
-            initialData: '',
+            initialData: widget.emoji,
             builder: (BuildContext context, AsyncSnapshot<String> emoji) {
               return Text(
                 emoji.data.toString(),
@@ -52,6 +58,10 @@ class _previewState extends State<Preview> {
       ],
     );
 
-    return stack;
+    if (widget.onTap != null) {
+      return makeTouchable(stack, widget.onTap as VoidCallback);
+    } else {
+      return stack;
+    }
   }
 }
