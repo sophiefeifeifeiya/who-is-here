@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whoshere/controller/controller.dart';
-import '../widgets/flow_bubble.dart';
-import '../widgets/circle_bubble.dart';
-import '../widgets/rectangle_bubble.dart';
+import 'package:whoshere/widgets/Bubble.dart';
 
 class Preview extends StatefulWidget {
   const Preview({Key? key}) : super(key: key);
@@ -26,12 +24,11 @@ class _previewState extends State<Preview> {
                 stream: typeChoosingController.stream,
                 initialData: 0,
                 builder: (BuildContext context, AsyncSnapshot<int> type) {
-                  if (type.data == 0) return FlowBubble();
-                  if (type.data == 2) return CircleBubble();
-                  if (type.data == 3)
-                    return RectangleBubble();
-                  else
-                    return FlowBubble();
+                  if (type.data != null) {
+                    return Bubble(style: type.data as int);
+                  } else {
+                    return const Bubble(style: 1);
+                  }
                 },
               )),
         ),
@@ -43,7 +40,7 @@ class _previewState extends State<Preview> {
             builder: (BuildContext context, AsyncSnapshot<String> emoji) {
               return Text(
                 emoji.data.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 30.0,
                 ),
               );

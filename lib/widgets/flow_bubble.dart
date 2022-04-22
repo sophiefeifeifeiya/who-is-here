@@ -18,15 +18,15 @@ class _FlowBubbleState extends State<FlowBubble> {
       initialData: Colors.lightBlue,
       builder: (BuildContext context, AsyncSnapshot<Color> snapshot) {
         return AvatarGlow(
-          startDelay: Duration(milliseconds: 0),
+          startDelay: const Duration(milliseconds: 0),
           glowColor: (snapshot.data)!,
           //边框大小
           endRadius: 90.0,
-          duration: Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           repeat: true,
           showTwoGlows: true,
-          repeatPauseDuration: Duration(milliseconds: 0),
-          child: Material(
+          repeatPauseDuration: const Duration(milliseconds: 0),
+          child: const Material(
             elevation: 8.0,
             shape: CircleBorder(),
             color: Colors.transparent,
