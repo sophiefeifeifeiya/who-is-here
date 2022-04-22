@@ -38,6 +38,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   animated_theme_switcher: ^2.0.1-nullsafety.0
+  get: ^4.3.8
+  dio: ^4.0.0
+  fluttertoast: ^8.0.8
+  # 网络监测
+  connectivity_plus: ^2.2.1
+  # 本地存储
+  shared_preferences: ^2.0.13
+  # 国际化
+  flutter_localizations:
+    sdk: flutter
+  # 加载提示
+  flutter_easyloading: ^3.0.3
 
   # AMap Flutter plugin
   amap_flutter_map:

@@ -1,16 +1,30 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import './widgets/MapView.dart';
-import './mock/mockMapOverLays.dart';
-import 'package:whoshere/mock/mockTagList.dart';
-import 'package:whoshere/widgets/TagSelector.dart';
-import 'package:whoshere/widgets/SearchBarDelegate.dart';
-import 'package:whoshere/widgets/FilledIconButton.dart';
-import 'package:whoshere/page/profile_page.dart';
-import 'package:whoshere/widgets/tapbar.dart';
+import 'package:whoshere/page/home_page.dart';
+import 'package:whoshere/utils/dependency_injection.dart';
+import 'package:whoshere/utils/storage.dart';
+import 'http/http_config.dart';
+import 'http/http_utils.dart';
+import 'utils/size_config.dart';
+// import 'package:whoshere/routes/routes.dart';
+import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  ///不加存储报错
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// 等待依赖服务初始化
+  await DependencyInjection.init();
+
+  /// 适配工具初始化
+  SizeConfig.initialize();
+
+  /// 网络接口配置
+  HttpUtils.init(httpState: HttpState.release);
+
+  ///初始化存储
+  await SpUtil().init();
   runApp(const MyApp());
 }
 
@@ -21,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: "Who's here",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -30,102 +44,28 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedTagIndex = 0;
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
-  late VoidCallback _showPersistantBottomSheetCallBack;
-
-  @override
-  void initState() {
-    super.initState();
-    _showPersistantBottomSheetCallBack = _showBottomSheet;
-  }
-
-  void _showBottomSheet() {
-    setState(() {
-      _showPersistantBottomSheetCallBack = () {};
-    });
-
-    _scaffoldKey.currentState
-        ?.showBottomSheet((context) {
-          return tapBar2();
-        })
-        .closed
-        .whenComplete(() {
-          // controller broadcast
-
-          if (mounted) {
-            setState(() {
-              _showPersistantBottomSheetCallBack = _showBottomSheet;
-            });
-          }
-        });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).viewPadding.top;
-    double windowWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      key: _scaffoldKey,
-      body: Stack(
-        children: [
-          MapView(
-            overlays:
-                getMockMapOverLays(context, _showPersistantBottomSheetCallBack),
-          ),
-          SizedBox(
-            width: windowWidth,
-            height: statusBarHeight + 40,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: windowWidth - 40,
-                  child: TagSelector(
-                    tabTitleList: tagList,
-                    select: _selectedTagIndex,
-                    onTap: (int index) {
-                      setState(() {
-                        _selectedTagIndex = index;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: IconButton(
-                      splashColor: Color.fromARGB(255, 0, 0, 255),
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(
-                            context: context, delegate: SearchBarDelegate());
-                      },
-                    )),
-              ],
-            ),
-          ),
-          Positioned(
-              bottom: 20,
-              right: 20,
-              child: FilledIconButton(
-                background: Colors.blueAccent,
-                cb: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
-                ),
-              ))
-        ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       title: '聊天',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       defaultTransition: Transition.native,
+//       initialRoute: RoutePages.login,
+//       getPages: RoutePages.pages,
+//       localizationsDelegates: const [
+//         GlobalMaterialLocalizations.delegate,
+//         GlobalCupertinoLocalizations.delegate,
+//         GlobalWidgetsLocalizations.delegate,
+//       ],
+//       supportedLocales: const [Locale("zh")],
+//       builder: (BuildContext context, Widget? child) {
+//         return FlutterEasyLoading(child: child);
+//       },
+//     );
+//   }
+// }
