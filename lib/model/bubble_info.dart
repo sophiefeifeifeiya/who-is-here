@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class BubbleStyleInfo extends Object {
   final int bubbleStyle;
   final String tag;
@@ -14,6 +16,16 @@ class BubbleEmojiInfo {
 
   const BubbleEmojiInfo({
     required this.emoji,
+    required this.tag,
+  });
+}
+
+class BubbleColorInfo {
+  final Color color;
+  final String tag;
+
+  const BubbleColorInfo({
+    required this.color,
     required this.tag,
   });
 }
