@@ -17,7 +17,7 @@ class tapBar2 extends StatelessWidget {
           top: 30,
           left: 1,
           right: 1,
-          child: Container(
+          child: SizedBox(
             height: 400,
             width: 430,
             child: gridView(),
