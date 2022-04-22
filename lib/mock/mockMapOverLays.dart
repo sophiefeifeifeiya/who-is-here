@@ -17,6 +17,7 @@ List<MapOverlay> getMockMapOverLays(
         tag: 'current_user',
         onTap: () => openBubbleSertting(context,
             bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
+        onMap: true,
       ),
     ),
     MapOverlay(
@@ -28,6 +29,7 @@ List<MapOverlay> getMockMapOverLays(
           width: 85,
           height: 85,
           onTap: () => _showPersistantBottomSheetCallBack(),
+          onMap: true,
         )),
     MapOverlay(
         coordinate: LatLng(23.477641, 111.260786),
@@ -38,6 +40,7 @@ List<MapOverlay> getMockMapOverLays(
           width: 85,
           height: 85,
           onTap: () => _showPersistantBottomSheetCallBack(),
+          onMap: true,
         )),
     // MapOverlay(
     //     coordinate: LatLng(23.477641, 111.161786),

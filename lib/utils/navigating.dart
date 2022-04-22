@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:whoshere/page/bubble_setting_page.dart';
 // import 'package:whoshere/stranger/page/stranger_page.dart';
 // import 'package:whoshere/friend/page/friend_page.dart';
-import 'package:whoshere/page/emoji_page2.dart';
 
 // void openFriendPage(BuildContext context) {
 //   CupertinoScaffold.showCupertinoModalBottomSheet(

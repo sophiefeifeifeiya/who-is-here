@@ -13,6 +13,7 @@ class DecoratedBubble extends StatefulWidget {
   final String tag;
   final double width;
   final double height;
+  final bool onMap;
 
   const DecoratedBubble(
       {Key? key,
@@ -21,7 +22,8 @@ class DecoratedBubble extends StatefulWidget {
       this.emoji = '',
       this.onTap,
       this.width = 150,
-      this.height = 145})
+      this.height = 145,
+      this.onMap = false})
       : super(key: key);
 
   @override
@@ -49,7 +51,11 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
           children: [
             Positioned(
               child: SizedBox(
-                  height: widget.height, width: widget.width, child: bubble),
+                  height:
+                      (widget.onMap && currentStyle != 1) ? 85 : widget.height,
+                  width:
+                      (widget.onMap && currentStyle != 1) ? 85 : widget.height,
+                  child: bubble),
             ),
             Positioned(
               right: currentStyle == 1 ? 20 : -3,
