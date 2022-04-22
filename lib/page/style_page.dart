@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:whoshere/widgets/bubble.dart';
 import 'package:whoshere/controller/controller.dart';
+import 'package:whoshere/model/bubble_info.dart';
 
 void swicthStyle(int style, String tag) {
-  typeChoosingController.add(style);
+  typeChoosingController.add(BubbleStyleInfo(bubbleStyle: style, tag: tag));
 }
 
 class styleWidget extends StatelessWidget {

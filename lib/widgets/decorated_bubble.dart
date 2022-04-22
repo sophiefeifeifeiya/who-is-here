@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whoshere/controller/controller.dart';
+import 'package:whoshere/model/bubble_info.dart';
 import 'package:whoshere/utils/Touchable.dart';
 import 'package:whoshere/widgets/bubble.dart';
 
@@ -22,6 +23,8 @@ class DecoratedBubble extends StatefulWidget {
 }
 
 class _DecoratedBubbleState extends State<DecoratedBubble> {
+  int? currentStyle;
+
   @override
   Widget build(BuildContext context) {
     var stack = Stack(
@@ -33,12 +36,16 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
               width: 145,
               child: StreamBuilder(
                 stream: typeChoosingController.stream,
-                initialData: widget.bubbleStyle,
-                builder: (BuildContext context, AsyncSnapshot<int> type) {
-                  if (type.data != null) {
-                    return Bubble(style: type.data as int);
+                initialData: BubbleStyleInfo(
+                    bubbleStyle: widget.bubbleStyle, tag: widget.tag),
+                builder: (BuildContext context,
+                    AsyncSnapshot<BubbleStyleInfo> type) {
+                  if (type.data?.tag == widget.tag &&
+                      type.data?.bubbleStyle != null) {
+                    currentStyle = type.data?.bubbleStyle as int;
+                    return Bubble(style: type.data?.bubbleStyle as int);
                   } else {
-                    return const Bubble(style: 2);
+                    return Bubble(style: currentStyle as int);
                   }
                 },
               )),
@@ -51,8 +58,6 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
             stream: emojiChoosingController.stream,
             initialData: widget.emoji,
             builder: (BuildContext context, AsyncSnapshot<String> emoji) {
-              print('emoji');
-              print(emoji.data);
               return Text(
                 emoji.data.toString(),
                 style: const TextStyle(

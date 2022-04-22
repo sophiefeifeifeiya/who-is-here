@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:whoshere/utils/navigating.dart';
 
 import '../widgets/MapOverlay.dart';
-import '../widgets/bubble.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:whoshere/widgets/decorated_bubble.dart';
 
@@ -12,24 +11,30 @@ List<MapOverlay> getMockMapOverLays(BuildContext context) {
     MapOverlay(
       coordinate: LatLng(23.477641, 111.274786),
       child: DecoratedBubble(
-        bubbleStyle: 2,
+        bubbleStyle: 1,
         emoji: '😅',
         tag: 'current_user',
         onTap: () => openBubbleSertting(context,
-            bubbleStyle: 2, emoji: '😅', tag: 'current_user'),
+            bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
       ),
     ),
     MapOverlay(
         coordinate: LatLng(23.467641, 111.274786),
-        child: Bubble(
-          avatar: 'images/avatar.png',
-          style: 3,
+        child: DecoratedBubble(
+          bubbleStyle: 2,
+          emoji: '😅',
+          tag: 'other_user_a',
+          onTap: () => openBubbleSertting(context,
+              bubbleStyle: 2, emoji: '😅', tag: 'current_user'),
         )),
     MapOverlay(
         coordinate: LatLng(23.477641, 111.260786),
-        child: Bubble(
-          avatar: 'images/avatar.png',
-          style: 2,
+        child: DecoratedBubble(
+          bubbleStyle: 3,
+          emoji: '😅',
+          tag: 'other_user_b',
+          onTap: () => openBubbleSertting(context,
+              bubbleStyle: 2, emoji: '😅', tag: 'current_user'),
         )),
     // MapOverlay(
     //     coordinate: LatLng(23.477641, 111.161786),
