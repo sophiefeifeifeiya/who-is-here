@@ -1,9 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/api/api_exceptions.dart';
 import 'package:whoshere/routes/route_pages.dart';
 import 'package:whoshere/service/user_service.dart';
@@ -39,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       String? email = Get.arguments["email"];
       String? password = Get.arguments["password"];
 
-      if (email != null && password != null ) {
+      if (email != null && password != null) {
         login(email, password);
       }
     }
@@ -60,17 +57,17 @@ class _LoginPageState extends State<LoginPage> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Row(
-              children: const [
-                Icon(Icons.error_outline),
-                SizedBox(
-                  width: 15,
+                title: Row(
+                  children: const [
+                    Icon(Icons.error_outline),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text("Login failed")
+                  ],
                 ),
-                Text("Login failed")
-              ],
-            ),
-            content: Text(e.errorMessage),
-          ));
+                content: Text(e.errorMessage),
+              ));
     } finally {
       setState(() {
         working = false;
@@ -103,12 +100,18 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
+      child: ListView(
         children: [
           const SizedBox(
             height: 100,
           ),
-          Center(child: SvgPicture.asset("images/brand.svg")),
+          Center(
+              child: Padding(
+            // Because of the question mark, the logo looks a little to the left
+            // So we move a little to the right to make the logo look like it is centered
+            padding: const EdgeInsets.only(left: 20),
+            child: SvgPicture.asset("images/brand.svg"),
+          )),
           const SizedBox(
             height: 50,
           ),
@@ -164,27 +167,14 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               )),
           const SizedBox(
-            height: 50,
-          ),
-          RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: "Forgot password",
-                style: const TextStyle(color: Colors.blueAccent),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = handleForgotPassword),
-          ])),
-          const SizedBox(
             height: 20,
           ),
-          RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: "Register new account",
-                style: const TextStyle(color: Colors.blueAccent),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = handleRegisterNewAccount),
-          ])),
+          TextButton(
+              onPressed: handleForgotPassword,
+              child: const Text("Forgot password")),
+          TextButton(
+              onPressed: handleRegisterNewAccount,
+              child: const Text("Register new account")),
         ],
       ),
     ));
