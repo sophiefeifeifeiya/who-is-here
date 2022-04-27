@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/model/message.dart';
-import 'package:whoshere/utils/size_config.dart';
 
 import 'chat_logic.dart';
 
@@ -58,20 +57,20 @@ class ChatPage extends StatelessWidget {
   Widget _fromTextItem(EMMessage emMessage) {
     return Container(
       margin:
-          EdgeInsets.only(left: 15.px, top: 5.px, right: 100.px, bottom: 10.px),
+          EdgeInsets.only(left: 15, top: 5, right: 100, bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 5.px),
+            margin: EdgeInsets.only(top: 5),
             child: Icon(
               Icons.account_circle,
               color: Colors.blueAccent,
-              size: 35.px,
+              size: 35,
             ),
           ),
           SizedBox(
-            width: 2.px,
+            width: 2,
           ),
           Expanded(
             child: Column(
@@ -79,11 +78,11 @@ class ChatPage extends StatelessWidget {
               children: [
                 Text(
                   "用户1",
-                  style: TextStyle(fontSize: 14.px),
+                  style: TextStyle(fontSize: 14),
                 ),
                 Container(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 7.px, vertical: 5.px),
+                      EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                   decoration: const BoxDecoration(
                     color: Colors.blueAccent,
                     //设置四周圆角
@@ -93,12 +92,12 @@ class ChatPage extends StatelessWidget {
                       ? Text(
                           '${emMessage.content}',
                           style:
-                              TextStyle(fontSize: 16.px, color: Colors.white),
+                              TextStyle(fontSize: 16, color: Colors.white),
                         )
                       : emMessage.msgType == EMMessageBodyType.VOICE
                           ? Image.asset(
                               "assets/images/chat_voice.png",
-                              width: 25.px,
+                              width: 25,
                             )
                           : FadeInImage.assetNetwork(
                               placeholder: "assets/images/chat_voice.png",
@@ -116,7 +115,7 @@ class ChatPage extends StatelessWidget {
   Widget _toTextItem(EMMessage emMessage) {
     return Container(
       margin:
-          EdgeInsets.only(left: 100.px, top: 5.px, right: 15.px, bottom: 10.px),
+          EdgeInsets.only(left: 100, top: 5, right: 15, bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -127,11 +126,11 @@ class ChatPage extends StatelessWidget {
               children: [
                 Text(
                   "用户2",
-                  style: TextStyle(fontSize: 14.px),
+                  style: TextStyle(fontSize: 14),
                 ),
                 Container(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 7.px, vertical: 5.px),
+                      EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                   decoration: const BoxDecoration(
                     color: Colors.blueAccent,
                     //设置四周圆角
@@ -141,14 +140,14 @@ class ChatPage extends StatelessWidget {
                       ? Text(
                           '${emMessage.content}',
                           style:
-                              TextStyle(fontSize: 16.px, color: Colors.white),
+                              TextStyle(fontSize: 16, color: Colors.white),
                         )
                       : emMessage.msgType == EMMessageBodyType.VOICE
                           ? Transform.rotate(
                               angle: 135,
                               child: Image.asset(
                                 "assets/images/chat_voice.png",
-                                width: 25.px,
+                                width: 25,
                               ),
                             )
                           : FadeInImage.assetNetwork(
@@ -158,14 +157,14 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 2.px,
+            width: 2,
           ),
           Container(
-            margin: EdgeInsets.only(top: 5.px),
+            margin: EdgeInsets.only(top: 5),
             child: Icon(
               Icons.account_circle,
               color: Colors.redAccent,
-              size: 35.px,
+              size: 35,
             ),
           ),
         ],
@@ -180,15 +179,15 @@ class ChatPage extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 15.px,
+            width: 15,
           ),
           Image.asset(
             "assets/images/voice.png",
-            width: 25.px,
+            width: 25,
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 5.px, horizontal: 10.px),
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               decoration: const BoxDecoration(
                 color: Colors.white54,
                 //设置四周圆角
@@ -199,9 +198,9 @@ class ChatPage extends StatelessWidget {
                 // obscureText: true,
                 controller: state.pswController,
                 textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 14.px),
+                style: TextStyle(fontSize: 14),
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(10.px, 0, 10.px, 0),
+                  contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   border: const OutlineInputBorder(borderSide: BorderSide.none),
                   hintText: '',
                   hintStyle:
@@ -226,17 +225,17 @@ class ChatPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/xiaolian.png",
-                      width: 25.px,
+                      width: 25,
                     ),
                     SizedBox(
-                      width: 10.px,
+                      width: 10,
                     ),
                     Image.asset(
                       "assets/images/add.png",
-                      width: 25.px,
+                      width: 25,
                     ),
                     SizedBox(
-                      width: 15.px,
+                      width: 15,
                     ),
                   ],
                 )*/

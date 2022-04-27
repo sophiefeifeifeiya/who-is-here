@@ -2,31 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:whoshere/page/home_page.dart';
-import 'package:whoshere/utils/dependency_injection.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:whoshere/utils/storage.dart';
-import 'http/http_config.dart';
-import 'http/http_utils.dart';
-import 'utils/size_config.dart';
-import 'package:whoshere/routes/routes.dart';
 import 'package:get/get.dart';
+import 'package:whoshere/api/api_broker.dart';
+import 'package:whoshere/routes/route_pages.dart';
+import 'package:whoshere/service/user_service.dart';
 
 void main() async {
-  ///不加存储报错
+  // Register services and configure dependencies
+  String apiDomain = const String.fromEnvironment("WHOSHERE_API_DOMAIN",
+      defaultValue: "whoshere.fuiyoo.tech");
+  String apiPath =
+      const String.fromEnvironment("WHOSHERE_API_BASE", defaultValue: "");
+  Get.put<ApiBroker>(ApiBroker(apiDomain: apiDomain, apiBasePath: apiPath),
+      permanent: true);
+
+  // Needed before loading from share preferences
   WidgetsFlutterBinding.ensureInitialized();
+  UserService userService = await UserService.createFromSharedPreference();
+  Get.put<IUserService>(userService, permanent: true);
 
-  /// 等待依赖服务初始化
-  await DependencyInjection.init();
-
-  /// 适配工具初始化
-  SizeConfig.initialize();
-
-  /// 网络接口配置
-  HttpUtils.init(httpState: HttpState.release);
-
-  ///初始化存储
-  await SpUtil().init();
   runApp(const MyApp());
 }
 
@@ -52,7 +47,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Who's here",
+      title: "Who's Here",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -65,9 +60,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [Locale("en")],
-      builder: (BuildContext context, Widget? child) {
-        return FlutterEasyLoading(child: child);
-      },
+      builder: EasyLoading.init(),
     );
   }
 }

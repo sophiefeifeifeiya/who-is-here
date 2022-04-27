@@ -1,12 +1,12 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:whoshere/page/setting_page.dart';
 import 'package:whoshere/model/Post.dart';
 import 'package:whoshere/widgets/posts.dart';
 import 'package:whoshere/widgets/tag.dart';
 import 'package:whoshere/model/people.dart';
-import 'package:get/get.dart';
-import 'package:whoshere/routes/routes.dart';
+import 'package:whoshere/routes/route_pages.dart';
 
 class friendPage extends StatelessWidget {
   @override
