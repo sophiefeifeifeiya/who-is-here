@@ -59,7 +59,10 @@ class _MapViewState extends State<MapView> {
       // print(
       //     "Overlay UI position: x: ${point.x}  y: ${point.y}    Pixel ratio: ${devicePixelRatio}");
       visibleOverlays.add(Positioned(
-        child: overlay,
+        child: FractionalTranslation(
+          translation: const Offset(-0.5, -0.5),
+          child: overlay,
+        ),
         left: point.x.toDouble() / devicePixelRatio,
         top: point.y.toDouble() / devicePixelRatio,
       ));
