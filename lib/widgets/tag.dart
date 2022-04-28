@@ -10,12 +10,13 @@ class tag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsetsDirectional.only(start: 10.0),
+        margin: const EdgeInsetsDirectional.only(start: 10.0),
         height: 30,
         width: 100,
         decoration: BoxDecoration(
-            color: Color.fromRGBO(Random().nextInt(256), Random().nextInt(256), Random().nextInt(256), 1),
-            borderRadius: BorderRadius.horizontal(
+            color: Color.fromRGBO(Random().nextInt(256), Random().nextInt(256),
+                Random().nextInt(256), 1),
+            borderRadius: const BorderRadius.horizontal(
                 left: Radius.circular(10), right: Radius.circular(10))),
         child: Center(
           child: Text(

@@ -1,14 +1,11 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:whoshere/page/setting_page.dart';
 import 'package:whoshere/model/Post.dart';
 import 'package:whoshere/widgets/posts.dart';
 import 'package:whoshere/widgets/tag.dart';
 import 'package:whoshere/model/people.dart';
-import 'package:whoshere/routes/route_pages.dart';
 
-class friendPage extends StatelessWidget {
+class strangerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,20 +13,22 @@ class friendPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           const menu_bar(),
-          info_bar(friend: friends[0]),
+          info_bar(
+            stranger: strangers[0],
+          ),
           const SizedBox(
             height: 15,
           ),
-          tag_bar(friend: friends[0]),
+          tag_bar(stranger: strangers[0]),
           const Divider(
             height: 5.0,
           ),
           SizedBox(
             height: 400.0,
             child: ListView.builder(
-                itemCount: eileen.length,
+                itemCount: smith.length,
                 itemBuilder: (context, index) => Posts(
-                      post: eileen[index],
+                      post: smith[index],
                     )),
           ),
           const Divider(
@@ -50,13 +49,13 @@ class hello_bar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
           Container(
             height: 35,
-            margin: const EdgeInsets.only(left: 12.0, right: 10.0),
-            padding: const EdgeInsets.only(bottom: 1.5, right: 2.5),
+            margin: EdgeInsets.only(left: 12.0, right: 10.0),
+            padding: EdgeInsets.only(bottom: 1.5, right: 2.5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(
@@ -73,15 +72,13 @@ class hello_bar extends StatelessWidget {
           Expanded(
             child: Container(
               height: 35.0,
-              margin: EdgeInsets.only(right: 10.0),
+              margin: const EdgeInsets.only(right: 10.0),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
                 color: Colors.black,
-                onPressed: () {
-                  Get.toNamed(RoutePages.chat);
-                },
+                onPressed: () {},
                 child: Text(
                   "Start Chatting".toUpperCase(),
                   style: const TextStyle(
@@ -99,8 +96,8 @@ class hello_bar extends StatelessWidget {
 }
 
 class tag_bar extends StatelessWidget {
-  final People friend;
-  const tag_bar({Key? key, required this.friend}) : super(key: key);
+  final People stranger;
+  const tag_bar({Key? key, required this.stranger}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,16 +115,16 @@ class tag_bar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              tag(friend.tags[0]),
-              tag(friend.tags[1]),
-              tag(friend.tags[2]),
+              tag(stranger.tags[0]),
+              tag(stranger.tags[1]),
+              tag(stranger.tags[2]),
             ],
           ),
           SizedBox(
             height: 10.0,
           ),
           Row(
-            children: [tag(friend.tags[3]), tag(friend.tags[4])],
+            children: [tag(stranger.tags[3]), tag(stranger.tags[4])],
           )
         ],
       ),
@@ -144,21 +141,16 @@ class menu_bar extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              context: context,
-              builder: (context) => setting_page(),
-              isScrollControlled: false,
-              enableDrag: true,
-            );
+            // uncomment to display setting page
+            // showModalBottomSheet(
+            //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+            //   context: context,
+            //   builder: (context)=>setting_page(),
+            //   isScrollControlled: false,
+            //   enableDrag: true,
+            // );
           },
-          icon: Icon(Icons.settings),
-          splashRadius: 15,
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.call),
+          icon: Icon(Icons.location_off),
           splashRadius: 15,
         ),
       ],
@@ -167,9 +159,9 @@ class menu_bar extends StatelessWidget {
 }
 
 class info_bar extends StatelessWidget {
-  final People friend;
+  final People stranger;
 
-  const info_bar({Key? key, required this.friend}) : super(key: key);
+  const info_bar({Key? key, required this.stranger}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -187,14 +179,14 @@ class info_bar extends StatelessWidget {
                   height: 20.0,
                 ),
                 Text(
-                  friend.name,
+                  stranger.name,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
                 Text(
-                  friend.tickle,
+                  stranger.tickle,
                   style: TextStyle(fontSize: 13),
                 )
               ],
@@ -206,7 +198,7 @@ class info_bar extends StatelessWidget {
             margin: EdgeInsetsDirectional.only(end: 15.0),
             child: AvatarView(
               avatarType: AvatarType.CIRCLE,
-              imagePath: friend.profile,
+              imagePath: stranger.profile,
             ),
           ),
         ],
