@@ -8,7 +8,6 @@ import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/service/services.dart';
 import 'package:whoshere/widgets/MapOverlay.dart';
 import 'package:whoshere/widgets/MapView.dart';
-import 'package:whoshere/mock/mockMapOverLays.dart';
 import 'package:whoshere/mock/mockTagList.dart';
 import 'package:whoshere/widgets/TagSelector.dart';
 import 'package:whoshere/widgets/SearchBarDelegate.dart';
@@ -166,6 +165,7 @@ class _HomePageState extends State<HomePage> {
                 bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
             // onTap: () => openFriendPage(context),
             onMap: true,
+            avatarPath: stateController.currentUser.value!.avatarPath,
           ),
         ));
       }

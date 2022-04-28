@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/model/user.dart';
-import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:whoshere/service/services.dart';
 
 class UserService implements IUserService {
@@ -15,24 +14,23 @@ class UserService implements IUserService {
 
   final ApiBroker _broker = Get.find();
 
+  UserService() {
+    _broker.onTokenRefreshed.listen((event) {
+      _saveToken(event.accessToken, event.refreshToken);
+    });
+  }
+
   @override
   Future<User> login(String email, String password) async {
     UserLoginResponse response =
         await _broker.login(request: UserLoginRequest(email, password));
-
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(_prefsKeyAccessToken, response.accessToken.token);
-    prefs.setString(
-        _prefsKeyAccessTokenExpires, response.accessToken.expires.toString());
-    prefs.setString(_prefsKeyRefreshToken, response.refreshToken.token);
-    prefs.setString(
-        _prefsKeyRefreshTokenExpires, response.refreshToken.expires.toString());
-
+    await _saveToken(response.accessToken, response.refreshToken);
+    UserProfile profile = await _broker.getProfile();
     return User(
-        imagePath: "images/1.jpg",
-        name: "Kaedehara Kazuha",
-        email: "wanye@gmail.com",
-        about: "ok.");
+        avatarPath: profile.avatarPath,
+        name: profile.userName,
+        email: profile.email,
+        about: profile.bio);
   }
 
   @override
@@ -63,11 +61,15 @@ class UserService implements IUserService {
       return null;
     }
 
+    _broker.accessToken = UserTokenPair(accessToken, accessExpires);
+    _broker.refreshToken = UserTokenPair(refreshToken, refreshExpires);
+    UserProfile profile = await _broker.getProfile();
+
     return User(
-        imagePath: "images/1.jpg",
-        name: "Kaedehara Kazuha",
-        email: "wanye@gmail.com",
-        about: "ok.");
+        avatarPath: profile.avatarPath,
+        name: profile.userName,
+        email: profile.email,
+        about: profile.bio);
   }
 
   @override
@@ -75,4 +77,14 @@ class UserService implements IUserService {
 
   @override
   UserTokenPair? get refreshToken => _broker.refreshToken;
+
+  Future _saveToken(UserTokenPair accessToken, UserTokenPair refreshToken) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(_prefsKeyAccessToken, accessToken.token);
+    prefs.setString(
+        _prefsKeyAccessTokenExpires, accessToken.expires.toString());
+    prefs.setString(_prefsKeyRefreshToken, refreshToken.token);
+    prefs.setString(
+        _prefsKeyRefreshTokenExpires, refreshToken.expires.toString());
+  }
 }

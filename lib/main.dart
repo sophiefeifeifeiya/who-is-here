@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/api/api_broker.dart';
+import 'package:whoshere/api_const_key.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/routes/route_pages.dart';
 import 'package:whoshere/service/user_location_service.dart';
@@ -14,12 +15,9 @@ import 'service/services.dart';
 
 void main() async {
   // Register services and configure dependencies
-  String apiDomain = const String.fromEnvironment("WHOSHERE_API_DOMAIN",
-      defaultValue: "whoshere.fuiyoo.tech");
-  String apiPath =
-      const String.fromEnvironment("WHOSHERE_API_BASE", defaultValue: "");
-
-  Get.put<ApiBroker>(ApiBroker(apiDomain: apiDomain, apiBasePath: apiPath),
+  Get.put<ApiBroker>(
+      ApiBroker(
+          apiDomain: ApiConstKey.apiDomain, apiBasePath: ApiConstKey.apiPath),
       permanent: true);
   // Needed before loading from share preferences
   WidgetsFlutterBinding.ensureInitialized();

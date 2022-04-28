@@ -15,11 +15,13 @@ class DecoratedBubble extends StatefulWidget {
   final double width;
   final double height;
   final bool onMap;
+  final String avatarPath;
 
   const DecoratedBubble(
       {Key? key,
       required this.bubbleStyle,
       required this.tag,
+      required this.avatarPath,
       this.emoji = '',
       this.onTap,
       this.width = 150,
@@ -46,7 +48,10 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
         if (type.data?.tag == widget.tag && type.data?.bubbleStyle != null) {
           currentStyle = type.data?.bubbleStyle as int;
         }
-        bubble = PlainBubble(style: currentStyle as int);
+        bubble = PlainBubble(
+          style: currentStyle as int,
+          avatarPath: widget.avatarPath,
+        );
         var stack = Stack(
           alignment: const FractionalOffset(0.3, 0.75),
           children: [

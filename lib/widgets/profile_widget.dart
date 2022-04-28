@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoshere/utils/image_uri_util.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -31,7 +32,7 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = AssetImage(imagePath);
+    final image = NetworkImage(getAvatarImageUri(imagePath).toString());
 
     return ClipOval(
       child: Material(

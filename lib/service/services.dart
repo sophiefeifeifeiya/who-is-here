@@ -2,7 +2,8 @@ import 'package:whoshere/model/user.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 abstract class IUserService {
-  /// Attempt to login with the given email and password.
+  /// Attempt to login with the given email and password and
+  /// get the user profile.
   ///
   /// Stores access token and refresh token to a persistent storage.
   /// Throws ApiBrokerException if login failed.

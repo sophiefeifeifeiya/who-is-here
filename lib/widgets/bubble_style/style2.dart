@@ -4,7 +4,11 @@ import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
 
-class bubbleType2 extends StatelessWidget {
+class BubbleType2 extends StatelessWidget {
+  final String avatarUrl;
+
+  const BubbleType2({Key? key, required this.avatarUrl}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -17,7 +21,7 @@ class bubbleType2 extends StatelessWidget {
           borderColor: Colors.lightBlue,
           avatarType: AvatarType.CIRCLE,
           backgroundColor: Colors.red,
-          imagePath: "assets/images/profile.jpg",
+          imagePath: avatarUrl,
         ),
       ),
     );

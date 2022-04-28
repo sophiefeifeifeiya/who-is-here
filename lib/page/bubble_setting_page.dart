@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/page/emoji_page.dart';
 import 'package:whoshere/page/style_page.dart';
 import 'package:whoshere/page/color_page.dart';
@@ -10,10 +12,12 @@ import 'package:whoshere/widgets/category.dart';
 
 class BubbleSettingPage extends StatelessWidget {
   final int bubbleStye;
-
   final String tag;
   final String emoji;
-  const BubbleSettingPage(
+
+  final UserStateController stateController = Get.find();
+
+  BubbleSettingPage(
       {Key? key, required this.bubbleStye, this.emoji = '', required this.tag})
       : super(key: key);
 
@@ -31,11 +35,12 @@ class BubbleSettingPage extends StatelessWidget {
                 height: 20,
               ),
               Center(
-                child: DecoratedBubble(
+                child: Obx(() => DecoratedBubble(
                   tag: tag,
                   bubbleStyle: bubbleStye,
                   emoji: emoji,
-                ),
+                  avatarPath: stateController.currentUser.value!.avatarPath,
+                )),
               ),
               SizedBox(
                 height: 20,
@@ -50,9 +55,10 @@ class BubbleSettingPage extends StatelessWidget {
               ),
               if (snapshot.data == 0) colorWidget(tag: tag),
               if (snapshot.data == 1)
-                styleWidget(
+                Obx(() => StyleWidget(
                   tag: tag,
-                ),
+                  avatarPath: stateController.currentUser.value!.avatarPath,
+                )),
               if (snapshot.data == 2)
                 emojiWidget(
                   tag: tag,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -9,8 +10,13 @@ import 'api_exceptions.dart';
 class ApiBroker {
   final String apiDomain;
   final String apiBasePath;
+  final StreamController<UserLoginResponse> tokenRefreshController =
+      StreamController<UserLoginResponse>();
+  late Stream<UserLoginResponse> onTokenRefreshed;
 
-  ApiBroker({required this.apiDomain, required this.apiBasePath});
+  ApiBroker({required this.apiDomain, required this.apiBasePath}) {
+    onTokenRefreshed = tokenRefreshController.stream;
+  }
 
   // All null or all not null
   UserTokenPair? accessToken;
@@ -19,57 +25,112 @@ class ApiBroker {
   static const String _contentTypeJson = "application/json";
 
   Future<UserLoginResponse> login({required UserLoginRequest request}) async {
-    try {
-      Uri uri = Uri.https(apiDomain, apiBasePath + "/User/Login");
-      var response = await http.post(uri,
-          headers: {"Content-Type": _contentTypeJson},
-          body: json.encode(request.toJson()));
-      _ensureSuccessfulResponse(response);
-      var userTokens = UserLoginResponse.fromJson(json.decode(response.body));
-      accessToken = userTokens.accessToken;
-      refreshToken = userTokens.refreshToken;
-      return userTokens;
-    } on SocketException catch (e) {
-      throw ApiBrokerException("Network lost: ${e.message}");
-    }
+    var response = await sendRequest(
+        method: "POST",
+        apiPath: "/User/Login",
+        requireIdentity: false,
+        body: json.encode(request.toJson()));
+    var userTokens = UserLoginResponse.fromJson(json.decode(response.body));
+    accessToken = userTokens.accessToken;
+    refreshToken = userTokens.refreshToken;
+    return userTokens;
   }
 
   Future register({required UserRegistrationRequest request}) async {
     if (accessToken != null) {
-      throw StateError("Cannot register a new account when signed in");
+      throw StateError(
+          "Cannot register a new account because already signed in");
     }
 
-    var response = await http.post(Uri.https(apiDomain, apiBasePath + "/User/Register"),
-      headers: {"Content-Type": _contentTypeJson},
-      body: json.encode(request.toJson())
-    );
-    _ensureSuccessfulResponse(response);
+    sendRequest(
+        method: "POST",
+        apiPath: "/User/Register",
+        requireIdentity: false,
+        body: json.encode(request.toJson()));
+  }
+
+  Future<UserProfile> getProfile() async {
+    if (refreshToken == null) {
+      throw StateError("You must be logged in to call profile()");
+    }
+
+    var response = await sendRequest(method: "GET", apiPath: "/User/Profile");
+    return UserProfile.fromJson(json.decode(response.body));
+  }
+
+  Future refresh() async {
+    if (refreshToken == null) {
+      throw StateError("You must be logged in to call profile()");
+    }
+
+    // if the refresh token is expired
+    if (DateTime.now().isAfter(refreshToken!.expires)) {
+      throw UserTokenExpiredException();
+    }
+
+    var response = await sendRequest(
+        method: "POST",
+        apiPath: "/User/Refresh",
+        requireIdentity: false,
+        disableRefresh: true,
+        body:
+            json.encode(UserRefreshTokenRequest(refreshToken!.token).toJson()));
+    var userTokens = UserLoginResponse.fromJson(json.decode(response.body));
+    accessToken = userTokens.accessToken;
+    refreshToken = userTokens.refreshToken;
+    tokenRefreshController.sink.add(userTokens);
   }
 
   Future<http.Response> sendRequest(
-      {required String method, required String apiPath}) async {
-    var request =
-        http.Request(method, Uri.https(apiDomain, apiBasePath + apiPath));
+      {required String method,
+      required String apiPath,
+      Object? body,
+      bool requireIdentity = true,
+      bool disableRefresh = false,
+      Map<String, dynamic>? queryParameters,
+      Map<String, String>? headers}) async {
+    var request = http.Request(
+        method, Uri.https(apiDomain, apiBasePath + apiPath, queryParameters));
+
+    if (body != null) {
+      if (body is String) {
+        request.body = body;
+      } else if (body is Map<String, String>) {
+        request.bodyFields = body;
+      } else if (body is List<int>) {
+        request.bodyBytes = body;
+      }
+    }
+
+    // default content-type is json
+    request.headers["Content-Type"] = _contentTypeJson;
+    if (headers != null) {
+      headers.forEach((key, value) {
+        request.headers[key] = value;
+      });
+    }
 
     var client = http.Client();
     try {
       if (accessToken != null) {
-        var now = DateTime.now();
         // Refresh access token 2 minuets before it expired
-        if (now.isAfter(
+        if (DateTime.now().isAfter(
             accessToken!.expires.subtract(const Duration(minutes: 2)))) {
-        } else {
-          // if the access token is expired, check refresh token
-          if (now.isAfter(refreshToken!.expires)) {
-            // if the refresh token is expired
-            throw UserTokenExpiredException();
-          } else {}
+          if (!disableRefresh) {
+            await refresh();
+          }
         }
+      }
+
+      if (requireIdentity) {
+        request.headers["Authorization"] = "Bearer ${accessToken!.token}";
       }
 
       var response = await http.Response.fromStream(await client.send(request));
       _ensureSuccessfulResponse(response);
       return response;
+    } on SocketException catch (e) {
+      throw ApiBrokerException("Network lost: ${e.message}");
     } finally {
       client.close();
     }

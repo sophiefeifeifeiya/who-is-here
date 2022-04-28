@@ -12,7 +12,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final User user = User(
-      imagePath: "imagePath",
+      avatarPath: "imagePath",
       name: "name",
       email: "email",
       about: "about",
@@ -28,7 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             physics: const BouncingScrollPhysics(),
             children: [
               ProfileWidget(
-                imagePath: user.imagePath,
+                imagePath: user.avatarPath,
                 isEdit: true,
                 onClicked: () async {},
               ),

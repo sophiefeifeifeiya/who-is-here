@@ -2,6 +2,7 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/utils/Touchable.dart';
+import 'package:whoshere/utils/image_uri_util.dart';
 import 'package:whoshere/widgets/bubble_style/style1.dart';
 import 'package:whoshere/widgets/bubble_style/style2.dart';
 import 'package:whoshere/widgets/bubble_style/style3.dart';
@@ -11,33 +12,35 @@ import 'package:whoshere/widgets/bubble_style/style3.dart';
 // }
 
 class PlainBubble extends StatelessWidget {
-  final String avatar;
+  late String avatarUrl;
   final int style;
   final VoidCallback? cb;
-  const PlainBubble(
-      {Key? key, this.avatar = 'images/avatar.png', this.style = 1, this.cb})
-      : super(key: key);
+
+  PlainBubble({Key? key, required String avatarPath, this.style = 1, this.cb})
+      : super(key: key) {
+    avatarUrl = getAvatarImageUri(avatarPath).toString();
+  }
 
   @override
   Widget build(BuildContext context) {
     switch (style) {
       case 1:
         if (cb != null) {
-          return makeTouchable(buildBubble1(avatar), cb as VoidCallback);
+          return makeTouchable(buildBubble1(avatarUrl), cb as VoidCallback);
         } else {
-          return buildBubble1(avatar);
+          return buildBubble1(avatarUrl);
         }
       case 2:
         if (cb != null) {
-          return makeTouchable(buildBubble2(avatar), cb as VoidCallback);
+          return makeTouchable(buildBubble2(avatarUrl), cb as VoidCallback);
         } else {
-          return buildBubble2(avatar);
+          return buildBubble2(avatarUrl);
         }
       case 3:
         if (cb != null) {
-          return makeTouchable(buildBubble3(avatar), cb as VoidCallback);
+          return makeTouchable(buildBubble3(avatarUrl), cb as VoidCallback);
         } else {
-          return buildBubble3(avatar);
+          return buildBubble3(avatarUrl);
         }
       default:
         return Container();
@@ -46,15 +49,21 @@ class PlainBubble extends StatelessWidget {
 }
 
 Widget buildBubble1(String avatar) {
-  return bubbleType1();
+  return BubbleType1(
+    avatarUrl: avatar,
+  );
 }
 
 Widget buildBubble2(String avatar) {
-  return bubbleType2();
+  return BubbleType2(
+    avatarUrl: avatar,
+  );
 }
 
 Widget buildBubble3(String avatar) {
-  return bubbleType3();
+  return BubbleType3(
+    avatarUrl: avatar,
+  );
 }
 
 Widget buildBubble4(String avatar) {

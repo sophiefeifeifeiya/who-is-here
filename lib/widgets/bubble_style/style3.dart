@@ -2,10 +2,14 @@ import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
 
-class bubbleType3 extends StatelessWidget {
+class BubbleType3 extends StatelessWidget {
+  final String avatarUrl;
+
+  const BubbleType3({Key? key, required this.avatarUrl}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: 80,
       width: 80,
       child: InkWell(
@@ -15,12 +19,12 @@ class bubbleType3 extends StatelessWidget {
         borderColor: Colors.lightBlue,
         avatarType: AvatarType.RECTANGLE,
         backgroundColor: Colors.red,
-        imagePath: "assets/images/profile.jpg",
-        placeHolder: Icon(
+        imagePath: avatarUrl,
+        placeHolder: const Icon(
           Icons.person,
           size: 50,
         ),
-        errorWidget: Icon(
+        errorWidget: const Icon(
           Icons.error,
           size: 50,
         ),

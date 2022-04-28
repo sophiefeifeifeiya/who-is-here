@@ -4,7 +4,7 @@ import 'package:amap_flutter_base/amap_flutter_base.dart';
 part 'user.g.dart';
 
 class User {
-  String imagePath;
+  String avatarPath;
   String name;
   String email;
   String about;
@@ -12,13 +12,28 @@ class User {
   LatLng location;
 
   User({
-    required this.imagePath,
+    required this.avatarPath,
     required this.name,
     required this.email,
     required this.about,
     this.isDarkMode = false,
     this.location = const LatLng(0, 0),
   });
+}
+
+@JsonSerializable()
+class UserProfile {
+  final String avatarPath;
+  final String userName;
+  final String email;
+  final String bio;
+
+  UserProfile(this.avatarPath, this.userName, this.email, this.bio);
+
+  factory UserProfile.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserProfileToJson(this);
 }
 
 @JsonSerializable()
@@ -72,4 +87,17 @@ class UserRegistrationRequest {
       _$UserRegistrationRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserRegistrationRequestToJson(this);
+}
+
+@JsonSerializable()
+class UserRefreshTokenRequest {
+  final String refreshToken;
+
+  UserRefreshTokenRequest(this.refreshToken);
+
+  factory UserRefreshTokenRequest.fromJson(Map<String, dynamic> json) =>
+      _$UserRefreshTokenRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserRefreshTokenRequestToJson(this);
+
 }
