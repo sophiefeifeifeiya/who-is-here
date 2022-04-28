@@ -32,18 +32,18 @@ class BubbleSettingPage extends StatelessWidget {
             children: <Widget>[
               tapBar(),
               SizedBox(
-                height: 20,
+                height: 5,
               ),
               Center(
                 child: Obx(() => DecoratedBubble(
-                  tag: tag,
-                  bubbleStyle: bubbleStye,
-                  emoji: emoji,
-                  avatarPath: stateController.currentUser.value!.avatarPath,
-                )),
+                      tag: tag,
+                      bubbleStyle: bubbleStye,
+                      emoji: emoji,
+                      avatarPath: stateController.currentUser.value!.avatarPath,
+                    )),
               ),
               SizedBox(
-                height: 20,
+                height: 5,
               ),
               Categories(),
               Divider(
@@ -56,9 +56,9 @@ class BubbleSettingPage extends StatelessWidget {
               if (snapshot.data == 0) colorWidget(tag: tag),
               if (snapshot.data == 1)
                 Obx(() => StyleWidget(
-                  tag: tag,
-                  avatarPath: stateController.currentUser.value!.avatarPath,
-                )),
+                      tag: tag,
+                      avatarPath: stateController.currentUser.value!.avatarPath,
+                    )),
               if (snapshot.data == 2)
                 emojiWidget(
                   tag: tag,
