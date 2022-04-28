@@ -162,9 +162,9 @@ class _HomePageState extends State<HomePage> {
             bubbleStyle: 1,
             emoji: '😅',
             tag: 'current_user',
-            // onTap: () => openBubbleSertting(context,
-            //     bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
-            onTap: () => openFriendPage(context),
+            onTap: () => openBubbleSertting(context,
+                bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
+            // onTap: () => openFriendPage(context),
             onMap: true,
           ),
         ));
