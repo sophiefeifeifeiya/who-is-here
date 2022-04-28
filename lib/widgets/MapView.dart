@@ -1,16 +1,23 @@
 import 'dart:io';
-
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:amap_flutter_map/amap_flutter_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:whoshere/api_const_key.dart';
 
 import 'MapOverlay.dart';
 
 class MapView extends StatefulWidget {
-  const MapView({Key? key, this.overlays}) : super(key: key);
+  const MapView(
+      {Key? key,
+      this.overlays,
+      this.initialCameraPosition,
+      this.mapCreatedCallback})
+      : super(key: key);
 
   final List<MapOverlay>? overlays;
+  final CameraPosition? initialCameraPosition;
+  final MapCreatedCallback? mapCreatedCallback;
 
   @override
   State<MapView> createState() => _MapViewState();
@@ -18,24 +25,26 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   static const AMapApiKey _amapApiKeys = AMapApiKey(
-      androidKey: 'f9648f64a9a370e7dc8e09c63ac2cbc1',
-      iosKey: 'c166816f949c6c796c329e0c62968d34');
+      androidKey: ApiConstKey.amapAndroidApiKey,
+      iosKey: ApiConstKey.amapIosApiKey);
 
   AMapController? controller;
   List<Widget> visibleOverlays = [];
   double devicePixelRatio = 1; // default to 1, will be updated in build()
 
-  void onMapCreated(AMapController? controller) {
+  void onMapCreated(AMapController controller) {
     this.controller = controller;
-    controller?.setRenderFps(60);
-    setupOverlays();
+    controller.setRenderFps(60);
+    updateOverlays();
+
+    widget.mapCreatedCallback?.call(controller);
   }
 
   void onCameraMove(CameraPosition position) async {
-    setupOverlays();
+    updateOverlays();
   }
 
-  void setupOverlays() async {
+  void updateOverlays() async {
     if (widget.overlays == null || controller == null) {
       return;
     }
@@ -47,8 +56,8 @@ class _MapViewState extends State<MapView> {
       if (point == null) {
         continue;
       }
-      print(
-          "Overlay UI position: x: ${point.x}  y: ${point.y}    Pixel ratio: ${devicePixelRatio}");
+      // print(
+      //     "Overlay UI position: x: ${point.x}  y: ${point.y}    Pixel ratio: ${devicePixelRatio}");
       visibleOverlays.add(Positioned(
         child: overlay,
         left: point.x.toDouble() / devicePixelRatio,
@@ -59,6 +68,14 @@ class _MapViewState extends State<MapView> {
     setState(() {
       this.visibleOverlays = visibleOverlays;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (controller != null) {
+      controller!.disponse();
+    }
   }
 
   @override
@@ -78,10 +95,10 @@ class _MapViewState extends State<MapView> {
           AMapWidget(
             onMapCreated: onMapCreated,
             onCameraMove: onCameraMove,
-            privacyStatement: const AMapPrivacyStatement(
-                hasContains: true, hasShow: true, hasAgree: true),
-            initialCameraPosition: const CameraPosition(
-                target: LatLng(23.476733, 111.279022), zoom: 16),
+            privacyStatement: ApiConstKey.amapPrivacyStatement,
+            initialCameraPosition: widget.initialCameraPosition ??
+                const CameraPosition(
+                    target: LatLng(39.909187, 116.397451), zoom: 10),
             apiKey: _amapApiKeys,
           ),
           Stack(

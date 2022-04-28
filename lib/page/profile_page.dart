@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/edit_profile_page.dart';
-import 'package:whoshere/utils/user_preferences.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
 import 'package:whoshere/widgets/profile_widget.dart';
+import 'package:amap_flutter_base/amap_flutter_base.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -15,7 +16,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    const user = UserPreferences.myUser;
+    final User user = User(
+        imagePath: "imagePath",
+        name: "name",
+        email: "email",
+        about: "about",
+        isDarkMode: false,
+        location: LatLng(0, 0));
+
 
     return Builder(
       builder: (context) => Scaffold(

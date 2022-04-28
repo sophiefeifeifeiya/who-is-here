@@ -5,8 +5,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/api/api_broker.dart';
+import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/routes/route_pages.dart';
+import 'package:whoshere/service/user_location_service.dart';
 import 'package:whoshere/service/user_service.dart';
+
+import 'service/services.dart';
 
 void main() async {
   // Register services and configure dependencies
@@ -14,13 +18,17 @@ void main() async {
       defaultValue: "whoshere.fuiyoo.tech");
   String apiPath =
       const String.fromEnvironment("WHOSHERE_API_BASE", defaultValue: "");
+
   Get.put<ApiBroker>(ApiBroker(apiDomain: apiDomain, apiBasePath: apiPath),
       permanent: true);
-
   // Needed before loading from share preferences
   WidgetsFlutterBinding.ensureInitialized();
-  UserService userService = await UserService.createFromSharedPreference();
-  Get.put<IUserService>(userService, permanent: true);
+  // permanent because only 1 logged-in account is allowed at the same time
+  Get.put<IUserService>(UserService(), permanent: true);
+
+  Get.put<IUserLocationService>(UserLocationService());
+
+  Get.put<UserStateController>(UserStateController());
 
   runApp(const MyApp());
 }

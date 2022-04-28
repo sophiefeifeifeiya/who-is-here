@@ -1,27 +1,30 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 part 'user.g.dart';
 
 class User {
-  final String imagePath;
-  final String name;
-  final String email;
-  final String about;
-  final bool isDarkMode;
+  String imagePath;
+  String name;
+  String email;
+  String about;
+  bool isDarkMode;
+  LatLng location;
 
-  const User({
+  User({
     required this.imagePath,
     required this.name,
     required this.email,
     required this.about,
-    required this.isDarkMode,
+    this.isDarkMode = false,
+    this.location = const LatLng(0, 0),
   });
 }
 
 @JsonSerializable()
 class UserLoginRequest {
-  String email;
-  String password;
+  final String email;
+  final String password;
 
   UserLoginRequest(this.email, this.password);
 
@@ -33,8 +36,8 @@ class UserLoginRequest {
 
 @JsonSerializable()
 class UserLoginResponse {
-  UserTokenPair accessToken;
-  UserTokenPair refreshToken;
+  final UserTokenPair accessToken;
+  final UserTokenPair refreshToken;
 
   UserLoginResponse(this.accessToken, this.refreshToken);
 
@@ -46,8 +49,8 @@ class UserLoginResponse {
 
 @JsonSerializable()
 class UserTokenPair {
-  String token;
-  DateTime expires;
+  final String token;
+  final DateTime expires;
 
   UserTokenPair(this.token, this.expires);
 
@@ -59,9 +62,9 @@ class UserTokenPair {
 
 @JsonSerializable()
 class UserRegistrationRequest {
-  String userName;
-  String password;
-  String email;
+  final String userName;
+  final String password;
+  final String email;
 
   UserRegistrationRequest(this.userName, this.password, this.email);
 

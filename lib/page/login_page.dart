@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/api/api_exceptions.dart';
+import 'package:whoshere/controller/user_state_controller.dart';
+import 'package:whoshere/model/user.dart';
 import 'package:whoshere/routes/route_pages.dart';
-import 'package:whoshere/service/user_service.dart';
+import 'package:whoshere/service/services.dart';
 import 'package:whoshere/utils/input_validations.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,12 +26,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    tryAutoLogin();
+  }
 
-    // Auto login
-    // if (userService.isLoggedIn) {
-    //   redirect(); // do not await
-    //   return;
-    // }
+  void tryAutoLogin() async {
+    User? user = await userService.loadLoggedInUser();
+    if (user != null) {
+      Get.find<UserStateController>().currentUser.value = user;
+      Get.offAllNamed(RoutePages.home);
+      return;
+    }
 
     var arguments = Get.arguments;
     if (arguments != null) {
@@ -40,10 +46,6 @@ class _LoginPageState extends State<LoginPage> {
         login(email, password);
       }
     }
-  }
-
-  Future redirect() async {
-    Future.microtask(() => Get.offAllNamed(RoutePages.home));
   }
 
   Future login(String email, String password) async {

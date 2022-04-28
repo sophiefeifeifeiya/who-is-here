@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/api/api_exceptions.dart';
 import 'package:whoshere/routes/route_pages.dart';
-import 'package:whoshere/service/user_service.dart';
+import 'package:whoshere/service/services.dart';
 import 'package:whoshere/utils/input_validations.dart';
 
 class RegisterPage extends StatefulWidget {

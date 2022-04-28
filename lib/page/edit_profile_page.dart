@@ -1,12 +1,9 @@
-import 'dart:io';
-
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/model/user.dart';
-import 'package:whoshere/utils/user_preferences.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
 import 'package:whoshere/widgets/profile_widget.dart';
 import 'package:whoshere/widgets/textfield_widget.dart';
+import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -14,7 +11,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  User user = UserPreferences.myUser;
+  final User user = User(
+      imagePath: "imagePath",
+      name: "name",
+      email: "email",
+      about: "about",
+      isDarkMode: false,
+      location: LatLng(0, 0));
 
   @override
   Widget build(BuildContext context) => Builder(
