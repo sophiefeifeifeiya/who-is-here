@@ -49,13 +49,13 @@ class hello_bar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
           Container(
             height: 35,
-            margin: EdgeInsets.only(left: 12.0, right: 10.0),
-            padding: EdgeInsets.only(bottom: 1.5, right: 2.5),
+            margin: const EdgeInsets.only(left: 12.0, right: 10.0),
+            padding: const EdgeInsets.only(bottom: 1.5, right: 2.5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(
