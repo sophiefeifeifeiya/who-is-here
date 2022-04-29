@@ -31,7 +31,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
@@ -41,11 +40,12 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         children: [
           Text(
             widget.label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
           TextField(
             controller: controller,
+            onChanged: (String s) => widget.onChanged(s),
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),

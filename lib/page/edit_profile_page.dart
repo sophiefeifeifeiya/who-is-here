@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:whoshere/model/user.dart';
+import 'package:get/get.dart';
+import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
 import 'package:whoshere/widgets/profile_widget.dart';
 import 'package:whoshere/widgets/textfield_widget.dart';
-import 'package:amap_flutter_base/amap_flutter_base.dart';
+import 'package:whoshere/utils/input_validations.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -11,14 +12,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final User user = User(
-      userId: "",
-      avatarPath: "imagePath",
-      userName: "name",
-      email: "email",
-      bio: "about",
-      isDarkMode: false,
-      location: LatLng(0, 0));
+  final UserStateController stateController = Get.find();
 
   @override
   Widget build(BuildContext context) => Builder(
@@ -28,30 +22,51 @@ class _EditProfilePageState extends State<EditProfilePage> {
             padding: const EdgeInsets.symmetric(horizontal: 32),
             physics: const BouncingScrollPhysics(),
             children: [
-              ProfileWidget(
-                imagePath: user.avatarPath,
-                isEdit: true,
-                onClicked: () async {},
-              ),
+              Obx(() => ProfileWidget(
+                    imagePath: stateController.currentUser.value!.avatarPath,
+                    isEdit: true,
+                    onClicked: () async {},
+                  )),
               const SizedBox(height: 24),
-              TextFieldWidget(
-                label: 'Full Name',
-                text: user.userName,
-                onChanged: (name) {},
-              ),
+              Obx(() => TextFieldWidget(
+                    label: 'Full Name',
+                    text: stateController.currentUser.value!.userName,
+                    onChanged: (name) {
+                      // TODO: update backend
+                      if (name.isNotEmpty) {
+                        stateController.currentUser.update((u) {
+                          u!.userName = name;
+                        });
+                      }
+                    },
+                  )),
               const SizedBox(height: 24),
-              TextFieldWidget(
-                label: 'Email',
-                text: user.email,
-                onChanged: (email) {},
-              ),
+              Obx(() => TextFieldWidget(
+                    label: 'Email',
+                    text: stateController.currentUser.value!.email,
+                    onChanged: (email) {
+                      // TODO: update backend
+                      if (email.isNotEmpty && email.isValidEmail()) {
+                        stateController.currentUser.update((u) {
+                          u!.email = email;
+                        });
+                      }
+                    },
+                  )),
               const SizedBox(height: 24),
-              TextFieldWidget(
-                label: 'About',
-                text: user.bio,
-                maxLines: 5,
-                onChanged: (about) {},
-              ),
+              Obx(() => TextFieldWidget(
+                    label: 'About',
+                    text: stateController.currentUser.value!.bio,
+                    maxLines: 5,
+                    onChanged: (about) {
+                      // TODO: update backend
+                      if (about.isNotEmpty) {
+                        stateController.currentUser.update((u) {
+                          u!.bio = about;
+                        });
+                      }
+                    },
+                  )),
             ],
           ),
         ),
