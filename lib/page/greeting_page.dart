@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/friend_page.dart';
 import 'package:whoshere/widgets/emojis.dart';
 
 class GreetingPage extends StatelessWidget {
+
+  final Rx<User> user;
+
+  GreetingPage(this.user);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -11,7 +18,7 @@ class GreetingPage extends StatelessWidget {
           height: 250,
           alignment: Alignment.topCenter,
           // width: 300,
-          child: hello_bar(),
+          child: hello_bar(user: user,),
         ),
         Positioned(
           top: 30,

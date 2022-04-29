@@ -1,6 +1,9 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whoshere/controller/chat_controller.dart';
+import 'package:whoshere/controller/user_state_controller.dart';
+import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/setting_page.dart';
 import 'package:whoshere/model/Post.dart';
 import 'package:whoshere/widgets/posts.dart';
@@ -9,6 +12,10 @@ import 'package:whoshere/model/people.dart';
 import 'package:whoshere/routes/route_pages.dart';
 
 class friendPage extends StatelessWidget {
+  final Rx<User> friend;
+
+  friendPage(this.friend);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +42,9 @@ class friendPage extends StatelessWidget {
           const Divider(
             height: 5.0,
           ),
-          const hello_bar()
+          hello_bar(
+            user: friend,
+          )
         ],
       ),
     );
@@ -43,9 +52,9 @@ class friendPage extends StatelessWidget {
 }
 
 class hello_bar extends StatelessWidget {
-  const hello_bar({
-    Key? key,
-  }) : super(key: key);
+  final Rx<User> user;
+
+  hello_bar({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +89,11 @@ class hello_bar extends StatelessWidget {
                 ),
                 color: Colors.black,
                 onPressed: () {
-                  Get.toNamed(RoutePages.chat);
+                  Get.put(ChatStateController(user: user),
+                      tag: user.value.userId);
+                  Get.toNamed(RoutePages.chat, arguments: {
+                    "user": user.value
+                  });
                 },
                 child: Text(
                   "Start Chatting".toUpperCase(),
