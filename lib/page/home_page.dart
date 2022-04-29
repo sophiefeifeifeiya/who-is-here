@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:amap_flutter_map/amap_flutter_map.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -59,6 +58,7 @@ class _HomePageState extends State<HomePage> {
   void updateNearbyUsers() async {
     print("Updating nearby users");
     var users = await userLocationService.getNearbyUsers();
+
     setState(() {
       nearbyUsers = users;
     });
@@ -164,6 +164,10 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  bool filtrateUser(User user) {
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
@@ -186,7 +190,8 @@ class _HomePageState extends State<HomePage> {
         ));
       }
 
-      overlays.addAll(nearbyUsers.map((u) {
+      overlays
+          .addAll(nearbyUsers.where((u) => filtrateUser(u)).toList().map((u) {
         var rnd = Random();
         int i = rnd.nextInt(2) + 1;
         const emojis = ['🙃', '🐸', '🍉'];

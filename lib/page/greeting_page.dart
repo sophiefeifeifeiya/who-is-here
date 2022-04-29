@@ -11,7 +11,7 @@ class GreetingPage extends StatelessWidget {
           height: 250,
           alignment: Alignment.topCenter,
           // width: 300,
-          child: hello_bar(),
+          child: const hello_bar(),
         ),
         Positioned(
           top: 30,

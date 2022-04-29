@@ -13,6 +13,8 @@ class User {
   bool isDarkMode;
   @JsonKey(fromJson: _locationFromJson, toJson: _locationToJson)
   LatLng location;
+  @JsonKey(ignore: true)
+  String? tag;
 
   User({
     required this.userId,
@@ -24,8 +26,7 @@ class User {
     this.location = const LatLng(0, 0),
   });
 
-  factory User.fromJson(Map<String, dynamic> json) =>
-      _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
@@ -36,10 +37,7 @@ class User {
   }
 
   static Map<String, dynamic> _locationToJson(LatLng location) {
-    return {
-      "latitude": location.latitude,
-      "longitude": location.longitude
-    };
+    return {"latitude": location.latitude, "longitude": location.longitude};
   }
 }
 
@@ -51,7 +49,8 @@ class UserProfile {
   final String email;
   final String bio;
 
-  UserProfile(this.userId, this.avatarPath, this.userName, this.email, this.bio);
+  UserProfile(
+      this.userId, this.avatarPath, this.userName, this.email, this.bio);
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);
@@ -122,5 +121,4 @@ class UserRefreshTokenRequest {
       _$UserRefreshTokenRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserRefreshTokenRequestToJson(this);
-
 }
