@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:coord_convert/coord_convert.dart';
 import 'package:http/http.dart' as http;
 import 'package:whoshere/model/user.dart';
 
@@ -56,6 +57,22 @@ class ApiBroker {
 
     var response = await sendRequest(method: "GET", apiPath: "/User/Profile");
     return UserProfile.fromJson(json.decode(response.body));
+  }
+
+  /// Get nearby users
+  ///
+  /// currentLocation: the coordinate of current location in WGS-084
+  Future<List<User>> getNearbyUsers(Coords currentLocation) async {
+    var response = await sendRequest(
+        method: "GET",
+        apiPath: "/UserLocation",
+        queryParameters: {
+          "latitude": currentLocation.latitude,
+          "longitude": currentLocation.longitude
+        });
+    Iterable l = json.decode(response.body);
+    List<User> users = List<User>.from(l.map((j) => User.fromJson(j)));
+    return users;
   }
 
   Future refresh() async {

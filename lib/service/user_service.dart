@@ -27,6 +27,7 @@ class UserService implements IUserService {
     await _saveToken(response.accessToken, response.refreshToken);
     UserProfile profile = await _broker.getProfile();
     return User(
+        userId: profile.userId,
         avatarPath: profile.avatarPath,
         name: profile.userName,
         email: profile.email,
@@ -66,6 +67,7 @@ class UserService implements IUserService {
     UserProfile profile = await _broker.getProfile();
 
     return User(
+        userId: profile.userId,
         avatarPath: profile.avatarPath,
         name: profile.userName,
         email: profile.email,

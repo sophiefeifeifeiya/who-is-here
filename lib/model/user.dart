@@ -3,15 +3,19 @@ import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 part 'user.g.dart';
 
+@JsonSerializable()
 class User {
+  String userId;
   String avatarPath;
   String name;
   String email;
   String about;
   bool isDarkMode;
+  @JsonKey(fromJson: _locationFromJson, toJson: _locationToJson)
   LatLng location;
 
   User({
+    required this.userId,
     required this.avatarPath,
     required this.name,
     required this.email,
@@ -19,16 +23,33 @@ class User {
     this.isDarkMode = false,
     this.location = const LatLng(0, 0),
   });
+
+  factory User.fromJson(Map<String, dynamic> json) =>
+      _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  static LatLng _locationFromJson(Map<String, dynamic> json) {
+    return LatLng(json["latitude"], json["longitude"]);
+  }
+
+  static Map<String, dynamic> _locationToJson(LatLng location) {
+    return {
+      "latitude": location.latitude,
+      "longitude": location.longitude
+    };
+  }
 }
 
 @JsonSerializable()
 class UserProfile {
+  final String userId;
   final String avatarPath;
   final String userName;
   final String email;
   final String bio;
 
-  UserProfile(this.avatarPath, this.userName, this.email, this.bio);
+  UserProfile(this.userId, this.avatarPath, this.userName, this.email, this.bio);
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);

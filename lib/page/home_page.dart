@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
+import 'package:whoshere/model/user.dart';
 import 'package:whoshere/service/services.dart';
 import 'package:whoshere/widgets/MapOverlay.dart';
 import 'package:whoshere/widgets/MapView.dart';
@@ -29,22 +30,36 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  late VoidCallback _showPersistantBottomSheetCallBack;
-
   final IUserLocationService userLocationService = Get.find();
   final IUserService userService = Get.find();
   final UserStateController stateController = Get.find();
   AMapController? mapController;
-  Completer mapControllerCompleter = Completer();
+  final Completer mapControllerCompleter = Completer();
+
+  late VoidCallback _showPersistantBottomSheetCallBack;
+  late Timer _nearByUserUpdateTimer;
 
   int _selectedTagIndex = 0;
   bool firstLocationUpdate = true;
+  List<User> nearbyUsers = [];
 
   @override
   void initState() {
     super.initState();
     _showPersistantBottomSheetCallBack = _showBottomSheet;
     onLoad();
+    _nearByUserUpdateTimer =
+        Timer.periodic(const Duration(seconds: 30), (timer) {
+      updateNearbyUsers();
+    });
+  }
+
+  void updateNearbyUsers() async {
+    print("Updating nearby users");
+    var users = await userLocationService.getNearbyUsers();
+    setState(() {
+      nearbyUsers = users;
+    });
   }
 
   Future ensurePermission() async {
@@ -169,6 +184,19 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
       }
+
+      overlays.addAll(nearbyUsers.map((u) => MapOverlay(
+          coordinate: u.location,
+          child: DecoratedBubble(
+            bubbleStyle: 1,
+            emoji: '😅',
+            tag: 'other_user',
+            onTap: () => openBubbleSertting(context,
+                bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
+            // onTap: () => openFriendPage(context),
+            onMap: true,
+            avatarPath: u.avatarPath,
+          ))));
 
       return MapView(
         mapCreatedCallback: onMapControllerCreated,

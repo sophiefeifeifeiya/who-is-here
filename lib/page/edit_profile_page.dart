@@ -12,6 +12,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final User user = User(
+      userId: "",
       avatarPath: "imagePath",
       name: "name",
       email: "email",

@@ -40,5 +40,5 @@ abstract class IUserLocationService {
 
   void dispose();
 
-  List<User> getNearbyUsers();
+  Future<List<User>> getNearbyUsers();
 }

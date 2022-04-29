@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:amap_flutter_location/amap_flutter_location.dart';
+import 'package:coord_convert/coord_convert.dart';
+import 'package:get/get.dart';
+import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/api_const_key.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
@@ -8,6 +11,7 @@ import 'package:whoshere/service/services.dart';
 class UserLocationService implements IUserLocationService {
   final StreamController<LatLng> _updateController = StreamController<LatLng>();
   final AMapFlutterLocation _location = AMapFlutterLocation();
+  final ApiBroker _broker = Get.find();
 
   LatLng _lastUpdateLocation =
       const LatLng(31.239703, 121.499718); // default initial location: Shanghai
@@ -24,9 +28,18 @@ class UserLocationService implements IUserLocationService {
   LatLng get currentLocation => _lastUpdateLocation;
 
   @override
-  List<User> getNearbyUsers() {
-    // TODO: implement getNearbyUsers
-    throw UnimplementedError();
+  Future<List<User>> getNearbyUsers() async {
+    List<User> users = await _broker.getNearbyUsers(CoordConvert.gcj02towgs84(
+        Coords(_lastUpdateLocation.latitude, _lastUpdateLocation.longitude)));
+
+    // Convert WGS-084 back to GCJ-02
+    users.forEach((u) {
+      Coords gcjCoord = CoordConvert.wgs84togcj02(
+          Coords(u.location.latitude, u.location.longitude));
+      u.location = LatLng(gcjCoord.latitude, gcjCoord.longitude);
+    });
+
+    return users;
   }
 
   @override
