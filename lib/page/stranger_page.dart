@@ -197,9 +197,12 @@ class info_bar extends StatelessWidget {
             height: 100,
             margin: EdgeInsetsDirectional.only(end: 15.0),
             child: AvatarView(
-              avatarType: AvatarType.CIRCLE,
-              imagePath: stranger.profile,
-            ),
+                avatarType: AvatarType.CIRCLE,
+                imagePath: stranger.profile,
+                placeHolder: const Icon(
+                  Icons.person,
+                  size: 50,
+                )),
           ),
         ],
       ),

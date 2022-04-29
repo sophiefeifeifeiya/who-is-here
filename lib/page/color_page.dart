@@ -16,7 +16,7 @@ class colorWidget extends StatelessWidget {
         ),
         Row(
           children: <Widget>[
-            const SizedBox(width: 10.0),
+            const SizedBox(width: 5.0),
             ColorButton((Colors.red)),
             const SizedBox(width: 5.0),
             ColorButton((Colors.orange)),
@@ -34,7 +34,7 @@ class colorWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            const SizedBox(width: 10.0),
+            const SizedBox(width: 5.0),
             ColorButton(Colors.cyan),
             const SizedBox(width: 5.0),
             ColorButton(Colors.teal),

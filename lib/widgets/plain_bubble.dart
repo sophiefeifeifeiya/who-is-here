@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers
+// ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers, must_be_immutable
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/utils/Touchable.dart';
@@ -16,20 +16,23 @@ class PlainBubble extends StatelessWidget {
   final int style;
   final VoidCallback? cb;
   final double paddingValue;
+  final double? size;
 
-  PlainBubble(
-      {Key? key,
-      required String avatarPath,
-      this.style = 1,
-      this.cb,
-      this.paddingValue = 0})
-      : super(key: key) {
+  PlainBubble({
+    Key? key,
+    required String avatarPath,
+    this.style = 1,
+    this.cb,
+    this.paddingValue = 0,
+    this.size,
+  }) : super(key: key) {
     avatarUrl = getAvatarImageUri(avatarPath).toString();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget bubble = Container();
+    Widget bubble = Text('unexpected value');
+    double _size = size ?? 80;
     switch (style) {
       case 1:
         if (cb != null) {
@@ -40,20 +43,22 @@ class PlainBubble extends StatelessWidget {
         break;
       case 2:
         if (cb != null) {
-          bubble = makeTouchable(buildBubble2(avatarUrl), cb as VoidCallback);
+          bubble = makeTouchable(
+              buildBubble2(avatarUrl, size: _size), cb as VoidCallback);
         } else {
-          bubble = buildBubble2(avatarUrl);
+          bubble = buildBubble2(avatarUrl, size: _size);
         }
         break;
       case 3:
         if (cb != null) {
-          bubble = makeTouchable(buildBubble3(avatarUrl), cb as VoidCallback);
+          bubble = makeTouchable(
+              buildBubble3(avatarUrl, size: _size), cb as VoidCallback);
         } else {
-          bubble = buildBubble3(avatarUrl);
+          bubble = buildBubble3(avatarUrl, size: _size);
         }
         break;
       default:
-      // return Container();
+        bubble = Text('unexpected value');
     }
     return Padding(padding: EdgeInsets.all(paddingValue), child: bubble);
   }
@@ -65,15 +70,17 @@ Widget buildBubble1(String avatar) {
   );
 }
 
-Widget buildBubble2(String avatar) {
+Widget buildBubble2(String avatar, {double size = 80}) {
   return BubbleType2(
     avatarUrl: avatar,
+    size: size,
   );
 }
 
-Widget buildBubble3(String avatar) {
+Widget buildBubble3(String avatar, {double size = 80}) {
   return BubbleType3(
     avatarUrl: avatar,
+    size: size,
   );
 }
 

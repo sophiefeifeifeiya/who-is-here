@@ -2,27 +2,33 @@
 
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:whoshere/controller/controller.dart';
 
 class BubbleType2 extends StatelessWidget {
   final String avatarUrl;
+  final double size;
 
-  const BubbleType2({Key? key, required this.avatarUrl}) : super(key: key);
+  const BubbleType2({Key? key, required this.avatarUrl, this.size = 80})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print('===== size =====');
+    print(size);
     return SizedBox(
-      height: 80,
-      width: 80,
+      height: size,
+      width: size,
       child: InkWell(
         child: AvatarView(
-          radius: 1000,
-          borderWidth: 10,
-          borderColor: Colors.lightBlue,
-          avatarType: AvatarType.CIRCLE,
-          backgroundColor: Colors.red,
-          imagePath: avatarUrl,
-        ),
+            radius: 1000,
+            borderWidth: 10,
+            borderColor: Colors.lightBlue,
+            avatarType: AvatarType.CIRCLE,
+            backgroundColor: Colors.red,
+            imagePath: avatarUrl,
+            placeHolder: const Icon(
+              Icons.person,
+              size: 50,
+            )),
       ),
     );
   }

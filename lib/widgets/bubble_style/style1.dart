@@ -1,7 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:whoshere/controller/controller.dart';
-import 'package:whoshere/utils/navigating.dart';
 
 class BubbleType1 extends StatelessWidget {
   final int scene;

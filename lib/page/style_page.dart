@@ -16,35 +16,38 @@ class StyleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 150,
-        padding: EdgeInsets.all(10),
-        color: Colors.transparent,
-        child: GridView.count(
-            crossAxisCount: 1,
-            padding: const EdgeInsets.all(10),
-            scrollDirection: Axis.horizontal,
-            mainAxisSpacing: 15,
-            crossAxisSpacing: 15,
-            children: [
-              PlainBubble(
-                style: 1,
-                cb: () => swicthStyle(1, tag),
-                avatarPath: avatarPath,
-              ),
-              // bubbleType1(),
-              PlainBubble(
-                style: 2,
-                paddingValue: 10,
-                cb: () => swicthStyle(2, tag),
-                avatarPath: avatarPath,
-              ),
-              PlainBubble(
-                style: 3,
-                paddingValue: 10,
-                cb: () => swicthStyle(3, tag),
-                avatarPath: avatarPath,
-              ),
-            ]));
+    return GridView.count(
+        crossAxisCount: 1,
+        padding: const EdgeInsets.all(10),
+        scrollDirection: Axis.horizontal,
+        mainAxisSpacing: 0,
+        children: [
+          Align(
+            child: PlainBubble(
+              style: 1,
+              cb: () => swicthStyle(1, tag),
+              avatarPath: avatarPath,
+            ),
+          ),
+          // bubbleType1(),
+          Align(
+            child: PlainBubble(
+              style: 2,
+              paddingValue: 0,
+              cb: () => swicthStyle(2, tag),
+              size: 100,
+              avatarPath: avatarPath,
+            ),
+          ),
+          Align(
+            child: PlainBubble(
+              style: 3,
+              paddingValue: 0,
+              cb: () => swicthStyle(3, tag),
+              size: 100,
+              avatarPath: avatarPath,
+            ),
+          ),
+        ]);
   }
 }

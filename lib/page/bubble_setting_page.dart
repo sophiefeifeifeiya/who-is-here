@@ -17,6 +17,12 @@ class BubbleSettingPage extends StatelessWidget {
 
   final UserStateController stateController = Get.find();
 
+  static final Map<int, Widget?> panelMap = {
+    0: null,
+    1: null,
+    2: null,
+  };
+
   BubbleSettingPage(
       {Key? key, required this.bubbleStye, this.emoji = '', required this.tag})
       : super(key: key);
@@ -27,6 +33,25 @@ class BubbleSettingPage extends StatelessWidget {
         stream: childPageStreamController.stream,
         initialData: 0,
         builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+          Widget panel;
+          int panelType = snapshot.data ?? 0;
+          if (panelMap[panelType] == null) {
+            if (panelType == 0) {
+              panelMap[panelType] = colorWidget(tag: tag);
+            } else if (panelType == 1) {
+              panelMap[panelType] = Obx(() => StyleWidget(
+                    tag: tag,
+                    avatarPath: stateController.currentUser.value!.avatarPath,
+                  ));
+            } else if (panelType == 2) {
+              panelMap[panelType] = emojiWidget(
+                tag: tag,
+              );
+            } else {
+              panelMap[panelType] = Text('unexpected value');
+            }
+          }
+          panel = panelMap[panelType]!;
           return Column(
             // scrollDirection: Axis.vertical,
             children: <Widget>[
@@ -36,8 +61,8 @@ class BubbleSettingPage extends StatelessWidget {
               ),
               Center(
                 child: Obx(() => DecoratedBubble(
-                      width: 100,
-                      height: 100,
+                      width: 120,
+                      height: 120,
                       tag: tag,
                       bubbleStyle: bubbleStye,
                       emoji: emoji,
@@ -55,16 +80,7 @@ class BubbleSettingPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              if (snapshot.data == 0) colorWidget(tag: tag),
-              if (snapshot.data == 1)
-                Obx(() => StyleWidget(
-                      tag: tag,
-                      avatarPath: stateController.currentUser.value!.avatarPath,
-                    )),
-              if (snapshot.data == 2)
-                emojiWidget(
-                  tag: tag,
-                ),
+              Expanded(child: panel)
             ],
           );
         });

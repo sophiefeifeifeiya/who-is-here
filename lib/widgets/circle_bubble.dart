@@ -1,5 +1,4 @@
 import 'package:avatar_view/avatar_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
 
@@ -18,13 +17,16 @@ class _CircleBubbleState extends State<CircleBubble> {
       initialData: Colors.lightBlueAccent,
       builder: (BuildContext context, AsyncSnapshot<Color> snapshot) {
         return AvatarView(
-          radius: 100,
-          borderWidth: 13,
-          borderColor: (snapshot.data)!,
-          avatarType: AvatarType.CIRCLE,
-          backgroundColor: Colors.red,
-          imagePath: "assets/images/profile.jpg",
-        );
+            radius: 100,
+            borderWidth: 13,
+            borderColor: (snapshot.data)!,
+            avatarType: AvatarType.CIRCLE,
+            backgroundColor: Colors.red,
+            imagePath: "assets/images/profile.jpg",
+            placeHolder: const Icon(
+              Icons.person,
+              size: 50,
+            ));
       },
     );
   }

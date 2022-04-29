@@ -109,7 +109,7 @@ class tag_bar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
               child: Icon(
             Icons.format_quote,
             size: 50,
@@ -123,7 +123,7 @@ class tag_bar extends StatelessWidget {
               tag(friend.tags[2]),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Row(
@@ -145,20 +145,20 @@ class menu_bar extends StatelessWidget {
         IconButton(
           onPressed: () {
             showModalBottomSheet(
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               context: context,
-              builder: (context) => setting_page(),
+              builder: (context) => const setting_page(),
               isScrollControlled: false,
               enableDrag: true,
             );
           },
-          icon: Icon(Icons.settings),
+          icon: const Icon(Icons.settings),
           splashRadius: 15,
         ),
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.call),
+          icon: const Icon(Icons.call),
           splashRadius: 15,
         ),
       ],
@@ -205,9 +205,12 @@ class info_bar extends StatelessWidget {
             height: 100,
             margin: EdgeInsetsDirectional.only(end: 15.0),
             child: AvatarView(
-              avatarType: AvatarType.CIRCLE,
-              imagePath: friend.profile,
-            ),
+                avatarType: AvatarType.CIRCLE,
+                imagePath: friend.profile,
+                placeHolder: const Icon(
+                  Icons.person,
+                  size: 50,
+                )),
           ),
         ],
       ),
