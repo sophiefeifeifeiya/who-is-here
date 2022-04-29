@@ -1,20 +1,23 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/controller/chat_controller.dart';
-import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/setting_page.dart';
 import 'package:whoshere/model/Post.dart';
+import 'package:whoshere/utils/navigating.dart';
 import 'package:whoshere/widgets/posts.dart';
 import 'package:whoshere/widgets/tag.dart';
 import 'package:whoshere/model/people.dart';
 import 'package:whoshere/routes/route_pages.dart';
+import 'package:whoshere/utils/image_uri_util.dart';
 
 class friendPage extends StatelessWidget {
   final Rx<User> friend;
 
-  friendPage(this.friend);
+  const friendPage(this.friend, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,10 @@ class friendPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           const menu_bar(),
-          info_bar(friend: friends[0]),
+          info_bar(
+            friend: friends[0],
+            user: friend.value,
+          ),
           const SizedBox(
             height: 15,
           ),
@@ -32,7 +38,7 @@ class friendPage extends StatelessWidget {
             height: 5.0,
           ),
           SizedBox(
-            height: 400.0,
+            height: 350.0,
             child: ListView.builder(
                 itemCount: eileen.length,
                 itemBuilder: (context, index) => Posts(
@@ -76,12 +82,14 @@ class hello_bar extends StatelessWidget {
                 Icons.pan_tool,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+                openFriendPage(context, user);
+              },
             ),
           ),
           Expanded(
             child: Container(
-              height: 35.0,
+              height: 20.0,
               margin: EdgeInsets.only(right: 10.0),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
@@ -91,9 +99,7 @@ class hello_bar extends StatelessWidget {
                 onPressed: () {
                   Get.put(ChatStateController(user: user),
                       tag: user.value.userId);
-                  Get.toNamed(RoutePages.chat, arguments: {
-                    "user": user.value
-                  });
+                  Get.toNamed(RoutePages.chat, arguments: {"user": user.value});
                 },
                 child: Text(
                   "Start Chatting".toUpperCase(),
@@ -181,12 +187,14 @@ class menu_bar extends StatelessWidget {
 
 class info_bar extends StatelessWidget {
   final People friend;
+  final User user;
 
-  const info_bar({Key? key, required this.friend}) : super(key: key);
+  const info_bar({Key? key, required this.friend, required this.user})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,7 +208,9 @@ class info_bar extends StatelessWidget {
                   height: 20.0,
                 ),
                 Text(
-                  friend.name,
+                  user.userName,
+                  softWrap: false,
+                  overflow: TextOverflow.visible,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -219,7 +229,7 @@ class info_bar extends StatelessWidget {
             margin: EdgeInsetsDirectional.only(end: 15.0),
             child: AvatarView(
                 avatarType: AvatarType.CIRCLE,
-                imagePath: friend.profile,
+                imagePath: getAvatarImageUri(user.avatarPath).toString(),
                 placeHolder: const Icon(
                   Icons.person,
                   size: 50,
