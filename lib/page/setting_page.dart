@@ -58,7 +58,7 @@ class setting_page extends StatelessWidget {
           alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text("Visibility Off",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class setting_page extends StatelessWidget {
           alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text("Delete Friend",
                   style: TextStyle(
                     color: Colors.red,

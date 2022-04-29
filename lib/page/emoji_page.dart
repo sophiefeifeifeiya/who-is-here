@@ -9,6 +9,7 @@ class emojiWidget extends StatelessWidget {
   const emojiWidget({Key? key, required this.tag}) : super(key: key);
 
   _onEmojiSelected(Emoji emoji) {
+    print(emoji.emoji);
     emojiChoosingController.add(BubbleEmojiInfo(emoji: emoji.emoji, tag: tag));
   }
 

@@ -9,45 +9,29 @@ class colorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          children: <Widget>[
-            const SizedBox(width: 5.0),
-            ColorButton((Colors.red)),
-            const SizedBox(width: 5.0),
-            ColorButton((Colors.orange)),
-            const SizedBox(width: 5.0),
-            ColorButton((Colors.yellow)),
-            const SizedBox(width: 5.0),
-            ColorButton((Colors.green)),
-            const SizedBox(width: 5.0),
-            ColorButton((Colors.blue)),
-            const SizedBox(width: 5.0),
-            ColorButton((Colors.purple)),
-            const SizedBox(width: 5.0),
-            ColorButton(Colors.pink),
-          ],
-        ),
-        Row(
+    return Stack(
+      children: [
+        GridView.count(
+          crossAxisCount: 6,
+          padding: const EdgeInsets.all(10),
+          scrollDirection: Axis.vertical,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
           children: [
-            const SizedBox(width: 5.0),
+            ColorButton((Colors.red)),
+            ColorButton((Colors.orange)),
+            ColorButton((Colors.yellow)),
+            ColorButton((Colors.green)),
+            ColorButton((Colors.blue)),
+            ColorButton((Colors.purple)),
+            ColorButton(Colors.pink),
             ColorButton(Colors.cyan),
-            const SizedBox(width: 5.0),
             ColorButton(Colors.teal),
-            const SizedBox(width: 5.0),
             ColorButton(Colors.grey),
-            const SizedBox(width: 5.0),
             ColorButton(Colors.black),
           ],
         ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        Center(child: ColorPicker(350))
+        Positioned(bottom: 10, child: Center(child: ColorPicker(350)))
       ],
     );
   }

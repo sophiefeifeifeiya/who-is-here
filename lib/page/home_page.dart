@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:amap_flutter_map/amap_flutter_map.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
@@ -167,7 +168,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
     double windowWidth = MediaQuery.of(context).size.width;
-
     var mapView = Obx(() {
       List<MapOverlay> overlays = [];
       if (stateController.currentUser.value != null) {
@@ -175,10 +175,10 @@ class _HomePageState extends State<HomePage> {
           coordinate: stateController.currentUser.value!.location,
           child: DecoratedBubble(
             bubbleStyle: 1,
-            emoji: '😅',
+            emoji: '🐼',
             tag: 'current_user',
             onTap: () => openBubbleSertting(context,
-                bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
+                bubbleStyle: 1, emoji: '🐼', tag: 'current_user'),
             // onTap: () => openFriendPage(context),
             onMap: true,
             avatarPath: stateController.currentUser.value!.avatarPath,
@@ -186,18 +186,22 @@ class _HomePageState extends State<HomePage> {
         ));
       }
 
-      overlays.addAll(nearbyUsers.map((u) => MapOverlay(
-          coordinate: u.location,
-          child: DecoratedBubble(
-            bubbleStyle: 1,
-            emoji: '😅',
-            tag: 'other_user',
-            onTap: () => openBubbleSertting(context,
-                bubbleStyle: 1, emoji: '😅', tag: 'current_user'),
-            // onTap: () => openFriendPage(context),
-            onMap: true,
-            avatarPath: u.avatarPath,
-          ))));
+      overlays.addAll(nearbyUsers.map((u) {
+        var rnd = Random();
+        int i = rnd.nextInt(2) + 1;
+        const emojis = ['🙃', '🐸', '🍉'];
+        return MapOverlay(
+            coordinate: u.location,
+            child: DecoratedBubble(
+              bubbleStyle: i,
+              emoji: emojis[i],
+              tag: u.userId,
+              // onTap: () => openFriendPage(context),
+              onTap: () => _showPersistantBottomSheetCallBack(),
+              onMap: true,
+              avatarPath: u.avatarPath,
+            ));
+      }));
 
       return MapView(
         mapCreatedCallback: onMapControllerCreated,
