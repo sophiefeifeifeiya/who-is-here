@@ -16,7 +16,7 @@ import 'package:whoshere/widgets/SearchBarDelegate.dart';
 import 'package:whoshere/widgets/FilledIconButton.dart';
 import 'package:whoshere/page/profile_page.dart';
 import 'package:whoshere/widgets/decorated_bubble.dart';
-import 'package:whoshere/widgets/tapbar.dart';
+import 'package:whoshere/widgets/greeting_page.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:whoshere/utils/navigating.dart';
 
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
 
     _scaffoldKey.currentState
         ?.showBottomSheet((context) {
-          return tapBar2();
+          return GreetingPage();
         })
         .closed
         .whenComplete(() {
