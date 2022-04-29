@@ -7,7 +7,7 @@ part 'user.g.dart';
 class User {
   String userId;
   String avatarPath;
-  String name;
+  String userName;
   String email;
   String bio;
   bool isDarkMode;
@@ -17,7 +17,7 @@ class User {
   User({
     required this.userId,
     required this.avatarPath,
-    required this.name,
+    required this.userName,
     required this.email,
     required this.bio,
     this.isDarkMode = false,
