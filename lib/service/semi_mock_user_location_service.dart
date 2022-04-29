@@ -7,13 +7,22 @@ import 'package:faker/faker.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 class SemiMockUserLocationService extends UserLocationService {
+
+  List<User>? _mockUsers;
+
   @override
   Future<List<User>> getNearbyUsers() async {
     List<User> users = await super.getNearbyUsers();
     if (users.length < 10) {
-      for (int i = 0; i < 5; i++) {
-        users.add(_newMockUser());
+
+      if (_mockUsers == null) {
+        _mockUsers = [];
+        for (int i = 0; i < 5; i++) {
+          _mockUsers!.add(_newMockUser());
+        }
       }
+
+      users.addAll(_mockUsers!);
     }
 
     return users;
