@@ -30,7 +30,9 @@ class User {
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   static LatLng _locationFromJson(Map<String, dynamic> json) {
-    return LatLng(json["latitude"], json["longitude"]);
+    num latitude = json["latitude"];
+    num longitude = json["longitude"];
+    return LatLng(latitude.toDouble(), longitude.toDouble());
   }
 
   static Map<String, dynamic> _locationToJson(LatLng location) {

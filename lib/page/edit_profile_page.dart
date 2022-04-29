@@ -14,7 +14,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final User user = User(
       userId: "",
       avatarPath: "imagePath",
-      name: "name",
+      userName: "name",
       email: "email",
       bio: "about",
       isDarkMode: false,
@@ -36,7 +36,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 24),
               TextFieldWidget(
                 label: 'Full Name',
-                text: user.name,
+                text: user.userName,
                 onChanged: (name) {},
               ),
               const SizedBox(height: 24),

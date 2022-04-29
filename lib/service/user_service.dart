@@ -29,7 +29,7 @@ class UserService implements IUserService {
     return User(
         userId: profile.userId,
         avatarPath: profile.avatarPath,
-        name: profile.userName,
+        userName: profile.userName,
         email: profile.email,
         bio: profile.bio);
   }
@@ -69,7 +69,7 @@ class UserService implements IUserService {
     return User(
         userId: profile.userId,
         avatarPath: profile.avatarPath,
-        name: profile.userName,
+        userName: profile.userName,
         email: profile.email,
         bio: profile.bio);
   }

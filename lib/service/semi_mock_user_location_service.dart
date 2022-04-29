@@ -37,7 +37,7 @@ class SemiMockUserLocationService extends UserLocationService {
     return User(
         userId: "mock-${Uuid().v4()}",
         avatarPath: "/avatar_images/default_avatar_${rand.nextInt(7) + 1}.jpg",
-        name: faker.internet.userName(),
+        userName: faker.internet.userName(),
         email: faker.internet.email(),
         bio: faker.lorem.sentence(),
         location: LatLng(currentLocation.latitude + latitudeOffset,
