@@ -47,6 +47,7 @@ dependencies:
   permission_handler: ^9.2.0
   uuid: ^3.0.6
   faker: ^2.0.0 # generate mock data
+  web_socket_channel: ^2.2.0
 
   # state, navigation, and dependency management
   get: ^4.3.8

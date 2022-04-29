@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:whoshere/chat/chat_view.dart';
+import 'package:whoshere/page/chat_page.dart';
 import 'package:whoshere/page/login_page.dart';
 import 'package:whoshere/page/home_page.dart';
 import 'package:whoshere/page/register_page.dart';

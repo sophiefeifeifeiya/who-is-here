@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:coord_convert/coord_convert.dart';
 import 'package:http/http.dart' as http;
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:whoshere/model/user.dart';
 
 import 'api_exceptions.dart';
@@ -59,6 +61,24 @@ class ApiBroker {
     return UserProfile.fromJson(json.decode(response.body));
   }
 
+  Future<WebSocketChannel> openChatChannel() async {
+    if (accessToken == null) {
+      throw StateError("You must login");
+    }
+
+    if (_needRefresh()) {
+      await refresh();
+    }
+
+    return IOWebSocketChannel.connect(
+        Uri(
+          scheme: "wss",
+          host: apiDomain,
+          path: apiBasePath + "/Chat/ws",
+        ),
+        headers: {"Authorization": "Bearer ${accessToken!.token}"});
+  }
+
   /// Get nearby users
   ///
   /// currentLocation: the coordinate of current location in WGS-084
@@ -73,6 +93,12 @@ class ApiBroker {
     Iterable l = json.decode(response.body);
     List<User> users = List<User>.from(l.map((j) => User.fromJson(j)));
     return users;
+  }
+
+  bool _needRefresh() {
+    // Refresh access token 2 minuets before it expired
+    return DateTime.now()
+        .isAfter(accessToken!.expires.subtract(const Duration(minutes: 2)));
   }
 
   Future refresh() async {
@@ -130,9 +156,7 @@ class ApiBroker {
     var client = http.Client();
     try {
       if (accessToken != null) {
-        // Refresh access token 2 minuets before it expired
-        if (DateTime.now().isAfter(
-            accessToken!.expires.subtract(const Duration(minutes: 2)))) {
+        if (_needRefresh()) {
           if (!disableRefresh) {
             await refresh();
           }
