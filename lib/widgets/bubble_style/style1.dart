@@ -7,7 +7,8 @@ class BubbleType1 extends StatelessWidget {
   final int scene;
   final String avatarUrl;
 
-  const BubbleType1({Key? key, required this.avatarUrl, this.scene = 0}) : super(key: key);
+  const BubbleType1({Key? key, required this.avatarUrl, this.scene = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

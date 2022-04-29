@@ -9,10 +9,10 @@ void swicthStyle(int style, String tag) {
 }
 
 class StyleWidget extends StatelessWidget {
-
   final String avatarPath;
   final String tag;
-  const StyleWidget({Key? key, required this.avatarPath, required this.tag}) : super(key: key);
+  const StyleWidget({Key? key, required this.avatarPath, required this.tag})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +35,13 @@ class StyleWidget extends StatelessWidget {
               // bubbleType1(),
               PlainBubble(
                 style: 2,
+                paddingValue: 10,
                 cb: () => swicthStyle(2, tag),
                 avatarPath: avatarPath,
               ),
               PlainBubble(
                 style: 3,
+                paddingValue: 10,
                 cb: () => swicthStyle(3, tag),
                 avatarPath: avatarPath,
               ),

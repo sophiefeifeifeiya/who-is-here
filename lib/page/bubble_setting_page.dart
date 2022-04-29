@@ -36,6 +36,8 @@ class BubbleSettingPage extends StatelessWidget {
               ),
               Center(
                 child: Obx(() => DecoratedBubble(
+                      width: 100,
+                      height: 100,
                       tag: tag,
                       bubbleStyle: bubbleStye,
                       emoji: emoji,

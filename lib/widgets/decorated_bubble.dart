@@ -16,6 +16,7 @@ class DecoratedBubble extends StatefulWidget {
   final double height;
   final bool onMap;
   final String avatarPath;
+  final double paddingValue;
 
   const DecoratedBubble(
       {Key? key,
@@ -26,7 +27,8 @@ class DecoratedBubble extends StatefulWidget {
       this.onTap,
       this.width = 150,
       this.height = 145,
-      this.onMap = false})
+      this.onMap = false,
+      this.paddingValue = 0})
       : super(key: key);
 
   @override
@@ -49,24 +51,29 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
           currentStyle = type.data?.bubbleStyle as int;
         }
         bubble = PlainBubble(
+          paddingValue: currentStyle == 1 ? 0 : 10,
           style: currentStyle as int,
           avatarPath: widget.avatarPath,
         );
         var stack = Stack(
           alignment: const FractionalOffset(0.3, 0.75),
+          clipBehavior: Clip.none,
           children: [
             Positioned(
               child: SizedBox(
-                  height:
-                      (widget.onMap && currentStyle != 1) ? 85 : widget.height,
-                  width:
-                      (widget.onMap && currentStyle != 1) ? 85 : widget.height,
-                  child: bubble),
+                height:
+                    (widget.onMap && currentStyle != 1) ? 100 : widget.height,
+                width:
+                    (widget.onMap && currentStyle != 1) ? 100 : widget.height,
+                child: bubble,
+              ),
             ),
             EmojiDecroator(
               tag: widget.tag,
-              right: currentStyle == 1 ? 20 : 0,
-              bottom: currentStyle == 1 ? 20 : 0,
+              // right: currentStyle == 1 ? 20 : 0,
+              // bottom: currentStyle == 1 ? 20 : 0,
+              right: 0,
+              bottom: 0,
               emoji: widget.emoji,
             )
           ],

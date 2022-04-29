@@ -15,36 +15,47 @@ class PlainBubble extends StatelessWidget {
   late String avatarUrl;
   final int style;
   final VoidCallback? cb;
+  final double paddingValue;
 
-  PlainBubble({Key? key, required String avatarPath, this.style = 1, this.cb})
+  PlainBubble(
+      {Key? key,
+      required String avatarPath,
+      this.style = 1,
+      this.cb,
+      this.paddingValue = 0})
       : super(key: key) {
     avatarUrl = getAvatarImageUri(avatarPath).toString();
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget bubble = Container();
     switch (style) {
       case 1:
         if (cb != null) {
-          return makeTouchable(buildBubble1(avatarUrl), cb as VoidCallback);
+          bubble = makeTouchable(buildBubble1(avatarUrl), cb as VoidCallback);
         } else {
-          return buildBubble1(avatarUrl);
+          bubble = buildBubble1(avatarUrl);
         }
+        break;
       case 2:
         if (cb != null) {
-          return makeTouchable(buildBubble2(avatarUrl), cb as VoidCallback);
+          bubble = makeTouchable(buildBubble2(avatarUrl), cb as VoidCallback);
         } else {
-          return buildBubble2(avatarUrl);
+          bubble = buildBubble2(avatarUrl);
         }
+        break;
       case 3:
         if (cb != null) {
-          return makeTouchable(buildBubble3(avatarUrl), cb as VoidCallback);
+          bubble = makeTouchable(buildBubble3(avatarUrl), cb as VoidCallback);
         } else {
-          return buildBubble3(avatarUrl);
+          bubble = buildBubble3(avatarUrl);
         }
+        break;
       default:
-        return Container();
+      // return Container();
     }
+    return Padding(padding: EdgeInsets.all(paddingValue), child: bubble);
   }
 }
 
