@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/bubble_setting_page.dart';
 import 'package:whoshere/page/friend_page.dart';
 import 'package:whoshere/page/stranger_page.dart';
 
-void openFriendPage(BuildContext context) {
+void openFriendPage(BuildContext context, Rx<User> friend) {
   CupertinoScaffold.showCupertinoModalBottomSheet(
       context: context,
-      builder: (context) => friendPage(),
+      builder: (context) => friendPage(friend),
       enableDrag: true,
       expand: true,
       backgroundColor: Colors.grey);

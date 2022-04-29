@@ -28,6 +28,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+typedef BottomSheetCallBack = void Function(Rx<User> user);
+
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final IUserLocationService userLocationService = Get.find();
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   AMapController? mapController;
   final Completer mapControllerCompleter = Completer();
 
-  late VoidCallback _showPersistantBottomSheetCallBack;
+  late BottomSheetCallBack _showPersistantBottomSheetCallBack;
   late Timer _nearByUserUpdateTimer;
 
   int _selectedTagIndex = 0;
@@ -143,14 +145,14 @@ class _HomePageState extends State<HomePage> {
     userLocationService.startLocationUpdate();
   }
 
-  void _showBottomSheet() {
+  void _showBottomSheet(Rx<User> user) {
     setState(() {
-      _showPersistantBottomSheetCallBack = () {};
+      _showPersistantBottomSheetCallBack = (user) {};
     });
 
     _scaffoldKey.currentState
         ?.showBottomSheet((context) {
-          return GreetingPage();
+          return GreetingPage(user);
         })
         .closed
         .whenComplete(() {
@@ -202,7 +204,7 @@ class _HomePageState extends State<HomePage> {
               emoji: emojis[i],
               tag: u.userId,
               // onTap: () => openFriendPage(context),
-              onTap: () => _showPersistantBottomSheetCallBack(),
+              onTap: () => _showPersistantBottomSheetCallBack(u.obs),
               onMap: true,
               avatarPath: u.avatarPath,
             ));
