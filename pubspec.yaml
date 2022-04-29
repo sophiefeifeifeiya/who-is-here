@@ -45,6 +45,8 @@ dependencies:
   flutter_svg: ^1.0.3
   json_annotation: ^4.4.0
   permission_handler: ^9.2.0
+  uuid: ^3.0.6
+  faker: ^2.0.0 # generate mock data
 
   # state, navigation, and dependency management
   get: ^4.3.8

@@ -73,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16),
             Text(
-              user.about,
+              user.bio,
               style: const TextStyle(fontSize: 16, height: 1.4),
             ),
           ],

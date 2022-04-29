@@ -31,7 +31,7 @@ class UserService implements IUserService {
         avatarPath: profile.avatarPath,
         name: profile.userName,
         email: profile.email,
-        about: profile.bio);
+        bio: profile.bio);
   }
 
   @override
@@ -71,7 +71,7 @@ class UserService implements IUserService {
         avatarPath: profile.avatarPath,
         name: profile.userName,
         email: profile.email,
-        about: profile.bio);
+        bio: profile.bio);
   }
 
   @override

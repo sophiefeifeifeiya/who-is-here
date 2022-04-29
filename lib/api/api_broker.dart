@@ -66,10 +66,10 @@ class ApiBroker {
     var response = await sendRequest(
         method: "GET",
         apiPath: "/UserLocation",
-        queryParameters: {
+        body: json.encode({
           "latitude": currentLocation.latitude,
           "longitude": currentLocation.longitude
-        });
+        }));
     Iterable l = json.decode(response.body);
     List<User> users = List<User>.from(l.map((j) => User.fromJson(j)));
     return users;

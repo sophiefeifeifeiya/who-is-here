@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
         Timer.periodic(const Duration(seconds: 30), (timer) {
       updateNearbyUsers();
     });
+    updateNearbyUsers();
   }
 
   void updateNearbyUsers() async {

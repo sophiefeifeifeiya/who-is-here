@@ -9,7 +9,7 @@ class User {
   String avatarPath;
   String name;
   String email;
-  String about;
+  String bio;
   bool isDarkMode;
   @JsonKey(fromJson: _locationFromJson, toJson: _locationToJson)
   LatLng location;
@@ -19,7 +19,7 @@ class User {
     required this.avatarPath,
     required this.name,
     required this.email,
-    required this.about,
+    required this.bio,
     this.isDarkMode = false,
     this.location = const LatLng(0, 0),
   });

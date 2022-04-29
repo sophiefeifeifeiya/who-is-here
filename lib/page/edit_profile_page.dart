@@ -16,7 +16,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       avatarPath: "imagePath",
       name: "name",
       email: "email",
-      about: "about",
+      bio: "about",
       isDarkMode: false,
       location: LatLng(0, 0));
 
@@ -48,7 +48,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 24),
               TextFieldWidget(
                 label: 'About',
-                text: user.about,
+                text: user.bio,
                 maxLines: 5,
                 onChanged: (about) {},
               ),

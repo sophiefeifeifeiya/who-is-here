@@ -47,12 +47,16 @@ class UserLocationService implements IUserLocationService {
   Stream<LatLng> get onLocationUpdate => _updateController.stream;
 
   void _onLocationUpdate(Map<String, dynamic> update) {
-    print('====update====');
-    print(update);
-    var loc = LatLng(update["latitude"], update["longitude"]);
-    // print("Location update: ${loc.toString()}");
-    _lastUpdateLocation = loc;
-    _updateController.sink.add(loc);
+    if (update["latitude"] != null) {
+      var loc = LatLng(update["latitude"], update["longitude"]);
+      // print("Location update: ${loc.toString()}");
+      _lastUpdateLocation = loc;
+      _updateController.sink.add(loc);
+    } else {
+      // print error
+      print(update);
+    }
+
   }
 
   @override

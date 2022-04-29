@@ -8,7 +8,7 @@ import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/api_const_key.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/routes/route_pages.dart';
-import 'package:whoshere/service/user_location_service.dart';
+import 'package:whoshere/service/semi_mock_user_location_service.dart';
 import 'package:whoshere/service/user_service.dart';
 
 import 'service/services.dart';
@@ -24,9 +24,9 @@ void main() async {
   // permanent because only 1 logged-in account is allowed at the same time
   Get.put<IUserService>(UserService(), permanent: true);
 
-  Get.put<IUserLocationService>(UserLocationService());
+  Get.put<IUserLocationService>(SemiMockUserLocationService());
 
-  Get.put<UserStateController>(UserStateController());
+  Get.put<UserStateController>(UserStateController(), permanent: true);
 
   runApp(const MyApp());
 }
