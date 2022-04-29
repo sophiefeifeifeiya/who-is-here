@@ -16,7 +16,7 @@ class Posts extends StatelessWidget {
             height: 250.0,
             width: double.infinity,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(100.0),
                 topLeft: Radius.circular(15.0),
                 bottomLeft: Radius.circular(15.0),
@@ -29,10 +29,10 @@ class Posts extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 1.0),
+            padding: const EdgeInsets.only(top: 1.0),
             child: Container(
               height: 250.0,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
@@ -50,23 +50,21 @@ class Posts extends StatelessWidget {
                   height: 30.0,
                   width: double.infinity,
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.0, vertical: 1.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Row(
                           children: [
-                            Container(
-                              child: Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Text(
-                                  post.time,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.white),
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                post.time,
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.white),
                               ),
                             )
                           ],
