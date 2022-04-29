@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
   final UserStateController stateController = Get.find();
   AMapController? mapController;
   final Completer mapControllerCompleter = Completer();
+  final Map<String, String> tagMap = {};
 
   late BottomSheetCallBack _showPersistantBottomSheetCallBack;
   late Timer _nearByUserUpdateTimer;
@@ -60,9 +61,18 @@ class _HomePageState extends State<HomePage> {
   void updateNearbyUsers() async {
     print("Updating nearby users");
     var users = await userLocationService.getNearbyUsers();
-
     setState(() {
-      nearbyUsers = users;
+      int i = 0;
+      nearbyUsers = users.map((User u) {
+        if (!tagMap.containsKey(u.userId)) {
+          final tobeAdded = <String, String>{
+            u.userId: tagList[i++ % tagList.length]
+          };
+          tagMap.addAll(tobeAdded);
+        }
+        u.tag = tagMap[u.userId];
+        return u;
+      }).toList();
     });
   }
 
@@ -167,7 +177,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool filtrateUser(User user) {
-    return true;
+    print('======= check =======');
+    print(user.tag);
+    print(tagList[_selectedTagIndex]);
+    return user.tag == tagList[_selectedTagIndex];
   }
 
   @override
@@ -235,6 +248,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: (int index) {
                       setState(() {
                         _selectedTagIndex = index;
+                        updateNearbyUsers();
                       });
                     },
                   ),
