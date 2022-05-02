@@ -9,6 +9,13 @@ abstract class ApiConstKey {
 
   static const String apiDomain = String.fromEnvironment("WHOSHERE_API_DOMAIN",
       defaultValue: "whoshere.fuiyoo.tech");
+
+  /// The api port number, default value is 0 (this value will not be used)
+  static const int apiPort = int.fromEnvironment("WHOSHERE_API_PORT");
   static const String apiPath =
       String.fromEnvironment("WHOSHERE_API_BASE", defaultValue: "");
+
+  static const bool useSecureContext =
+      bool.fromEnvironment("WHOSHERE_API_SECURE_CONTEXT", defaultValue: true);
+
 }

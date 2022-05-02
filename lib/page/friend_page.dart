@@ -3,6 +3,7 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/controller/chat_controller.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:whoshere/page/setting_page.dart';
@@ -12,7 +13,6 @@ import 'package:whoshere/widgets/posts.dart';
 import 'package:whoshere/widgets/tag.dart';
 import 'package:whoshere/model/people.dart';
 import 'package:whoshere/routes/route_pages.dart';
-import 'package:whoshere/utils/image_uri_util.dart';
 
 class friendPage extends StatelessWidget {
   final Rx<User> friend;
@@ -189,7 +189,9 @@ class info_bar extends StatelessWidget {
   final People friend;
   final User user;
 
-  const info_bar({Key? key, required this.friend, required this.user})
+  final ApiBroker _broker = Get.find();
+
+  info_bar({Key? key, required this.friend, required this.user})
       : super(key: key);
 
   @override
@@ -229,7 +231,8 @@ class info_bar extends StatelessWidget {
             margin: EdgeInsetsDirectional.only(end: 15.0),
             child: AvatarView(
                 avatarType: AvatarType.CIRCLE,
-                imagePath: getAvatarImageUri(user.avatarPath).toString(),
+                imagePath:
+                    _broker.getAvatarImageUri(user.avatarPath).toString(),
                 placeHolder: const Icon(
                   Icons.person,
                   size: 50,

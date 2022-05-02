@@ -1,55 +1,48 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:whoshere/api/api_broker.dart';
-import 'package:whoshere/api/api_exceptions.dart';
 import 'package:whoshere/model/chat_message.dart';
 import 'package:whoshere/model/user.dart';
-import 'package:whoshere/routes/route_pages.dart';
+import 'package:whoshere/service/services.dart';
 
 class ChatStateController extends GetxController {
   final TextEditingController textEditController = TextEditingController();
   final ScrollController scrollController = ScrollController();
+
+  final IUserChatService chatService = Get.find();
+
   final RxList<ChatMessage> messageList = <ChatMessage>[].obs;
   final Rx<User> user;
-  final ApiBroker _broker = Get.find();
 
-  WebSocketChannel? _chatChannel;
+  StreamSubscription? chatSubscription;
 
   ChatStateController({required this.user});
 
-  @override
-  void onInit() async {
-    try {
-      _chatChannel = await _broker.openChatChannel();
-      _chatChannel!.stream.listen(onMessageReceived);
-    } on ApiBrokerException catch (e) {
-      await Get.dialog(AlertDialog(
-        title: const Text("We have a problem..."),
-        content: Text(e.errorMessage),
-      ));
-      Get.offNamed(RoutePages.chat);
-    }
+  void onMessageReceived(ChatNotification chatNotification) {
+    messageList.add(chatNotification.message);
+    chatService.saveMessage(user.value.userId, chatNotification.message);
+    FlutterRingtonePlayer.playNotification();
   }
 
-  void onMessageReceived(dynamic event) {
-    if (event is Map<String, dynamic>) {
-      messageList.add(ChatMessage(
-          direction: ChatMessageDirection.receive,
-          content: event["Message"],
-          contentType: ChatMessageBodyType.txt,
-          time: DateTime.parse(event["SendTime"])));
-    }
-    print(event);
+  @override
+  void onInit() async {
+    super.onInit();
+    chatSubscription = chatService.onMessageReceived
+        .where((event) => event.senderId == user.value.userId)
+        .listen(onMessageReceived);
+    var messages = await chatService.loadChatHistory(user.value.userId);
+    messageList.addAll(messages);
+    scrollToBottom();
+  }
+
+  @override
+  void onClose() {
+    chatSubscription?.cancel();
   }
 
   RxBool showSend = false.obs;
-
-  void initMessageList() {}
-
-  void saveMessageList() {}
 
   void sendMessage() {
     var chatMessage = ChatMessage(
@@ -59,21 +52,25 @@ class ChatStateController extends GetxController {
       time: DateTime.now(),
       sending: true,
     );
-
-    _sendMessageToChannel(chatMessage);
-    messageList.add(chatMessage);
+    textEditController.clear();
+    _sendMessageToChannelAndSave(chatMessage);
+    scrollToBottom();
   }
 
-  void _sendMessageToChannel(ChatMessage chatMessage) async {
-    if (_chatChannel == null) {
-      chatMessage.sending.value = false;
+  void _sendMessageToChannelAndSave(ChatMessage chatMessage) async {
+    messageList.add(chatMessage);
+    try {
+      await chatService.sendMessage(user.value.userId, chatMessage);
+      chatService.saveMessage(user.value.userId, chatMessage);
+    } on ChatRequestException catch (e) {
       chatMessage.sendFailed.value = true;
-      return;
-    } else {
-      _chatChannel!.sink.add(json.encode(
-          {"receiverId": user.value.userId, "message": chatMessage.content}));
-
-      chatMessage.sending.value = false; // TODO: wait for sending
     }
+    chatMessage.sending.value = false;
+  }
+
+  void scrollToBottom() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    });
   }
 }

@@ -9,6 +9,7 @@ import 'package:whoshere/api_const_key.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/routes/route_pages.dart';
 import 'package:whoshere/service/semi_mock_user_location_service.dart';
+import 'package:whoshere/service/user_chat_service.dart';
 import 'package:whoshere/service/user_service.dart';
 
 import 'service/services.dart';
@@ -17,7 +18,10 @@ void main() async {
   // Register services and configure dependencies
   Get.put<ApiBroker>(
       ApiBroker(
-          apiDomain: ApiConstKey.apiDomain, apiBasePath: ApiConstKey.apiPath),
+          apiDomain: ApiConstKey.apiDomain,
+          apiBasePath: ApiConstKey.apiPath,
+          useSecureContext: ApiConstKey.useSecureContext,
+          apiPort: ApiConstKey.apiPort == 0 ? null : ApiConstKey.apiPort),
       permanent: true);
   // Needed before loading from share preferences
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +31,7 @@ void main() async {
   Get.put<IUserLocationService>(SemiMockUserLocationService());
 
   Get.put<UserStateController>(UserStateController(), permanent: true);
+  Get.put<IUserChatService>(UserChatService(), permanent: true);
 
   runApp(const MyApp());
 }

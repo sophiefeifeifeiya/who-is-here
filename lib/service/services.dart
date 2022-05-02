@@ -1,3 +1,4 @@
+import 'package:whoshere/model/chat_message.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 
@@ -41,4 +42,27 @@ abstract class IUserLocationService {
   void dispose();
 
   Future<List<User>> getNearbyUsers();
+}
+
+abstract class IUserChatService {
+  Stream<ChatNotification> get onMessageReceived;
+
+  void connect();
+
+  Future sendMessage(String receiverId, ChatMessage chatMessage);
+
+  /// Load the chat history from local database
+  ///
+  /// chatPeerId: the userId of the user you chat with
+  Future<Iterable<ChatMessage>> loadChatHistory(String chatPeerId);
+
+  /// Save the chat message to local database
+  Future saveMessage(String chatPeerId, ChatMessage chatMessage);
+}
+
+class ChatRequestException implements Exception {
+  final int statusCode;
+  final String? errorMessage;
+
+  ChatRequestException({required this.statusCode, this.errorMessage});
 }

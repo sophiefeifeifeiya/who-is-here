@@ -11,14 +11,25 @@ import 'package:whoshere/model/user.dart';
 import 'api_exceptions.dart';
 
 class ApiBroker {
+  final bool useSecureContext;
   final String apiDomain;
+  late int apiPort;
   final String apiBasePath;
   final StreamController<UserLoginResponse> tokenRefreshController =
       StreamController<UserLoginResponse>();
   late Stream<UserLoginResponse> onTokenRefreshed;
 
-  ApiBroker({required this.apiDomain, required this.apiBasePath}) {
+  ApiBroker(
+      {required this.apiDomain,
+      required this.apiBasePath,
+      this.useSecureContext = true,
+      int? apiPort}) {
     onTokenRefreshed = tokenRefreshController.stream;
+    if (apiPort == null) {
+      this.apiPort = useSecureContext ? 443 : 80;
+    } else {
+      this.apiPort = apiPort;
+    }
   }
 
   // All null or all not null
@@ -71,11 +82,7 @@ class ApiBroker {
     }
 
     return IOWebSocketChannel.connect(
-        Uri(
-          scheme: "wss",
-          host: apiDomain,
-          path: apiBasePath + "/Chat/ws",
-        ),
+        getApiUri(scheme: useSecureContext ? "wss" : "ws", apiPath: "/Chat/ws"),
         headers: {"Authorization": "Bearer ${accessToken!.token}"});
   }
 
@@ -133,7 +140,7 @@ class ApiBroker {
       Map<String, dynamic>? queryParameters,
       Map<String, String>? headers}) async {
     var request = http.Request(
-        method, Uri.https(apiDomain, apiBasePath + apiPath, queryParameters));
+        method, getApiUri(apiPath: apiPath, queryParameters: queryParameters));
 
     if (body != null) {
       if (body is String) {
@@ -155,15 +162,16 @@ class ApiBroker {
 
     var client = http.Client();
     try {
-      if (accessToken != null) {
-        if (_needRefresh()) {
-          if (!disableRefresh) {
-            await refresh();
-          }
-        }
-      }
-
       if (requireIdentity) {
+        if (accessToken == null) {
+          throw StateError(
+              "Call an API that required identity but you are not logged in");
+        }
+
+        if (!disableRefresh && _needRefresh()) {
+          await refresh();
+        }
+
         request.headers["Authorization"] = "Bearer ${accessToken!.token}";
       }
 
@@ -175,6 +183,22 @@ class ApiBroker {
     } finally {
       client.close();
     }
+  }
+
+  Uri getApiUri(
+      {required String apiPath,
+      String? scheme,
+      Map<String, dynamic>? queryParameters}) {
+    return Uri(
+        scheme: scheme ?? (useSecureContext ? "https" : "http"),
+        host: apiDomain,
+        port: apiPort,
+        path: apiBasePath + apiPath,
+        queryParameters: queryParameters);
+  }
+
+  Uri getAvatarImageUri(String avatarPath) {
+    return getApiUri(apiPath: avatarPath);
   }
 
   void _ensureSuccessfulResponse(http.Response response) {

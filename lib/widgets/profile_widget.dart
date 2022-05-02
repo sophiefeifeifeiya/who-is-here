@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:whoshere/utils/image_uri_util.dart';
+import 'package:get/get.dart';
+import 'package:whoshere/api/api_broker.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
 
-  const ProfileWidget({
+  final ApiBroker _broker = Get.find();
+
+  ProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = false,
@@ -32,7 +35,7 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(getAvatarImageUri(imagePath).toString());
+    final image = NetworkImage(_broker.getAvatarImageUri(imagePath).toString());
 
     return ClipOval(
       child: Material(

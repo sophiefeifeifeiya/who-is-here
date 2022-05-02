@@ -1,8 +1,9 @@
 // ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers, must_be_immutable
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/utils/Touchable.dart';
-import 'package:whoshere/utils/image_uri_util.dart';
 import 'package:whoshere/widgets/bubble_style/style1.dart';
 import 'package:whoshere/widgets/bubble_style/style2.dart';
 import 'package:whoshere/widgets/bubble_style/style3.dart';
@@ -18,6 +19,8 @@ class PlainBubble extends StatelessWidget {
   final double paddingValue;
   final double? size;
 
+  final ApiBroker _broker = Get.find();
+
   PlainBubble({
     Key? key,
     required String avatarPath,
@@ -26,7 +29,7 @@ class PlainBubble extends StatelessWidget {
     this.paddingValue = 0,
     this.size,
   }) : super(key: key) {
-    avatarUrl = getAvatarImageUri(avatarPath).toString();
+    avatarUrl = _broker.getAvatarImageUri(avatarPath).toString();
   }
 
   @override

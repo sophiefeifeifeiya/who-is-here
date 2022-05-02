@@ -1,16 +1,17 @@
 import 'package:avatar_view/avatar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whoshere/api/api_broker.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/model/chat_message.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:whoshere/themes.dart';
-import 'package:whoshere/utils/image_uri_util.dart';
 
 import '../controller/chat_controller.dart';
 
 class ChatPage extends StatelessWidget {
   final UserStateController userStateController = Get.find();
+  final ApiBroker _broker = Get.find();
   late ChatStateController chatStateController;
 
   ChatPage({Key? key}) : super(key: key) {
@@ -22,17 +23,7 @@ class ChatPage extends StatelessWidget {
 
     User user = u;
     chatStateController = Get.find(tag: user.userId);
-    chatStateController.initMessageList();
-    _toBottom();
-
     assert(userStateController.currentUser.value != null);
-  }
-
-  _toBottom() {
-    Future.delayed(const Duration(milliseconds: 100), () {
-      chatStateController.scrollController.jumpTo(
-          chatStateController.scrollController.position.maxScrollExtent);
-    });
   }
 
   @override
@@ -87,23 +78,24 @@ class ChatPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            width: 40,
+            height: 40,
             margin: const EdgeInsets.only(top: 5),
             child: AvatarView(
-                imagePath:
-                    getAvatarImageUri(chatStateController.user.value.avatarPath)
-                        .toString()),
+                imagePath: _broker
+                    .getAvatarImageUri(
+                        chatStateController.user.value.avatarPath)
+                    .toString()),
           ),
           const SizedBox(
-            width: 2,
+            width: 8,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() => Text(
-                      chatStateController.user.value.userName,
-                      style: const TextStyle(fontSize: 14),
-                    )),
+                _buildChatBoxTime(chatMessage.time),
+                const SizedBox(height: 2,),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
@@ -123,7 +115,6 @@ class ChatPage extends StatelessWidget {
 
   ///Build the sending message box (on the right)
   Widget _toMessageBox(ChatMessage chatMessage) {
-    DateTime time = chatMessage.time.toLocal();
     return Container(
       margin: const EdgeInsets.only(left: 100, top: 5, right: 15, bottom: 10),
       child: Row(
@@ -134,10 +125,8 @@ class ChatPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  "${time.hour}:${time.minute.toString().padLeft(2, "0")}",
-                  style: const TextStyle(fontSize: 14, color: Colors.grey),
-                ),
+                _buildChatBoxTime(chatMessage.time),
+                const SizedBox(height: 2,),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
@@ -151,22 +140,29 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 2,
+            width: 8,
           ),
           Container(
             margin: const EdgeInsets.only(top: 5),
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: Obx(() => AvatarView(
-                    imagePath: getAvatarImageUri(
-                            userStateController.currentUser.value!.avatarPath)
-                        .toString(),
-                  )),
-            ),
+            height: 40,
+            width: 40,
+            child: Obx(() => AvatarView(
+                  imagePath: _broker
+                      .getAvatarImageUri(
+                          userStateController.currentUser.value!.avatarPath)
+                      .toString(),
+                )),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildChatBoxTime(DateTime time) {
+    DateTime localTime = time.toLocal();
+    return Text(
+      "${localTime.hour}:${localTime.minute.toString().padLeft(2, "0")}",
+      style: const TextStyle(fontSize: 14, color: Colors.grey),
     );
   }
 

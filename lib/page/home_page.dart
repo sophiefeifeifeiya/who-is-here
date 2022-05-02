@@ -35,6 +35,8 @@ class _HomePageState extends State<HomePage> {
   final IUserLocationService userLocationService = Get.find();
   final IUserService userService = Get.find();
   final UserStateController stateController = Get.find();
+  final IUserChatService chatService = Get.find();
+
   AMapController? mapController;
   final Completer mapControllerCompleter = Completer();
   final Map<String, String> tagMap = {};
@@ -56,6 +58,7 @@ class _HomePageState extends State<HomePage> {
       updateNearbyUsers();
     });
     updateNearbyUsers();
+    chatService.connect();
   }
 
   void updateNearbyUsers() async {
@@ -177,9 +180,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool filtrateUser(User user) {
-    print('======= check =======');
-    print(user.tag);
-    print(tagList[_selectedTagIndex]);
+    // print('======= check =======');
+    // print(user.tag);
+    // print(tagList[_selectedTagIndex]);
     return user.tag == tagList[_selectedTagIndex];
   }
 
