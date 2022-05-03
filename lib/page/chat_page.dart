@@ -95,7 +95,9 @@ class ChatPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildChatBoxTime(chatMessage.time),
-                const SizedBox(height: 2,),
+                const SizedBox(
+                  height: 2,
+                ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
@@ -126,7 +128,9 @@ class ChatPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 _buildChatBoxTime(chatMessage.time),
-                const SizedBox(height: 2,),
+                const SizedBox(
+                  height: 2,
+                ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 5),

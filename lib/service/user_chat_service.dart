@@ -16,7 +16,7 @@ class UserChatService extends IUserChatService {
 
   final ApiBroker _broker = Get.find();
   final StreamController<ChatNotification> _chatMessageController =
-      StreamController<ChatNotification>();
+      StreamController<ChatNotification>.broadcast();
 
   Completer<ChatResponse>? _completer;
   final Lock _lockWebSocket = Lock();
