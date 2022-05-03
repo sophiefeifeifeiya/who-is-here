@@ -37,7 +37,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
    <application
-        android:label="whoshere"
+        android:label="Who's Here?"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
