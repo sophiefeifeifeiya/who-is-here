@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:whoshere/controller/user_state_controller.dart';
 import 'package:whoshere/model/user.dart';
+import 'package:whoshere/routes/route_pages.dart';
 import 'package:whoshere/service/services.dart';
 import 'package:whoshere/widgets/MapOverlay.dart';
 import 'package:whoshere/widgets/MapView.dart';
@@ -13,7 +14,6 @@ import 'package:whoshere/mock/mockTagList.dart';
 import 'package:whoshere/widgets/TagSelector.dart';
 import 'package:whoshere/widgets/SearchBarDelegate.dart';
 import 'package:whoshere/widgets/FilledIconButton.dart';
-import 'package:whoshere/page/profile_page.dart';
 import 'package:whoshere/widgets/decorated_bubble.dart';
 import 'package:whoshere/page/greeting_page.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
@@ -274,11 +274,8 @@ class _HomePageState extends State<HomePage> {
               bottom: 20,
               right: 20,
               child: FilledIconButton(
-                background: Colors.blueAccent,
-                cb: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
-                ),
-              ))
+                  background: Colors.blueAccent,
+                  onPressed: () => Get.toNamed(RoutePages.profile)))
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

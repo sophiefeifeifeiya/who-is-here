@@ -21,6 +21,8 @@ abstract class IUserService {
   /// from persistent storage.
   Future<User?> loadLoggedInUser();
 
+  Future updateUserProfile(UserProfileUpdate profile);
+
   UserTokenPair? get accessToken;
   UserTokenPair? get refreshToken;
 }

@@ -1,5 +1,8 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
+
 import 'package:amap_flutter_base/amap_flutter_base.dart';
+import 'package:get/get.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
 
@@ -24,6 +27,7 @@ class User {
     required this.bio,
     this.isDarkMode = false,
     this.location = const LatLng(0, 0),
+    this.tag,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -39,6 +43,94 @@ class User {
   static Map<String, dynamic> _locationToJson(LatLng location) {
     return {"latitude": location.latitude, "longitude": location.longitude};
   }
+
+  UserProfile toUserProfile() => UserProfile(
+      userId: userId,
+      avatarPath: avatarPath,
+      bio: bio,
+      email: email,
+      userName: userName);
+
+  factory User.fromUserProfile(UserProfile profile) => User(
+      userId: profile.userId,
+      avatarPath: profile.avatarPath,
+      userName: profile.userName,
+      email: profile.email,
+      bio: profile.bio);
+
+  User copyWith({
+    String? userId,
+    String? avatarPath,
+    String? userName,
+    String? email,
+    String? bio,
+    bool? isDarkMode,
+    LatLng? location,
+    String? tag,
+  }) {
+    return User(
+      userId: userId ?? this.userId,
+      avatarPath: avatarPath ?? this.avatarPath,
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+      bio: bio ?? this.bio,
+      isDarkMode: isDarkMode ?? this.isDarkMode,
+      location: location ?? this.location,
+      tag: tag ?? this.tag,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'User(userId: $userId, userName: $userName, email: $email, bio: $bio, avatarPath: $avatarPath, isDarkMode: $isDarkMode, location: $location, tag: $tag)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is User &&
+        other.userId == userId &&
+        other.avatarPath == avatarPath &&
+        other.userName == userName &&
+        other.email == email &&
+        other.bio == bio &&
+        other.isDarkMode == isDarkMode &&
+        other.location == location &&
+        other.tag == tag;
+  }
+
+  @override
+  int get hashCode {
+    return userId.hashCode ^
+        avatarPath.hashCode ^
+        userName.hashCode ^
+        email.hashCode ^
+        bio.hashCode ^
+        isDarkMode.hashCode ^
+        location.hashCode ^
+        tag.hashCode;
+  }
+}
+
+extension UserUpdating on Rx<User?> {
+  updateUserProfile(UserProfileUpdate profileUpdate) {
+    update((u) {
+      if (u == null) {
+        return;
+      }
+
+      if (profileUpdate.userName != null) {
+        u.userName = profileUpdate.userName!;
+      }
+      if (profileUpdate.email != null) {
+        u.email = profileUpdate.email!;
+      }
+      if (profileUpdate.bio != null) {
+        u.bio = profileUpdate.bio!;
+      }
+    });
+  }
 }
 
 @JsonSerializable()
@@ -50,12 +142,43 @@ class UserProfile {
   final String bio;
 
   UserProfile(
-      this.userId, this.avatarPath, this.userName, this.email, this.bio);
+      {required this.userId,
+      required this.avatarPath,
+      required this.userName,
+      required this.email,
+      required this.bio});
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserProfileToJson(this);
+}
+
+@JsonSerializable()
+class UserProfileUpdate {
+  final String? userName;
+  final String? email;
+  final String? bio;
+
+  UserProfileUpdate({this.userName, this.email, this.bio});
+
+  factory UserProfileUpdate.fromUserProfile(
+          UserProfile currentProfile, UserProfile updatedProfile) =>
+      UserProfileUpdate(
+          userName: currentProfile.userName != updatedProfile.userName
+              ? updatedProfile.userName
+              : null,
+          email: currentProfile.email != updatedProfile.email
+              ? updatedProfile.email
+              : null,
+          bio: currentProfile.bio != updatedProfile.bio
+              ? updatedProfile.bio
+              : null);
+
+  factory UserProfileUpdate.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileUpdateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserProfileUpdateToJson(this);
 }
 
 @JsonSerializable()

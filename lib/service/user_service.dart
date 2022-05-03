@@ -26,12 +26,7 @@ class UserService implements IUserService {
         await _broker.login(request: UserLoginRequest(email, password));
     await _saveToken(response.accessToken, response.refreshToken);
     UserProfile profile = await _broker.getProfile();
-    return User(
-        userId: profile.userId,
-        avatarPath: profile.avatarPath,
-        userName: profile.userName,
-        email: profile.email,
-        bio: profile.bio);
+    return User.fromUserProfile(profile);
   }
 
   @override
@@ -80,7 +75,8 @@ class UserService implements IUserService {
   @override
   UserTokenPair? get refreshToken => _broker.refreshToken;
 
-  Future _saveToken(UserTokenPair accessToken, UserTokenPair refreshToken) async {
+  Future _saveToken(
+      UserTokenPair accessToken, UserTokenPair refreshToken) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(_prefsKeyAccessToken, accessToken.token);
     prefs.setString(
@@ -88,5 +84,10 @@ class UserService implements IUserService {
     prefs.setString(_prefsKeyRefreshToken, refreshToken.token);
     prefs.setString(
         _prefsKeyRefreshTokenExpires, refreshToken.expires.toString());
+  }
+
+  @override
+  Future updateUserProfile(UserProfileUpdate profile) async {
+    await _broker.updateProfile(profile);
   }
 }

@@ -7,7 +7,7 @@ class FilledIconButton extends StatelessWidget {
   final Color color;
   final double width;
   final double height;
-  final VoidCallback? cb;
+  final VoidCallback? onPressed;
   const FilledIconButton(
       {Key? key,
       this.icon = Icons.person,
@@ -15,7 +15,7 @@ class FilledIconButton extends StatelessWidget {
       this.background = Colors.lightBlue,
       this.width = 50,
       this.height = 50,
-      required this.cb})
+      required this.onPressed})
       : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class FilledIconButton extends StatelessWidget {
           size: width - 15,
           color: color,
         ),
-        onPressed: cb,
+        onPressed: onPressed,
       ),
     );
   }

@@ -131,6 +131,13 @@ class ApiBroker {
     tokenRefreshController.sink.add(userTokens);
   }
 
+  Future updateProfile(UserProfileUpdate profile) async {
+    await sendRequest(
+        method: "PATCH",
+        apiPath: "/User/Profile",
+        body: json.encode(profile.toJson()));
+  }
+
   Future<http.Response> sendRequest(
       {required String method,
       required String apiPath,
