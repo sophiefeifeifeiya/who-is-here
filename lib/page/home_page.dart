@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   AMapController? mapController;
   final Completer mapControllerCompleter = Completer();
-  final Map<String, String> tagMap = {};
 
   late BottomSheetCallBack _showPersistantBottomSheetCallBack;
   late Timer _nearByUserUpdateTimer;
@@ -61,21 +60,19 @@ class _HomePageState extends State<HomePage> {
     chatService.connect();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _nearByUserUpdateTimer.cancel();
+    userLocationService.stopLocationUpdate();
+    mapController?.disponse();
+  }
+
   void updateNearbyUsers() async {
-    print("Updating nearby users");
+    printInfo(info: "Updating nearby users");
     var users = await userLocationService.getNearbyUsers();
     setState(() {
-      int i = 0;
-      nearbyUsers = users.map((User u) {
-        if (!tagMap.containsKey(u.userId)) {
-          final tobeAdded = <String, String>{
-            u.userId: tagList[i++ % tagList.length]
-          };
-          tagMap.addAll(tobeAdded);
-        }
-        u.tag = tagMap[u.userId];
-        return u;
-      }).toList();
+      nearbyUsers = users;
     });
   }
 
@@ -183,7 +180,7 @@ class _HomePageState extends State<HomePage> {
     // print('======= check =======');
     // print(user.tag);
     // print(tagList[_selectedTagIndex]);
-    return user.tag == tagList[_selectedTagIndex];
+    return user.tags.contains(tagList[_selectedTagIndex]);
   }
 
   @override

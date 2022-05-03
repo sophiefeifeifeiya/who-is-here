@@ -61,12 +61,7 @@ class UserService implements IUserService {
     _broker.refreshToken = UserTokenPair(refreshToken, refreshExpires);
     UserProfile profile = await _broker.getProfile();
 
-    return User(
-        userId: profile.userId,
-        avatarPath: profile.avatarPath,
-        userName: profile.userName,
-        email: profile.email,
-        bio: profile.bio);
+    return User.fromUserProfile(profile);
   }
 
   @override

@@ -16,19 +16,22 @@ class User {
   bool isDarkMode;
   @JsonKey(fromJson: _locationFromJson, toJson: _locationToJson)
   LatLng location;
-  @JsonKey(ignore: true)
-  String? tag;
+  late RxList<String> tags;
 
-  User({
-    required this.userId,
-    required this.avatarPath,
-    required this.userName,
-    required this.email,
-    required this.bio,
-    this.isDarkMode = false,
-    this.location = const LatLng(0, 0),
-    this.tag,
-  });
+  User(
+      {required this.userId,
+      required this.avatarPath,
+      required this.userName,
+      required this.email,
+      required this.bio,
+      this.isDarkMode = false,
+      this.location = const LatLng(0, 0),
+      List<String>? tags}) {
+    this.tags = <String>[].obs;
+    if (tags != null) {
+      this.tags.addAll(tags);
+    }
+  }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -49,14 +52,16 @@ class User {
       avatarPath: avatarPath,
       bio: bio,
       email: email,
-      userName: userName);
+      userName: userName,
+      tags: tags.value);
 
   factory User.fromUserProfile(UserProfile profile) => User(
       userId: profile.userId,
       avatarPath: profile.avatarPath,
       userName: profile.userName,
       email: profile.email,
-      bio: profile.bio);
+      bio: profile.bio,
+      tags: profile.tags.obs);
 
   User copyWith({
     String? userId,
@@ -66,7 +71,7 @@ class User {
     String? bio,
     bool? isDarkMode,
     LatLng? location,
-    String? tag,
+    List<String>? tags,
   }) {
     return User(
       userId: userId ?? this.userId,
@@ -76,13 +81,13 @@ class User {
       bio: bio ?? this.bio,
       isDarkMode: isDarkMode ?? this.isDarkMode,
       location: location ?? this.location,
-      tag: tag ?? this.tag,
+      tags: tags ?? this.tags,
     );
   }
 
   @override
   String toString() {
-    return 'User(userId: $userId, userName: $userName, email: $email, bio: $bio, avatarPath: $avatarPath, isDarkMode: $isDarkMode, location: $location, tag: $tag)';
+    return 'User(userId: $userId, userName: $userName, email: $email, bio: $bio, avatarPath: $avatarPath, isDarkMode: $isDarkMode, location: $location, tags: $tags)';
   }
 
   @override
@@ -97,7 +102,7 @@ class User {
         other.bio == bio &&
         other.isDarkMode == isDarkMode &&
         other.location == location &&
-        other.tag == tag;
+        other.tags == tags;
   }
 
   @override
@@ -109,7 +114,7 @@ class User {
         bio.hashCode ^
         isDarkMode.hashCode ^
         location.hashCode ^
-        tag.hashCode;
+        tags.hashCode;
   }
 }
 
@@ -140,13 +145,15 @@ class UserProfile {
   final String userName;
   final String email;
   final String bio;
+  final List<String> tags;
 
   UserProfile(
       {required this.userId,
       required this.avatarPath,
       required this.userName,
       required this.email,
-      required this.bio});
+      required this.bio,
+      required this.tags});
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);

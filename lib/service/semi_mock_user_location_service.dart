@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:uuid/uuid.dart';
+import 'package:whoshere/mock/mockTagList.dart';
 import 'package:whoshere/model/user.dart';
 import 'package:whoshere/service/user_location_service.dart';
 import 'package:faker/faker.dart';
@@ -8,6 +9,7 @@ import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 class SemiMockUserLocationService extends UserLocationService {
   List<User>? _mockUsers;
+  int _tagGenIndex = 0;
 
   @override
   Future<List<User>> getNearbyUsers() async {
@@ -39,6 +41,7 @@ class SemiMockUserLocationService extends UserLocationService {
         email: faker.internet.email(),
         bio: faker.lorem.sentence(),
         location: LatLng(currentLocation.latitude + latitudeOffset,
-            currentLocation.longitude + longitudeOffset));
+            currentLocation.longitude + longitudeOffset),
+        tags: [tagList[_tagGenIndex++ % tagList.length]]);
   }
 }
