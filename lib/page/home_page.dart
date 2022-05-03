@@ -52,12 +52,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _showPersistantBottomSheetCallBack = _showBottomSheet;
     onLoad();
-    _nearByUserUpdateTimer =
-        Timer.periodic(const Duration(seconds: 30), (timer) {
-      updateNearbyUsers();
-    });
-    updateNearbyUsers();
-    chatService.connect();
   }
 
   @override
@@ -153,6 +147,13 @@ class _HomePageState extends State<HomePage> {
     await ensurePermission();
     userLocationService.onLocationUpdate.listen(onLocationUpdate);
     userLocationService.startLocationUpdate();
+
+    _nearByUserUpdateTimer =
+        Timer.periodic(const Duration(seconds: 30), (timer) {
+      updateNearbyUsers();
+    });
+    updateNearbyUsers();
+    chatService.connect();
   }
 
   void _showBottomSheet(Rx<User> user) {

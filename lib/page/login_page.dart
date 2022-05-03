@@ -18,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _loginFormKey = GlobalKey<FormState>();
   final IUserService userService = Get.find();
+  final UserStateController userStateController = Get.find();
 
   String? email;
   String? password;
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   void tryAutoLogin() async {
     User? user = await userService.loadLoggedInUser();
     if (user != null) {
-      Get.find<UserStateController>().currentUser.value = user;
+      userStateController.currentUser.value = user;
       Get.offAllNamed(RoutePages.home);
       return;
     }
@@ -53,7 +54,8 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         working = true;
       });
-      await userService.login(email, password);
+      User user = await userService.login(email, password);
+      userStateController.currentUser.value = user;
       Get.offAllNamed(RoutePages.home);
     } on ApiBrokerException catch (e) {
       showDialog(
@@ -122,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                         labelText: "Email", icon: Icon(Icons.email)),
                     enabled: !working,
