@@ -32,7 +32,6 @@ typedef BottomSheetCallBack = void Function(Rx<User> user);
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _mapKey = GlobalKey<MapViewState>();
   final IUserLocationService userLocationService = Get.find();
   final IUserService userService = Get.find();
   final UserStateController stateController = Get.find();
@@ -155,10 +154,10 @@ class _HomePageState extends State<HomePage> {
     userLocationService.onLocationUpdate.listen(onLocationUpdate);
     userLocationService.startLocationUpdate();
 
-    // _nearByUserUpdateTimer =
-    //     Timer.periodic(const Duration(seconds: 30), (timer) {
-    //   updateNearbyUsers();
-    // });
+    _nearByUserUpdateTimer =
+        Timer.periodic(const Duration(seconds: 30), (timer) {
+      updateNearbyUsers();
+    });
     updateNearbyUsers();
     chatService.connect();
   }
@@ -184,10 +183,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  bool filtrateUser(User user) {
-    // print('======= check =======');
-    // print(user.tag);
-    // print(tagList[_selectedTagIndex]);
+  bool filterateUser(User user) {
     return user.tags.contains(tagList[_selectedTagIndex]);
   }
 
@@ -216,7 +212,7 @@ class _HomePageState extends State<HomePage> {
       print('===== map ===== print map view rebuild');
       // add other users to map
       overlays.addAll(stateController.otherUsers.value
-          .where((user) => filtrateUser(user))
+          .where((user) => filterateUser(user))
           .toList()
           .map((user) {
         var rnd = Random();
@@ -237,7 +233,6 @@ class _HomePageState extends State<HomePage> {
       }));
 
       return MapView(
-        key: _mapKey,
         mapCreatedCallback: onMapControllerCreated,
         overlays: overlays,
       );
@@ -263,9 +258,7 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         _selectedTagIndex = index;
                         updateNearbyUsers();
-                        print(
-                            '===== _mapKey.currentState ===== ${_mapKey.currentState}');
-                        _mapKey.currentState?.updateOverlays();
+                        // _mapKey.currentState?.updateOverlays();
                       });
                     },
                   ),

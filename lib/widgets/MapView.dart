@@ -83,6 +83,12 @@ class MapViewState extends State<MapView> {
   }
 
   @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    updateOverlays();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context);
     Size parentSize = media.size;
