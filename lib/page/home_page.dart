@@ -32,6 +32,7 @@ typedef BottomSheetCallBack = void Function(Rx<User> user);
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _mapKey = GlobalKey<MapViewState>();
   final IUserLocationService userLocationService = Get.find();
   final IUserService userService = Get.find();
   final UserStateController stateController = Get.find();
@@ -65,9 +66,15 @@ class _HomePageState extends State<HomePage> {
   void updateNearbyUsers() async {
     printInfo(info: "Updating nearby users");
     var users = await userLocationService.getNearbyUsers();
-    setState(() {
-      nearbyUsers = users;
+    stateController.otherUsers.update((val) {
+      if (val != null) {
+        val.clear();
+        val.addAll(users);
+      }
     });
+    // setState(() {
+    //   nearbyUsers = users;
+    // });
   }
 
   Future ensurePermission() async {
@@ -148,10 +155,10 @@ class _HomePageState extends State<HomePage> {
     userLocationService.onLocationUpdate.listen(onLocationUpdate);
     userLocationService.startLocationUpdate();
 
-    _nearByUserUpdateTimer =
-        Timer.periodic(const Duration(seconds: 30), (timer) {
-      updateNearbyUsers();
-    });
+    // _nearByUserUpdateTimer =
+    //     Timer.periodic(const Duration(seconds: 30), (timer) {
+    //   updateNearbyUsers();
+    // });
     updateNearbyUsers();
     chatService.connect();
   }
@@ -190,6 +197,7 @@ class _HomePageState extends State<HomePage> {
     double windowWidth = MediaQuery.of(context).size.width;
     var mapView = Obx(() {
       List<MapOverlay> overlays = [];
+      // add current user to map
       if (stateController.currentUser.value != null) {
         overlays.add(MapOverlay(
           coordinate: stateController.currentUser.value!.location,
@@ -205,26 +213,31 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
       }
-
-      overlays
-          .addAll(nearbyUsers.where((u) => filtrateUser(u)).toList().map((u) {
+      print('===== map ===== print map view rebuild');
+      // add other users to map
+      overlays.addAll(stateController.otherUsers.value
+          .where((user) => filtrateUser(user))
+          .toList()
+          .map((user) {
         var rnd = Random();
         int i = rnd.nextInt(2) + 1;
         const emojis = ['🙃', '🐸', '🍉'];
+
         return MapOverlay(
-            coordinate: u.location,
+            coordinate: user.location,
             child: DecoratedBubble(
               bubbleStyle: i,
               emoji: emojis[i],
-              tag: u.userId,
+              tag: user.userId,
               // onTap: () => openFriendPage(context),
-              onTap: () => _showPersistantBottomSheetCallBack(u.obs),
+              onTap: () => _showPersistantBottomSheetCallBack(user.obs),
               onMap: true,
-              avatarPath: u.avatarPath,
+              avatarPath: user.avatarPath,
             ));
       }));
 
       return MapView(
+        key: _mapKey,
         mapCreatedCallback: onMapControllerCreated,
         overlays: overlays,
       );
@@ -250,6 +263,9 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         _selectedTagIndex = index;
                         updateNearbyUsers();
+                        print(
+                            '===== _mapKey.currentState ===== ${_mapKey.currentState}');
+                        _mapKey.currentState?.updateOverlays();
                       });
                     },
                   ),

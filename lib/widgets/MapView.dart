@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:get/get.dart';
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:amap_flutter_map/amap_flutter_map.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,10 @@ class MapView extends StatefulWidget {
   final MapCreatedCallback? mapCreatedCallback;
 
   @override
-  State<MapView> createState() => _MapViewState();
+  State<MapView> createState() => MapViewState();
 }
 
-class _MapViewState extends State<MapView> {
+class MapViewState extends State<MapView> {
   static const AMapApiKey _amapApiKeys = AMapApiKey(
       androidKey: ApiConstKey.amapAndroidApiKey,
       iosKey: ApiConstKey.amapIosApiKey);
