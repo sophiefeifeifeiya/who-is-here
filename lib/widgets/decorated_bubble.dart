@@ -17,19 +17,21 @@ class DecoratedBubble extends StatefulWidget {
   final bool onMap;
   final String avatarPath;
   final double paddingValue;
+  final bool iscurrentUser;
 
-  const DecoratedBubble(
-      {Key? key,
-      required this.bubbleStyle,
-      required this.tag,
-      required this.avatarPath,
-      this.emoji = '',
-      this.onTap,
-      this.width = 150,
-      this.height = 145,
-      this.onMap = false,
-      this.paddingValue = 0})
-      : super(key: key);
+  const DecoratedBubble({
+    Key? key,
+    required this.bubbleStyle,
+    required this.tag,
+    required this.avatarPath,
+    this.emoji = '',
+    this.onTap,
+    this.width = 150,
+    this.height = 145,
+    this.onMap = false,
+    this.paddingValue = 0,
+    this.iscurrentUser = false,
+  }) : super(key: key);
 
   @override
   _DecoratedBubbleState createState() => _DecoratedBubbleState();
@@ -47,6 +49,8 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
           BubbleStyleInfo(bubbleStyle: widget.bubbleStyle, tag: widget.tag),
       builder: (BuildContext context, AsyncSnapshot<BubbleStyleInfo> type) {
         Widget bubble;
+        print(
+            '===== bubble ===== Wwidget.tag: ${widget.tag} widget.bubbleStyle: ${widget.bubbleStyle} type.data?.bubbleStyle: ${type.data?.bubbleStyle}');
         if (type.data?.tag == widget.tag && type.data?.bubbleStyle != null) {
           currentStyle = type.data?.bubbleStyle as int;
         }
@@ -78,7 +82,7 @@ class _DecoratedBubbleState extends State<DecoratedBubble> {
         );
         if (widget.onTap == null) {
           return stack;
-        } else if (currentStyle == widget.bubbleStyle) {
+        } else if (!widget.iscurrentUser) {
           return makeTouchable(stack, widget.onTap as VoidCallback);
         } else {
           return makeTouchable(

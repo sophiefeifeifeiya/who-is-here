@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   final IUserService userService = Get.find();
   final UserStateController stateController = Get.find();
   final IUserChatService chatService = Get.find();
+  Map<String, int> bubbleMap = {};
 
   AMapController? mapController;
   final Completer mapControllerCompleter = Completer();
@@ -71,9 +72,6 @@ class _HomePageState extends State<HomePage> {
         val.addAll(users);
       }
     });
-    // setState(() {
-    //   nearbyUsers = users;
-    // });
   }
 
   Future ensurePermission() async {
@@ -173,8 +171,6 @@ class _HomePageState extends State<HomePage> {
         })
         .closed
         .whenComplete(() {
-          // controller broadcast
-
           if (mounted) {
             setState(() {
               _showPersistantBottomSheetCallBack = _showBottomSheet;
@@ -198,6 +194,7 @@ class _HomePageState extends State<HomePage> {
         overlays.add(MapOverlay(
           coordinate: stateController.currentUser.value!.location,
           child: DecoratedBubble(
+            iscurrentUser: true,
             bubbleStyle: 1,
             emoji: '🐼',
             tag: 'current_user',
@@ -209,20 +206,23 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
       }
-      print('===== map ===== print map view rebuild');
       // add other users to map
       overlays.addAll(stateController.otherUsers.value
           .where((user) => filterateUser(user))
           .toList()
           .map((user) {
         var rnd = Random();
-        int i = rnd.nextInt(2) + 1;
+        if (!bubbleMap.containsKey(user.userId)) {
+          int index = rnd.nextInt(2) + 1;
+          bubbleMap[user.userId] = index;
+        }
+        var i = bubbleMap[user.userId];
         const emojis = ['🙃', '🐸', '🍉'];
 
         return MapOverlay(
             coordinate: user.location,
             child: DecoratedBubble(
-              bubbleStyle: i,
+              bubbleStyle: i!,
               emoji: emojis[i],
               tag: user.userId,
               // onTap: () => openFriendPage(context),
