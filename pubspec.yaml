@@ -60,8 +60,7 @@ dependencies:
 
   # AMap Flutter plugin
   amap_flutter_map:
-    git:
-      url: whoishere@vs-ssh.visualstudio.com:v3/whoishere/Who%20is%20Here/amap_flutter_mapx
+    path: ./amap_flutter_map
   amap_flutter_location: ^3.0.0
   coord_convert: ^1.0.0
 
