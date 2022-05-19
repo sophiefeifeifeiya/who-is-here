@@ -7,7 +7,7 @@ import 'package:whoshere/model/user.dart';
 import 'package:whoshere/routes/route_pages.dart';
 import 'package:whoshere/service/services.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
-import 'package:whoshere/widgets/profile_widget.dart';
+import 'package:whoshere/widgets/avatar_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          Obx(() => ProfileWidget(
+          Obx(() => AvatarWidget(
                 imagePath: stateController.currentUser.value!.avatarPath,
                 onClicked: editProfile,
               )),
@@ -91,11 +91,6 @@ class _ProfilePageState extends State<ProfilePage> {
           )
         ],
       );
-
-  // Widget buildUpgradeButton() => ButtonWidget(
-  //       text: 'Upgrade To PRO',
-  //       onClicked: () {},
-  //     );
 
   Widget buildAbout(User user) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 48),

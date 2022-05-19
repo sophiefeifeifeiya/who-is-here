@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/api/api_broker.dart';
 
-class ProfileWidget extends StatelessWidget {
+class AvatarWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
 
   final ApiBroker _broker = Get.find();
 
-  ProfileWidget({
+  AvatarWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = false,

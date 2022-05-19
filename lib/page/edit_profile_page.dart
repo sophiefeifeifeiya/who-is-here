@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/controller/edit_profile_controller.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
-import 'package:whoshere/widgets/profile_widget.dart';
+import 'package:whoshere/widgets/avatar_widget.dart';
 import 'package:whoshere/widgets/textfield_widget.dart';
 import 'package:whoshere/utils/input_validations.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -16,6 +19,64 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   final EditProfileController stateController = Get.find();
 
+  // // 图片文件
+  // // File _image;
+  // // 实例化
+  // final ImagePicker _picker = ImagePicker();
+  // // 获取图片
+  // Future getImage() async {
+  //   final XFile? pickedFile = await _picker.pickImage(
+  //     // 拍照获取图片
+  //     // source: ImageSource.camera,
+  //     // 手机选择图库
+  //     source: ImageSource.gallery,
+  //     // 图片的最大宽度
+  //     // maxWidth: 400
+  //   );
+  //   // 更新状态
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       stateController.user.value.avatarPath = pickedFile.path; // 更新头像
+  //       // 上传图片到服务器
+  //       // uploadImg(image.path);
+  //     } else {
+  //       print('没有选择任何图片');
+  //     }
+  //   });
+  // }
+
+  File? image;
+  File? imageTemp;
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      this.image = imageTemp;
+      setState(() {
+        stateController.user.value.avatarPath = image.path;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickCamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      this.image = imageTemp;
+
+      setState(() {
+        stateController.user.value.avatarPath = image.path;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Builder(
         builder: (context) => Scaffold(
@@ -24,10 +85,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
             padding: const EdgeInsets.symmetric(horizontal: 32),
             physics: const BouncingScrollPhysics(),
             children: [
-              Obx(() => ProfileWidget(
+              Obx(() => AvatarWidget(
                     imagePath: stateController.user.value.avatarPath,
                     isEdit: true,
-                    onClicked: () async {},
+                    onClicked: () async {
+                      await pickImage();
+                      // await pickCamera();
+                    },
                   )),
               const SizedBox(height: 24),
               Obx(() => TextFieldWidget(
