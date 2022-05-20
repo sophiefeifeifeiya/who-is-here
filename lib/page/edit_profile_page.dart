@@ -8,6 +8,8 @@ import 'package:whoshere/utils/input_validations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+// import 'package:dio/dio.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -19,62 +21,62 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   final EditProfileController stateController = Get.find();
 
-  // // 图片文件
-  // // File _image;
-  // // 实例化
-  // final ImagePicker _picker = ImagePicker();
-  // // 获取图片
-  // Future getImage() async {
-  //   final XFile? pickedFile = await _picker.pickImage(
-  //     // 拍照获取图片
-  //     // source: ImageSource.camera,
-  //     // 手机选择图库
-  //     source: ImageSource.gallery,
-  //     // 图片的最大宽度
-  //     // maxWidth: 400
-  //   );
-  //   // 更新状态
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       stateController.user.value.avatarPath = pickedFile.path; // 更新头像
-  //       // 上传图片到服务器
-  //       // uploadImg(image.path);
-  //     } else {
-  //       print('没有选择任何图片');
-  //     }
-  //   });
-  // }
-
   File? image;
   File? imageTemp;
 
-  Future pickImage() async {
+  /// 返回一个选择图片的路径
+  Future<String> pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      this.image = imageTemp;
-      setState(() {
-        stateController.user.value.avatarPath = image.path;
-      });
+      if (image == null) return '';
+      // final imageTemp = File(image.path);
+      // this.image = imageTemp;
+      // add image to assets folder
+      // print("What is going on" +
+      //     stateController.user.value.avatarPath.toString());
+      // print("What is going on" + imageTemp.path.toString());
+      // await stateController.user.value.uploadAvatar(imageTemp);
+
+      return image.path;
+
+      /// 不要放在这里啦
+      // final user = stateController.user.value;
+      // if (user != null) {
+      //   user.avatarPath = image.path;
+      // }
+
+      // stateController.user.update((u) {
+      //   u?.avatarPath = image.path;
+      // });
+      // print("What is going on" +
+      //     stateController.user.value.avatarPath.toString());
+      // print("What is going on" + imageTemp.path.toString());
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
+      return '';
     }
   }
 
-  Future pickCamera() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      this.image = imageTemp;
+  // Future pickCamera() async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  //     if (image == null) return;
+  //     final imageTemp = File(image.path);
+  //     this.image = imageTemp;
 
-      setState(() {
-        stateController.user.value.avatarPath = image.path;
-      });
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
+  //     // add image to assets folder
+  //     print("What is going on" + imageTemp.path.toString());
+  //     // stateController.user.value.avatarPath = imageTemp.path;
+  //     setState(() {});
+  //   } on PlatformException catch (e) {
+  //     print('Failed to pick image: $e');
+  //   }
+  // }
+
+//前往getx更新user path属性
+  void _handleImagePath(String path) {
+    if (path.isEmpty) return;
+    stateController.updateUserAvatarPath(path);
   }
 
   @override
@@ -85,18 +87,43 @@ class _EditProfilePageState extends State<EditProfilePage> {
             padding: const EdgeInsets.symmetric(horizontal: 32),
             physics: const BouncingScrollPhysics(),
             children: [
-              Obx(() => AvatarWidget(
-                    imagePath: stateController.user.value.avatarPath,
-                    isEdit: true,
-                    onClicked: () async {
-                      await pickImage();
-                      // await pickCamera();
+              /// ??? 写法有问题
+              Obx(() {
+                final avatarPath = stateController.user.value?.avatarPath;
+
+                print('===|||||$avatarPath');
+                if (avatarPath == null) {
+                  return GestureDetector(
+                    onTap: () async {
+                      final imagePath = await pickImage(); // 接收图片路径
+                      _handleImagePath(imagePath);
                     },
-                  )),
+                    child: const SizedBox(
+                      width: 64,
+                      height: 64,
+                      child: CircleAvatar(
+                        child: Icon(Icons.person),
+                      ),
+                    ),
+                  );
+                }
+
+                final avaPath = stateController.avaPath.value;
+
+                return AvatarWidget(
+                  imagePath: avaPath.isNotEmpty ? avaPath : avatarPath,
+                  isEdit: true,
+                  onClicked: () async {
+                    final imagePath = await pickImage();
+                    _handleImagePath(imagePath);
+                    // await pickCamera();
+                  },
+                );
+              }),
               const SizedBox(height: 24),
               Obx(() => TextFieldWidget(
                     label: 'Full Name',
-                    text: stateController.user.value.userName,
+                    text: stateController.user.value?.userName ?? "空",
                     validator: (String? s) {
                       if (s == null || s.isEmpty) {
                         stateController.userNameValidationError.value = true;
@@ -114,7 +141,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 24),
               Obx(() => TextFieldWidget(
                     label: 'Email',
-                    text: stateController.user.value.email,
+                    text: stateController.user.value?.email ?? '空',
                     validator: (String? s) {
                       if (s == null) {
                         stateController.emailValidationError.value = true;
@@ -135,7 +162,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 24),
               Obx(() => TextFieldWidget(
                     label: 'About',
-                    text: stateController.user.value.bio,
+                    text: stateController.user.value?.bio ?? '关于',
                     maxLines: 5,
                     onChanged: (about) {
                       if (about.isNotEmpty) {
@@ -149,4 +176,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
       );
+
+  // _upLoadImage(File image) async {
+  //   String path = image.path;
+  //   var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+  //   var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
+  //   FormData formData = new FormData.from({
+  //     "userId": "10000024",
+  //     "file": new MultipartFile(new File(path), name,
+  //         contentType: ContentType.parse("image/$suffix"))
+  //   });
+
+  //   Dio dio = new Dio();
+  //   var respone = await dio.post<String>("/upload", data: formData);
+  //   if (respone.statusCode == 200) {
+  //     Fluttertoast.showToast(
+  //         msg: "图片上传成功", gravity: ToastGravity.CENTER, textColor: Colors.grey);
+  //   }
+  // }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoshere/api/api_broker.dart';
@@ -6,6 +8,7 @@ class AvatarWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
+  // final ValueChanged<String>? onChanged;
 
   final ApiBroker _broker = Get.find();
 
@@ -20,6 +23,7 @@ class AvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
 
+    print('>>>>' + imagePath);
     return Center(
       child: Stack(
         children: [
@@ -35,13 +39,13 @@ class AvatarWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(_broker.getAvatarImageUri(imagePath).toString());
+    // final image = NetworkImage(_broker.getAvatarImageUri(imagePath).toString());
 
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image,
+          image: FileImage(File(imagePath)),
           fit: BoxFit.cover,
           width: 128,
           height: 128,

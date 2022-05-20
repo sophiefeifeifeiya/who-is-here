@@ -124,7 +124,9 @@ extension UserUpdating on Rx<User?> {
       if (u == null) {
         return;
       }
-
+      if (profileUpdate.avatarPath != null) {
+        u.avatarPath = profileUpdate.avatarPath!;
+      }
       if (profileUpdate.userName != null) {
         u.userName = profileUpdate.userName!;
       }
@@ -163,15 +165,19 @@ class UserProfile {
 
 @JsonSerializable()
 class UserProfileUpdate {
+  final String? avatarPath;
   final String? userName;
   final String? email;
   final String? bio;
 
-  UserProfileUpdate({this.userName, this.email, this.bio});
+  UserProfileUpdate({this.avatarPath, this.userName, this.email, this.bio});
 
   factory UserProfileUpdate.fromUserProfile(
           UserProfile currentProfile, UserProfile updatedProfile) =>
       UserProfileUpdate(
+          avatarPath: currentProfile.avatarPath != updatedProfile.avatarPath
+              ? updatedProfile.avatarPath
+              : null,
           userName: currentProfile.userName != updatedProfile.userName
               ? updatedProfile.userName
               : null,

@@ -23,8 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void editProfile() async {
     assert(stateController.currentUser.value != null);
 
-    var editController = EditProfileController(
-        stateController.currentUser.value!.copyWith().obs);
+    var editController = EditProfileController(stateController.currentUser);
     Get.put(editController); // Copy a new user object
     await Get.toNamed(RoutePages.editProfile);
 
@@ -39,13 +38,15 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     try {
-      UserProfile newProfile = editController.user.value.toUserProfile();
-      UserProfile currentProfile =
-          stateController.currentUser.value!.toUserProfile();
-      UserProfileUpdate update =
-          UserProfileUpdate.fromUserProfile(currentProfile, newProfile);
-      await userService.updateUserProfile(update);
-      stateController.currentUser.updateUserProfile(update);
+      UserProfile? newProfile = editController.user.value?.toUserProfile();
+      if (newProfile != null) {
+        UserProfile currentProfile =
+            stateController.currentUser.value!.toUserProfile();
+        UserProfileUpdate update =
+            UserProfileUpdate.fromUserProfile(currentProfile, newProfile);
+        await userService.updateUserProfile(update);
+        stateController.currentUser.updateUserProfile(update);
+      }
     } on ApiBrokerException catch (e) {
       Get.dialog(AlertDialog(
         title: const Text("Failed to save profile"),
