@@ -40,7 +40,7 @@ class _TagSelectorState extends State<TagSelector> {
       String title = widget.tabTitleList[i];
       _list.add(TabModel(title: title, select: _currentIndex == i, id: i));
     }
-    widget.tabTitleList.forEach((element) {});
+    for (var element in widget.tabTitleList) {}
   }
 
   final ScrollController _scrollController = ScrollController();

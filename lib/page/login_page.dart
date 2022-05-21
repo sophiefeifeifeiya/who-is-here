@@ -9,7 +9,7 @@ import 'package:whoshere/service/services.dart';
 import 'package:whoshere/utils/input_validations.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
@@ -133,6 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (value == null || !value.isValidEmail()) {
                         return "Please enter a valid email address";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(
@@ -150,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (value == null || value.isEmpty) {
                         return "Password cannot be null";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(

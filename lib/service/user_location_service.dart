@@ -33,11 +33,11 @@ class UserLocationService implements IUserLocationService {
         Coords(_lastUpdateLocation.latitude, _lastUpdateLocation.longitude)));
 
     // Convert WGS-084 back to GCJ-02
-    users.forEach((u) {
+    for (var u in users) {
       Coords gcjCoord = CoordConvert.wgs84togcj02(
           Coords(u.location.latitude, u.location.longitude));
       u.location = LatLng(gcjCoord.latitude, gcjCoord.longitude);
-    });
+    }
 
     return users;
   }

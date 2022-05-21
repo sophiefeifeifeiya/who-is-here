@@ -31,7 +31,7 @@ class colorWidget extends StatelessWidget {
             ColorButton(Colors.black),
           ],
         ),
-        Positioned(bottom: 10, child: Center(child: ColorPicker(350)))
+        const Positioned(bottom: 10, child: Center(child: ColorPicker(350)))
       ],
     );
   }

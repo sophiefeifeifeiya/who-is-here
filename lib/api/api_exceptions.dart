@@ -16,8 +16,7 @@ class ApiRequestException extends ApiBrokerException {
 
   @override
   String toString() {
-    return "Backend API returns an error. status code: ${response.statusCode}\n" +
-        "Response content: ${response.body}";
+    return "Backend API returns an error. status code: ${response.statusCode}\n" "Response content: ${response.body}";
   }
 }
 
