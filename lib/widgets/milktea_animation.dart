@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 GlobalKey<_MilkteaScreenState> childKey5 = GlobalKey();
 
 class MilkteaScreen extends StatefulWidget {
-  MilkteaScreen({
+  const MilkteaScreen({
     required Key key,
   }) : super(key: key);
 
@@ -22,11 +22,11 @@ class _MilkteaScreenState extends State<MilkteaScreen>
     super.initState();
 
     controller = AnimationController(
-        duration: Duration(seconds: 1), vsync: this); //AnimationController
+        duration: const Duration(seconds: 1), vsync: this); //AnimationController
 
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
-    animationSlide = Tween(begin: Offset(0, 0), end: Offset(0.3, -0.7))
+    animationSlide = Tween(begin: const Offset(0, 0), end: const Offset(0.3, -0.7))
         .animate(CurvedAnimation(parent: controller, curve: Curves.ease));
   }
 
@@ -52,7 +52,7 @@ class _MilkteaScreenState extends State<MilkteaScreen>
 
     return SlideTransition(
       position: animationSlide,
-      child: Container(
+      child: SizedBox(
         height: 650,
         width: 650,
         child: ElevatedButton(

@@ -62,7 +62,7 @@ class ChatStateController extends GetxController {
     try {
       await chatService.sendMessage(user.value.userId, chatMessage);
       chatService.saveMessage(user.value.userId, chatMessage);
-    } on ChatRequestException catch (e) {
+    } on ChatRequestException {
       chatMessage.sendFailed.value = true;
     }
     chatMessage.sending.value = false;

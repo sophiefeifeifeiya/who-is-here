@@ -73,7 +73,7 @@ class setting_page extends StatelessWidget {
             ],
           ),
         )),
-        Divider(
+        const Divider(
           height: 10.0,
         ),
         Expanded(
@@ -81,7 +81,7 @@ class setting_page extends StatelessWidget {
           alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text("Report Problem",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class setting_page extends StatelessWidget {
             ],
           ),
         )),
-        Divider(
+        const Divider(
           height: 10.0,
         ),
         Expanded(
@@ -121,13 +121,13 @@ class setting_page extends StatelessWidget {
             ],
           ),
         )),
-        Divider(
+        const Divider(
           height: 10.0,
         ),
         Expanded(
             child: Container(
           alignment: Alignment.center,
-          child: Text("Cancel",
+          child: const Text("Cancel",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,

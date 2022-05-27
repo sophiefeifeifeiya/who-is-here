@@ -15,11 +15,11 @@ abstract class RoutePages {
   static const editProfile = "/profile/edit";
 
   static final List<GetPage> pages = [
-    GetPage(name: login, page: () => LoginPage()),
+    GetPage(name: login, page: () => const LoginPage()),
     GetPage(name: register, page: () => const RegisterPage()),
     GetPage(name: chat, page: () => ChatPage()),
     GetPage(name: home, page: () => const HomePage(title: "Who's here")),
     GetPage(name: profile, page: () => const ProfilePage()),
-    GetPage(name: editProfile, page: () => EditProfilePage())
+    GetPage(name: editProfile, page: () => const EditProfilePage())
   ];
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 GlobalKey<_CoffeeScreenState> childKey2 = GlobalKey();
 
 class CoffeeScreen extends StatefulWidget {
-  CoffeeScreen({
+  const CoffeeScreen({
     required Key key,
   }) : super(key: key);
 
@@ -22,11 +22,11 @@ class _CoffeeScreenState extends State<CoffeeScreen>
     super.initState();
 
     controller = AnimationController(
-        duration: Duration(seconds: 1), vsync: this); //AnimationController
+        duration: const Duration(seconds: 1), vsync: this); //AnimationController
 
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
-    animationSlide = Tween(begin: Offset(0, 0), end: Offset(0.3, -0.7))
+    animationSlide = Tween(begin: const Offset(0, 0), end: const Offset(0.3, -0.7))
         .animate(CurvedAnimation(parent: controller, curve: Curves.ease));
   }
 
@@ -52,7 +52,7 @@ class _CoffeeScreenState extends State<CoffeeScreen>
 
     return SlideTransition(
       position: animationSlide,
-      child: Container(
+      child: SizedBox(
         height: 400,
         width: 400,
         child: ElevatedButton(

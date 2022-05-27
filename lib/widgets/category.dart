@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoshere/controller/controller.dart';
 
@@ -36,7 +35,7 @@ class _CategoriesState extends State<Categories> {
         });
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 45.0),
+        padding: const EdgeInsets.symmetric(horizontal: 45.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -48,7 +47,7 @@ class _CategoriesState extends State<Categories> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 5.0),
+              margin: const EdgeInsets.only(top: 5.0),
               height: 3,
               width: 30,
               color:
