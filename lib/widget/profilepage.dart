@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+<<<<<<< HEAD
+=======
+import 'package:firebase_storage/firebase_storage.dart';
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
 import 'dart:io';
 import 'package:path/path.dart';
 
@@ -10,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+<<<<<<< HEAD
   File? _image;
 
 
@@ -43,22 +48,61 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
 
+=======
+  File _image;
+
+  @override
+  Widget build(BuildContext context) {
+    Future getImage() async {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = image;
+        print('Image Path $_image');
+      });
+    }
+
+    Future uploadPic(BuildContext context) async {
+      String fileName = basename(_image.path);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child(fileName);
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      setState(() {
+        print("Profile Picture uploaded");
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+      });
+    }
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
+<<<<<<< HEAD
             icon: const Icon(FontAwesomeIcons.arrowLeft),
             onPressed: () {
               Navigator.pop(context);
             }),
         title: const Text('Edit Profile'),
+=======
+            icon: Icon(FontAwesomeIcons.arrowLeft),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        title: Text('Edit Profile'),
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
       ),
       body: Builder(
         builder: (context) => Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+<<<<<<< HEAD
               const SizedBox(
+=======
+              SizedBox(
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
                 height: 20.0,
               ),
               Row(
@@ -68,14 +112,24 @@ class _ProfilePageState extends State<ProfilePage> {
                     alignment: Alignment.center,
                     child: CircleAvatar(
                       radius: 100,
+<<<<<<< HEAD
                       backgroundColor: const Color(0xff476cfb),
                       child: ClipOval(
                         child: SizedBox(
+=======
+                      backgroundColor: Color(0xff476cfb),
+                      child: ClipOval(
+                        child: new SizedBox(
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
                           width: 180.0,
                           height: 180.0,
                           child: (_image != null)
                               ? Image.file(
+<<<<<<< HEAD
                                   _image!,
+=======
+                                  _image,
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
                                   fit: BoxFit.fill,
                                 )
                               : Image.network(
@@ -87,9 +141,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Padding(
+<<<<<<< HEAD
                     padding: const EdgeInsets.only(top: 60.0),
                     child: IconButton(
                       icon: const Icon(
+=======
+                    padding: EdgeInsets.only(top: 60.0),
+                    child: IconButton(
+                      icon: Icon(
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
                         FontAwesomeIcons.camera,
                         size: 30.0,
                       ),

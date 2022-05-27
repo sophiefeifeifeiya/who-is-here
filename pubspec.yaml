@@ -54,7 +54,7 @@ dependencies:
   dd_js_util: any
 
   # state, navigation, and dependency management
-  get: ^4.3.8
+  get: 4.3.8
 
   shared_preferences: ^2.0.13
   flutter_easyloading: ^3.0.3

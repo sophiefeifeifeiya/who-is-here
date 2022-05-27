@@ -8,9 +8,18 @@ import 'package:whoshere/page/post/index.dart';
 import 'package:whoshere/routes/route_pages.dart';
 import 'package:whoshere/service/services.dart';
 import 'package:whoshere/widgets/appbar_widget.dart';
+<<<<<<< HEAD
 import 'package:whoshere/widgets/avatar_widget.dart';
+<<<<<<< HEAD
 import 'package:whoshere/model/Post.dart';
 import 'package:whoshere/widgets/posts.dart';
+=======
+=======
+import 'package:whoshere/widgets/profile_widget.dart';
+import 'package:whoshere/model/Post.dart';
+import 'package:whoshere/widgets/posts.dart';
+>>>>>>> viewMyPost
+>>>>>>> 9d65316d3a19484ec39241215115345a3375f770
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
