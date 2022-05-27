@@ -12,8 +12,6 @@ class BubbleType2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('===== size =====');
-    print(size);
     return SizedBox(
       height: size,
       width: size,

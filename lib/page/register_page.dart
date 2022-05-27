@@ -91,6 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || !value.isValidEmail()) {
                           return "Please enter a valid email address";
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(
@@ -105,6 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return "Username cannot be empty";
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(
@@ -122,6 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return "Password cannot be null";
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(
@@ -140,6 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         } else if (value != password) {
                           return "Please enter the same password";
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(

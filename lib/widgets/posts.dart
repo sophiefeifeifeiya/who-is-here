@@ -9,10 +9,10 @@ class Posts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 250.0,
             width: double.infinity,
             child: ClipRRect(
@@ -43,10 +43,10 @@ class Posts extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            padding: const EdgeInsets.only(left: 10.0, top: 10.0),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: 30.0,
                   width: double.infinity,
                   child: Padding(
@@ -73,7 +73,7 @@ class Posts extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 150.0,
                 ),
                 Row(
@@ -83,14 +83,14 @@ class Posts extends StatelessWidget {
                       children: [
                         Text(
                           post.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w900,
                               color: Colors.white),
                         ),
                         Text(
                           post.place,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 8.0,
                               fontWeight: FontWeight.w900,
                               color: Colors.white),

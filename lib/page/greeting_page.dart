@@ -7,7 +7,7 @@ import 'package:whoshere/widgets/emojis.dart';
 class GreetingPage extends StatelessWidget {
   final Rx<User> user;
 
-  GreetingPage(this.user);
+  const GreetingPage(this.user);
 
   @override
   Widget build(BuildContext context) {

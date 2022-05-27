@@ -60,7 +60,7 @@ class friendPage extends StatelessWidget {
 class hello_bar extends StatelessWidget {
   final Rx<User> user;
 
-  hello_bar({Key? key, required this.user}) : super(key: key);
+  const hello_bar({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +122,7 @@ class tag_bar extends StatelessWidget {
   const tag_bar({Key? key, required this.friend}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 150,
       width: 450,
       child: Column(

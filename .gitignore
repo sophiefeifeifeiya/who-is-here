@@ -2,6 +2,7 @@
 *.g.dart
 
 # Files and directories created by pub
+coverage/
 .dart_tool/
 .packages
 build/
@@ -57,6 +58,7 @@ doc/api/
 .pub-cache/
 .pub/
 /build/
+example.jsonl
 
 # Web related
 lib/generated_plugin_registrant.dart

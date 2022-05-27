@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:whoshere/model/user.dart';
+
+import '../api/api_broker.dart';
 
 class EditProfileController extends GetxController {
   final Rxn<User> user;
@@ -24,5 +28,9 @@ class EditProfileController extends GetxController {
       ///用户为空
       avaPath.trigger(path);
     }
+    Get.find<ApiBroker>().myUploadFile(File(path));
   }
+
+
+  /// 请求api
 }

@@ -22,7 +22,7 @@ class _SliderIndicatorPainter extends CustomPainter {
 
 class ColorPicker extends StatefulWidget {
   final double width;
-  ColorPicker(this.width);
+  const ColorPicker(this.width);
   @override
   _ColorPickerState createState() => _ColorPickerState();
 }

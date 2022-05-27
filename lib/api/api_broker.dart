@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:coord_convert/coord_convert.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide FormData,MultipartFile;
 import 'package:http/http.dart' as http;
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -15,15 +18,10 @@ class ApiBroker {
   final String apiDomain;
   late int apiPort;
   final String apiBasePath;
-  final StreamController<UserLoginResponse> tokenRefreshController =
-      StreamController<UserLoginResponse>();
+  final StreamController<UserLoginResponse> tokenRefreshController = StreamController<UserLoginResponse>();
   late Stream<UserLoginResponse> onTokenRefreshed;
 
-  ApiBroker(
-      {required this.apiDomain,
-      required this.apiBasePath,
-      this.useSecureContext = true,
-      int? apiPort}) {
+  ApiBroker({required this.apiDomain, required this.apiBasePath, this.useSecureContext = true, int? apiPort}) {
     onTokenRefreshed = tokenRefreshController.stream;
     if (apiPort == null) {
       this.apiPort = useSecureContext ? 443 : 80;
@@ -39,11 +37,7 @@ class ApiBroker {
   static const String _contentTypeJson = "application/json";
 
   Future<UserLoginResponse> login({required UserLoginRequest request}) async {
-    var response = await sendRequest(
-        method: "POST",
-        apiPath: "/User/Login",
-        requireIdentity: false,
-        body: json.encode(request.toJson()));
+    var response = await sendRequest(method: "POST", apiPath: "/User/Login", requireIdentity: false, body: json.encode(request.toJson()));
     var userTokens = UserLoginResponse.fromJson(json.decode(response.body));
     accessToken = userTokens.accessToken;
     refreshToken = userTokens.refreshToken;
@@ -52,15 +46,10 @@ class ApiBroker {
 
   Future register({required UserRegistrationRequest request}) async {
     if (accessToken != null) {
-      throw StateError(
-          "Cannot register a new account because already signed in");
+      throw StateError("Cannot register a new account because already signed in");
     }
 
-    sendRequest(
-        method: "POST",
-        apiPath: "/User/Register",
-        requireIdentity: false,
-        body: json.encode(request.toJson()));
+    sendRequest(method: "POST", apiPath: "/User/Register", requireIdentity: false, body: json.encode(request.toJson()));
   }
 
   Future<UserProfile> getProfile() async {
@@ -81,8 +70,7 @@ class ApiBroker {
       await refresh();
     }
 
-    return IOWebSocketChannel.connect(
-        getApiUri(scheme: useSecureContext ? "wss" : "ws", apiPath: "/Chat/ws"),
+    return IOWebSocketChannel.connect(getApiUri(scheme: useSecureContext ? "wss" : "ws", apiPath: "/Chat/ws"),
         headers: {"Authorization": "Bearer ${accessToken!.token}"});
   }
 
@@ -91,12 +79,7 @@ class ApiBroker {
   /// currentLocation: the coordinate of current location in WGS-084
   Future<List<User>> getNearbyUsers(Coords currentLocation) async {
     var response = await sendRequest(
-        method: "GET",
-        apiPath: "/UserLocation",
-        body: json.encode({
-          "latitude": currentLocation.latitude,
-          "longitude": currentLocation.longitude
-        }));
+        method: "GET", apiPath: "/UserLocation", body: json.encode({"latitude": currentLocation.latitude, "longitude": currentLocation.longitude}));
     Iterable l = json.decode(response.body);
     List<User> users = List<User>.from(l.map((j) => User.fromJson(j)));
     return users;
@@ -104,8 +87,7 @@ class ApiBroker {
 
   bool _needRefresh() {
     // Refresh access token 2 minuets before it expired
-    return DateTime.now()
-        .isAfter(accessToken!.expires.subtract(const Duration(minutes: 2)));
+    return DateTime.now().isAfter(accessToken!.expires.subtract(const Duration(minutes: 2)));
   }
 
   Future refresh() async {
@@ -123,8 +105,7 @@ class ApiBroker {
         apiPath: "/User/Refresh",
         requireIdentity: false,
         disableRefresh: true,
-        body:
-            json.encode(UserRefreshTokenRequest(refreshToken!.token).toJson()));
+        body: json.encode(UserRefreshTokenRequest(refreshToken!.token).toJson()));
     var userTokens = UserLoginResponse.fromJson(json.decode(response.body));
     accessToken = userTokens.accessToken;
     refreshToken = userTokens.refreshToken;
@@ -132,10 +113,7 @@ class ApiBroker {
   }
 
   Future updateProfile(UserProfileUpdate profile) async {
-    await sendRequest(
-        method: "PATCH",
-        apiPath: "/User/Profile",
-        body: json.encode(profile.toJson()));
+    await sendRequest(method: "PATCH", apiPath: "/User/Profile", body: json.encode(profile.toJson()));
   }
 
   Future<http.Response> sendRequest(
@@ -146,8 +124,7 @@ class ApiBroker {
       bool disableRefresh = false,
       Map<String, dynamic>? queryParameters,
       Map<String, String>? headers}) async {
-    var request = http.Request(
-        method, getApiUri(apiPath: apiPath, queryParameters: queryParameters));
+    var request = http.Request(method, getApiUri(apiPath: apiPath, queryParameters: queryParameters));
 
     if (body != null) {
       if (body is String) {
@@ -171,8 +148,7 @@ class ApiBroker {
     try {
       if (requireIdentity) {
         if (accessToken == null) {
-          throw StateError(
-              "Call an API that required identity but you are not logged in");
+          throw StateError("Call an API that required identity but you are not logged in");
         }
 
         if (!disableRefresh && _needRefresh()) {
@@ -192,10 +168,32 @@ class ApiBroker {
     }
   }
 
-  Uri getApiUri(
-      {required String apiPath,
-      String? scheme,
-      Map<String, dynamic>? queryParameters}) {
+  /// 上次头像的方法
+  Future<String?> myUploadFile(File file,{VoidCallback? success}) async {
+    var formData = FormData.fromMap({
+      'formFile': await MultipartFile.fromFile(
+        file.path,
+      )
+    });
+    final dio = Dio();
+    try {
+      final response = await dio.post('https://whoshere.fuiyoo.tech/User/Avatar',
+          data: formData, options: Options(headers: {'Authorization': "Bearer ${accessToken!.token}"}));
+      if(response.statusCode == 200) {
+
+
+       // final res =await dio.get('https://whoshere.fuiyoo.tech/User/Avatar',options: Options(headers: {'Authorization': "Bearer ${accessToken!.token}"}));
+       // print(res.data);
+
+        Get.dialog(const AlertDialog(content: Text('修改头像成功'),));
+        success?.call();
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Uri getApiUri({required String apiPath, String? scheme, Map<String, dynamic>? queryParameters}) {
     return Uri(
         scheme: scheme ?? (useSecureContext ? "https" : "http"),
         host: apiDomain,
@@ -203,6 +201,9 @@ class ApiBroker {
         path: apiBasePath + apiPath,
         queryParameters: queryParameters);
   }
+
+  //上传头像URL
+  Uri get getUploadFileUri => getApiUri(apiPath: '/User/Avatar');
 
   Uri getAvatarImageUri(String avatarPath) {
     return getApiUri(apiPath: avatarPath);

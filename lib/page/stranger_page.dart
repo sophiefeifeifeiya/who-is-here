@@ -100,13 +100,13 @@ class tag_bar extends StatelessWidget {
   const tag_bar({Key? key, required this.stranger}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 150,
       width: 450,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
               child: Icon(
             Icons.format_quote,
             size: 50,
@@ -120,7 +120,7 @@ class tag_bar extends StatelessWidget {
               tag(stranger.tags[2]),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Row(
@@ -150,7 +150,7 @@ class menu_bar extends StatelessWidget {
             //   enableDrag: true,
             // );
           },
-          icon: Icon(Icons.location_off),
+          icon: const Icon(Icons.location_off),
           splashRadius: 15,
         ),
       ],
@@ -165,29 +165,29 @@ class info_bar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             width: 150.0,
-            padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
+            padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 Text(
                   stranger.name,
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Text(
                   stranger.tickle,
-                  style: TextStyle(fontSize: 13),
+                  style: const TextStyle(fontSize: 13),
                 )
               ],
             ),
@@ -195,7 +195,7 @@ class info_bar extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            margin: EdgeInsetsDirectional.only(end: 15.0),
+            margin: const EdgeInsetsDirectional.only(end: 15.0),
             child: AvatarView(
                 avatarType: AvatarType.CIRCLE,
                 imagePath: stranger.profile,
