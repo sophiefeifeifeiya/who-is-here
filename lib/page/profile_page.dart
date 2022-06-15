@@ -11,7 +11,6 @@ import 'package:whoshere/widgets/appbar_widget.dart';
 import 'package:whoshere/widgets/avatar_widget.dart';
 import 'package:whoshere/model/Post.dart';
 import 'package:whoshere/widgets/posts.dart';
-import 'package:whoshere/widgets/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
