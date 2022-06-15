@@ -24,18 +24,18 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     }
 
-    Future uploadPic(BuildContext context) async {
-      String fileName = basename(_image.path);
-      StorageReference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child(fileName);
-      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-      setState(() {
-        print("Profile Picture uploaded");
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
-      });
-    }
+    // Future uploadPic(BuildContext context) async {
+    //   String fileName = basename(_image.path);
+    //   StorageReference firebaseStorageRef =
+    //       FirebaseStorage.instance.ref().child(fileName);
+    //   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    //   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    //   setState(() {
+    //     print("Profile Picture uploaded");
+    //     Scaffold.of(context)
+    //         .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+    //   });
+    // }
 
     return Scaffold(
       appBar: AppBar(
