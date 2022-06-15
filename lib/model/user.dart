@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 9d65316d3a19484ec39241215115345a3375f770
 import 'package:amap_flutter_base/amap_flutter_base.dart';
 import 'package:get/get.dart';
 import 'package:json_annotation/json_annotation.dart';
