@@ -1,4 +1,4 @@
-# who-is-here
+# Who's here
 
 Who's here provides users with social support based on location information display. The system will integrate location display, user filtering, tag verification, chat, friends adding, anonymous mode and public mode, blocking, etc. It does not support auto-matching chat, auto-screening of users, etc. The use case diagram and particular functions are demonstrated below.
 
